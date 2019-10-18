@@ -1,0 +1,40 @@
+
+
+/
+
+Home page
+
+/char?name=Mary
+
+Display the current state of the character
+Players should refresh when it changes (button on page)
+
+/overview
+
+Display a brief overview of the all characters (dead, stunned, elemental states, hit summary) in order
+Refreshes every 10 seconds
+
+/master
+
+Select an encounter
+
+/setup
+
+Get init for each PC (NPCs default to 10)
+
+/setupresponse
+
+Collects inits, forwards to encounter (via button?)
+
+/encounter
+
+Run an encounter
+
+Skip or act or attack or add NPCs
+
+Skip drops char down the action list one place
+
+Act has the char miss a turn (i.e., the action is resolved outside the system)
+
+Attack needs a target, a roll, and a bonus
+Save target, bonus defaults to 0
