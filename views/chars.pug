@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  p
+  table
+    tr
+      td(class='top')= chars[0].alias()
+      td(class='top')= chars[0].status()
+    tr
+      td(class='next')= chars[1].alias()
+      td(class='next')= chars[1].status()
+    each char in chars.slice(2)
+      tr
+        td= char.alias()
+        td= char.status()

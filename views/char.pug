@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h2 Character Sheet For #{char.alias()}
+  table
+    tr
+      th Attribute
+      th Value
+    each field in fields
+      tr
+        td #{field.name}
+        td #{char[field.name]}

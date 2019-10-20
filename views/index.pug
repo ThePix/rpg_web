@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  p
+  p If you are a player, please click on your character name to see your character status page
+  table
+    each char in chars
+      tr
+        td
+          a(href='/chars?name=' + char.name) #{char.alias}
+  p
+    a(href='/chars') Character summary
+  p
+    a(href='/encounter') Encounter
+    | (GM only)

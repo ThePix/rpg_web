@@ -1,7 +1,12 @@
 doctype html
 html
   head
-    title= title
+    title Pixie RPG Tool
     link(rel='stylesheet', href='/stylesheets/style.css')
+    unless noRefresh
+      meta(http-equiv="refresh", content="10")
   body
-    block content
+    h1 The Pixie RPG Tool
+    div(class='main')
+      block content
+    footer Downloaded at #{timestamp}

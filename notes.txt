@@ -4,12 +4,12 @@
 
 Home page
 
-/char?name=Mary
+/chars?name=Mary
 
 Display the current state of the character
 Players should refresh when it changes (button on page)
 
-/overview
+/chars
 
 Display a brief overview of the all characters (dead, stunned, elemental states, hit summary) in order
 Refreshes every 10 seconds
