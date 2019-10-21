@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const charsRouter = require('./routes/chars');
 const encounterRouter = require('./routes/encounter');
+const attackRouter = require('./routes/attack');
 
 const app = express();
 
@@ -90,7 +91,13 @@ const chars = [
   new Char({
     name:"Lara", hits:45, next:'Kyle', pc:true, current:true,
     attacks:[
-      new Attack({targets:1, bonus:0, name:'Basic sword attack'}),
+      new Attack({
+        targets:1, bonus:0, name:'Basic sword attack',
+        primary:function(attacker, target, roll, bonus) {
+          target.hits -= 5
+          return attacker.alias() + " attacks " + target.alias() + " for 5 damage."
+        }
+      }),
       new Attack({targets:'n', bonus:0, name:'Fireball'}),
     ],
   }),
@@ -140,6 +147,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/chars', charsRouter);
 app.use('/encounter', encounterRouter);
+app.use('/attack', attackRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

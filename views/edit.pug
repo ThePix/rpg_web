@@ -12,7 +12,7 @@ block content
           td #{field.display}
           td 
             if field.type === 'int'
-              input(type='numeric' name=field.name value=char[field.name])
+              input(type='number' name=field.name value=char[field.name])
             else if field.type === 'bool'
               input(type='checkbox' name=field.name checked=char[field.name])
             else

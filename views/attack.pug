@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  p
+  h2 Current turn: #{char.alias()}
+  h3 Making attack: #{attack.name}
+
+  form(method="post" action="attack")
+    table
+      tbody
+        tr
+          th(colspan=3) Numbers
+        tr
+          td Roll
+          td(colspan=2)
+            input(type='number' name='roll' value=1)
+        tr
+          td Bonus
+          td(colspan=2)
+            input(type='number' name='bonus' value=0)
+      tbody
+        tr
+          th Targets
+          th 1°
+          th 2°
+        each char in chars
+          tr
+            td #{char.alias()}
+            td
+              input(type='checkbox' name=char.name+'_pri')
+            td 
+              input(type='checkbox' name=char.name+'_sec')
+
+    input(type="hidden" name="name" value=char.name)
+    input(type="hidden" name="attack" value=attack.name)
+    p
+    button(type="submit" name="submit_param" value="submit_value" class="link-button") Attack

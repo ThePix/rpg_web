@@ -14,6 +14,13 @@ router.get('/', function(req, res, next) {
       res.render('edit', { char:char, fields: req.app.get('fields'), timestamp:req.timestamp });
     }
   }
+  if (req.query.attack) {
+    const attack = char.attacks.find(el => el.name === req.query.attack)
+  console.log(attack)
+    console.log("Attacking...")
+    handled = true
+    res.render('attack', { chars:chars, char:char, attack:attack, timestamp:req.timestamp });
+  }
   if (!handled) {
     res.render('encounter', { chars:chars, char:char, attacks:char.attacks, timestamp:req.timestamp });
   }
