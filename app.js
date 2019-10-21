@@ -1,4 +1,4 @@
-const PORT = 80
+const PORT = 8090
 
 const createError = require('http-errors');
 const express = require('express');
@@ -26,6 +26,8 @@ const requestTime = function (req, res, next) {
 class Char {
   constructor(data) {
     for (let key in data) this[key] = data[key]
+    if (this.maxHits === undefined) this.maxHits = this.hits
+    this.turnCount = 0
   }
   
   attack(target, roll, bonus) {
@@ -34,20 +36,31 @@ class Char {
   
   delay(chars) {
     const oneBefore = chars.find(el => el.next === this.name)
+    oneBefore.next = this.next
     console.log(oneBefore.name)
-    const oneAfter = chars.find(el => el.name === this.next)
-    console.log(oneAfter.name)
-    oneBefore.next = oneAfter.name
+
+    let oneAfter
+    do {
+      oneAfter = chars.find(el => el.name === this.next)
+    } while (oneAfter.disabled)
+    oneAfter.current = true
+  
+    this.current = false
     this.next = oneAfter.next
+  
     oneAfter.next = this.name
+    console.log(oneAfter.name)
   }
   
   nextChar(chars) {
+    let char
     do {
-      const char = chars.find(el => el.name === this.next)
+      char = chars.find(el => el.name === this.next)
       char.current = true
       this.current = false
     } while (char.disabled)
+    this.turnCount++
+    if (this['afterTurn' + this.turnCount]) this['afterTurn' + this.turnCount]()
   }
   
   status() {
@@ -77,7 +90,8 @@ const chars = [
   new Char({
     name:"Lara", hits:45, next:'Kyle', pc:true, current:true,
     attacks:[
-      new Attack({targets:1, bonus:0}),
+      new Attack({targets:1, bonus:0, name:'Basic sword attack'}),
+      new Attack({targets:'n', bonus:0, name:'Fireball'}),
     ],
   }),
   new Char({name:"Cuddly", hits:35, next:'Hugs'}),
@@ -96,7 +110,9 @@ console.log(chars[3])
 //chars[3].delay(chars)
 
 const fields = [
-  { name:'hits', type:'int',},
+  { name:'maxHits', type:'int', display:"Hits",},
+  { name:'hits', type:'int', display:"Max. hits"},
+  { name:'disabled', type:'bool', display:"Not active"},
 ]
 
 //chars[0].nextChar(chars)

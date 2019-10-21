@@ -3,27 +3,40 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  console.log("*** ENCOUNTER ***")
+  console.log("*** ENCOUNTER GET ***")
   const chars = req.app.get('chars');
-  console.log(chars)
-  if (req.query.name) {
-    const char = chars.find(el => el.name === req.query.name)
-    if (char) {
-      res.render('char', { char: char, fields: req.app.get('fields') });
-    }
-    else {
-      res.render('nochar', { name: req.query.name });
+  let char = chars.find(el => el.current)
+  let handled = false
+  if (req.query.action) {
+    if (req.query.action === "edit") {
+      console.log("Editing...")
+      handled = true
+      res.render('edit', { char:char, fields: req.app.get('fields'), timestamp:req.timestamp });
     }
   }
-  else {
-    const list = [];
-    list[0] = chars.find(el => el.current)
-    for (let i = 1; i < chars.length; i++) {
-      list[i] = chars.find(el => el.name === list[i - 1].next)
-    }
-    console.log(list)
-    res.render('chars', { chars:list });
+  if (!handled) {
+    res.render('encounter', { chars:chars, char:char, attacks:char.attacks, timestamp:req.timestamp });
   }
 });
+
+router.post('/', function(req, res, next) {
+  console.log("*** ENCOUNTER POST ***")
+  console.log(req.query)
+  console.log(req.body)
+  const chars = req.app.get('chars');
+  let char = chars.find(el => el.current)
+  if (req.body.action) {
+    if (req.body.action === "delay") {
+      char.delay(chars)
+    }
+    else {
+      char.nextChar(chars)
+    }
+    char = chars.find(el => el.current)
+  }
+  res.render('encounter', { chars:chars, char:char, attacks:char.attacks, timestamp:req.timestamp });
+});
+
+
 
 module.exports = router;

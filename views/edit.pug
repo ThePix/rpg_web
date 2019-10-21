@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h2 Editing Attributes For #{char.alias()}
+  form(method="post" action="chars")
+    table
+      tr
+        th Attribute
+        th Value
+      each field in fields
+        tr
+          td #{field.display}
+          td 
+            if field.type === 'int'
+              input(type='numeric' name=field.name value=char[field.name])
+            else if field.type === 'bool'
+              input(type='checkbox' name=field.name checked=char[field.name])
+            else
+              input(type='text' name=field.name value=char[field.name])
+    input(type="hidden" name="name" value=char.name)
+    p
+    button(type="submit" name="submit_param" value="submit_value" class="link-button") Update

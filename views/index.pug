@@ -7,7 +7,7 @@ block content
     each char in chars
       tr
         td
-          a(href='/chars?name=' + char.name) #{char.alias}
+          a(href='/chars?name=' + char.name) #{char.alias()}
   p
     a(href='/chars') Character summary
   p

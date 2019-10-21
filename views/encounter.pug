@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  p
+  h2 Current turn: #{char.alias()}
+  if attacks
+    ul
+      each attack in attacks
+        li
+          a(href='/encounter?attack=' + attack.name) #{attack.name}
+  else
+    p No attacks available
+        
+  p Other actions
+  
+  form(method="post" action="encounter" class="inline")
+    input(type="hidden" name="action" value="delay")
+    button(type="submit" name="submit_param" value="submit_value" class="link-button") Delay
+ 
+  form(method="post" action="encounter" class="inline")
+    input(type="hidden" name="action" value="Next")
+    button(type="submit" name="submit_param" value="submit_value" class="link-button") Next
+ 
+  form(method="get" action="encounter" class="inline")
+    input(type="hidden" name="action" value="edit")
+    button(type="submit" name="submit_param" value="submit_value" class="link-button") Edit
+ 
+  
+  hr
+
+  p Other character acting
+  ul
+    each char in chars
+      li
+        a(href='/encounter?char=' + char.name) #{char.alias()}

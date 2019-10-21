@@ -2,11 +2,11 @@ extends layout
 
 block content
   h2 Character Sheet For #{char.alias()}
-  table
+  table(class='big')
     tr
       th Attribute
       th Value
     each field in fields
       tr
-        td #{field.name}
+        td #{field.display}
         td #{char[field.name]}

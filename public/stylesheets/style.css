@@ -28,15 +28,24 @@ a {
 
 table {
   border: black 1px solid;
+}
+
+table.big {
   font: 28px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 td {
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: silver;
+  text-align:center;
+}
+
+td.big {
   padding: 10px;
   padding-left: 30px;
   padding-right: 30px;
-  background-color: silver;
-  text-align:center;
 }
 
 th {
