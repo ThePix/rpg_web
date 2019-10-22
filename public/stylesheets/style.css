@@ -63,3 +63,11 @@ td.next {
 input[type=number]{
     width: 40px;
 }
+
+.errors {
+  background-color: yellow;
+  border: black 1px solid;
+  padding: 2px;
+  margin:50px;
+  display:none;
+}

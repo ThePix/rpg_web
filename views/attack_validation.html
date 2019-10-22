@@ -1,0 +1,54 @@
+<script>
+  function validate() {
+    const names = $('input[name="chars"]').val().split(' ')
+    const chars = []
+    const errors = []
+    let primaryCount = 0
+    let secondaryCount = 0
+    for (let i = 0; i < names.length; i++) {
+      const d = {name: names[i]}
+      if ($('input[name=' + names[i] + '_pri]').prop("checked")) {
+        d.primary = true
+        primaryCount++
+        if ($('input[name=' + names[i] + '_roll]').val().length === 0) errors.push("No roll for " + names[i])
+      }
+      if ($('input[name=' + names[i] + '_sec]').prop("checked")) {
+        d.secondary = true
+        secondaryCount++
+      }
+      chars.push(d)
+    }
+    if (primaryCount > parseInt($('input[name=primaryMax]').val())) {
+      errors.push("Too many primary targets selected (maximum is " + $('input[name=primaryMax]').val() + ")")
+    }
+    if (primaryCount < parseInt($('input[name=primaryMin]').val())) {
+      errors.push("Too few primary targets selected (minimum is " + $('input[name=primaryMin]').val() + ")")
+    }
+    if (secondaryCount > parseInt($('input[name=secondaryMax]').val())) {
+      errors.push("Too many secondary targets selected (maximum is " + $('input[name=secondaryMax]').val() + ")")
+    }
+    if (secondaryCount < parseInt($('input[name=secondaryMax]').val())) {
+      errors.push("Too few secondary targets selected (minimum is " + $('input[name=secondaryMin]').val() + ")")
+    }
+    
+    if (errors.length > 0) {
+      flagErrors(errors)
+      return false
+    }
+    
+    $('#errors').hide()
+    return true
+  }
+  
+  function flagErrors(ary) {
+    $('body').css('background-color', 'red')
+    //const html = document.getElementById('errors')
+    $('#errors').show()
+    $('#errors').html("<i>Errors prevented this form being submitted:</i><br/>" + ary.join('<br/>'))
+    setTimeout(function(){ $('body').css('background-color', 'white'); }, 30);
+    setTimeout(function(){ $('body').css('background-color', 'red'); }, 100);
+    setTimeout(function(){ $('body').css('background-color', 'white'); }, 130);
+  }  
+  
+  
+</script>

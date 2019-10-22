@@ -23,7 +23,7 @@ const requestTime = function (req, res, next) {
   next()
 }
 
-
+// a character can be given an afterTurn5 attribute, for example, to have something happen when it gets to turn 5.
 class Char {
   constructor(data) {
     for (let key in data) this[key] = data[key]
@@ -78,27 +78,49 @@ class Char {
 // one target
 // multiple targets
 // one primary target and multiple secondary targets
+// each attack on a primary target gets its own roll
+// all attacks on secondary targets use the same roll
+//
+// primaryMax: max number of primary targets
+// secondaryNo: max number of secondary targets
+// bonus: attack bonus
+// damage
+// ignoresArmour
+// primary: The primary attack
+// secondary: The secondary attack
+
 class Attack {
   constructor(data) {
     for (let key in data) this[key] = data[key]
+    if (this.primaryMax === undefined) this.primaryMax = 1
+    if (this.secondaryMax === undefined) this.secondaryMax = 0
+    if (this.primaryMin === undefined) this.primaryMin = 1
+    if (this.secondaryMin === undefined) this.secondaryMin = 0
+    if (this.bonus === undefined) this.bonus = 0
   }
 
 }
 
 
-// A char may have moree than one place in the list
+// A char may have more than one place in the list
 const chars = [
   new Char({
     name:"Lara", hits:45, next:'Kyle', pc:true, current:true,
     attacks:[
       new Attack({
-        targets:1, bonus:0, name:'Basic sword attack',
+        name:'Basic sword attack',
         primary:function(attacker, target, roll, bonus) {
           target.hits -= 5
           return attacker.alias() + " attacks " + target.alias() + " for 5 damage."
         }
       }),
-      new Attack({targets:'n', bonus:0, name:'Fireball'}),
+      new Attack({
+        primaryNo:999,name:'Fireball',
+        primary:function(attacker, target, roll, bonus) {
+          target.hits -= 5
+          return attacker.alias() + " attacks " + target.alias() + " for 5 damage."
+        }
+      }),
     ],
   }),
   new Char({name:"Cuddly", hits:35, next:'Hugs'}),

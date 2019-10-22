@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
   console.log(attack)
     console.log("Attacking...")
     handled = true
-    res.render('attack', { chars:chars, char:char, attack:attack, timestamp:req.timestamp });
+    res.render('attack', { chars:chars, char:char, attack:attack, charList:chars.map(el => el.name).join(' '), timestamp:req.timestamp });
   }
   if (!handled) {
     res.render('encounter', { chars:chars, char:char, attacks:char.attacks, timestamp:req.timestamp });
