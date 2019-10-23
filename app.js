@@ -23,16 +23,30 @@ const requestTime = function (req, res, next) {
   next()
 }
 
+
+const DEFAULT_CHAR = {
+  turnCount:0,
+  will:0,
+  reflex:0,
+  stamina:0,
+  none:0,
+  hits:20,
+  shield:0,
+  armour:0,
+  pc:false,
+  current:false,
+  name:false,
+  display:false,
+  link:false,
+  next:false,
+  attacks:[],
+}
+
 // a character can be given an afterTurn5 attribute, for example, to have something happen when it gets to turn 5.
 class Char {
-  constructor(data) {
-    for (let key in data) this[key] = data[key]
+  constructor(data, attacks) {
+    for (let key in DEFAULT_CHAR) this[key] = data[key] || DEFAULT_CHAR[key]
     if (this.maxHits === undefined) this.maxHits = this.hits
-    this.turnCount = 0
-  }
-  
-  attack(target, roll, bonus) {
-    
   }
   
   delay(chars) {
@@ -84,55 +98,87 @@ class Char {
 // primaryMax: max number of primary targets
 // secondaryNo: max number of secondary targets
 // bonus: attack bonus
-// damage
-// ignoresArmour
-// primary: The primary attack
-// secondary: The secondary attack
+// primaryDamage
+// secondaryDamage
+// resistanceType: stamina, reflex, will, none
+// primaryResolve: The primary attack success of fail
+// secondaryResolve: The secondary attack success of fail
+// rollForSecondary: The secondary attack requires a dice roll (and may have a bonus)
+
+
+const DEFAULT_ATTACK = {
+  primaryMax:1,
+  secondaryMax:0,
+  primaryMin:0,
+  secondaryMin:0,
+  bonus:0,
+  primaryDamage:'d4',
+  secondaryDamage:'-',
+  primaryResolve:false,
+  secondaryResolve:false,
+  rollForSecondary:true,
+  resist:'reflex'
+}
+
 
 class Attack {
-  constructor(data) {
-    for (let key in data) this[key] = data[key]
-    if (this.primaryMax === undefined) this.primaryMax = 1
-    if (this.secondaryMax === undefined) this.secondaryMax = 0
-    if (this.primaryMin === undefined) this.primaryMin = 1
-    if (this.secondaryMin === undefined) this.secondaryMin = 0
-    if (this.bonus === undefined) this.bonus = 0
+  constructor(name, data) {
+    this.name = name
+    for (let key in DEFAULT_ATTACK) this[key] = data[key] || DEFAULT_ATTACK[key]
   }
 
 }
 
+class WeaponAttack extends Attack {
+  constructor(name, skill) {
+    super(name, {})
+    this.weapon = WEAPONS.find(el => el.name === name)
+    if (this.weapon === undefined) throw "Unknown weapon: " + name
+    this.primaryDamage = this.weapon.damage
+    this.bonus = skill
+  }
+
+}
+    
+
+const WEAPONS = [
+  {name:"Unarmed", damage:"d4", atts:"mX"},
+  {name:"Broad sword", damage:"3d6", atts:"m"},
+  {name:"Warhammer", damage:"2d10", atts:"mS"},
+]
+
+
 
 // A char may have more than one place in the list
 const chars = [
-  new Char({
-    name:"Lara", hits:45, next:'Kyle', pc:true, current:true,
-    attacks:[
-      new Attack({
-        name:'Basic sword attack',
-        primary:function(attacker, target, roll, bonus) {
-          target.hits -= 5
-          return attacker.alias() + " attacks " + target.alias() + " for 5 damage."
-        }
-      }),
-      new Attack({
-        primaryNo:999,name:'Fireball',
-        primary:function(attacker, target, roll, bonus) {
-          target.hits -= 5
-          return attacker.alias() + " attacks " + target.alias() + " for 5 damage."
-        }
-      }),
-    ],
-  }),
-  new Char({name:"Cuddly", hits:35, next:'Hugs'}),
-  new Char({name:"Hugs", hits:35, next:'Woofy'}),
-  new Char({name:"Kyle", hits:20, next:'Jon', pc:true,}),
-  new Char({name:"Jon", hits:35, next:'Cuddly', pc:true,}),
-  new Char({name:"Woofy", hits:35, next:'Arthur'}),
-  new Char({name:"Arthur", hits:35, next:'Woofy2'}),
-  new Char({name:"Woofy2", link:'Kyle', next:'Carmel',display:'Woofy'}),
-  new Char({name:"Carmel", hits:35, next:'Sandy', disabled:true, }),
-  new Char({name:"Sandy", hits:35, next:'Curly'}),
-  new Char({name:"Curly", hits:35, next:'Lara'}),
+  new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, attacks:[
+      new Attack("Fireball", {primaryMax:999}),
+      new Attack("Psych-ball", {secondaryMax:999, resist:"will", secondaryDamage:'d6'}),
+  ]}),
+  new Char({name:"Goblin1", hits:35, next:'Kyle', attacks:[
+      new WeaponAttack("Broad sword", 2),
+      new WeaponAttack("Unarmed", 2),
+  ]}),
+  new Char({name:"Kyle", hits:20, next:'Ogre', pc:true, attacks:[
+      new WeaponAttack("Broad sword", 2),
+      new WeaponAttack("Unarmed", 2),
+  ]}),
+  new Char({name:"Ogre", hits:35, next:'Serpent', attacks:[
+      new WeaponAttack("Warhammer", 2),
+      new WeaponAttack("Unarmed", 2),
+  ]}),
+  new Char({name:"Serpent", link:'Kyle', next:'Jon', attacks:[
+      new WeaponAttack("Unarmed", 5),
+  ]}),
+  new Char({name:"Jon", hits:35, next:'Goblin2', pc:true, attacks:[
+      new WeaponAttack("Warhammer", 2),
+      new WeaponAttack("Unarmed", 2),
+  ]}),
+  new Char({name:"Goblin2", hits:35, next:'Serpent_redux', disabled:true, attacks:[
+      new WeaponAttack("Broad sword", 2),
+      new WeaponAttack("Unarmed", 2),
+  ]}),
+  new Char({name:"Serpent_redux", link:'Kyle', next:'Lara',display:'Serpent'}, []),
 ]
 
 console.log(chars[3])

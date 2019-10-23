@@ -7,7 +7,7 @@ block content
 
   form(method="post" action="attack" onsubmit="return(validate())")
     table
-      if attack.secondaryNo > 0
+      if attack.secondaryNo > 0 && attack.rollForSecondary
         tbody
           tr
             th(colspan=3) Numbers for secondary attack
@@ -44,6 +44,7 @@ block content
     input(type="hidden" name="primaryMin" value=attack.primaryMin)
     input(type="hidden" name="secondaryMin" value=attack.secondaryMin)
     input(type="hidden" name="chars" value=charList)
+    input(type="hidden" name="stage" value="1")
     p Max = #{attack.primaryMax}
     button(type="submit") Attack
     a(onclick="validate()") Test

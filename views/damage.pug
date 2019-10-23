@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  p
+  h2 Current turn: #{char.alias()}
+  h3 Making attack: #{attack.name}
+
+  form(method="post" action="damage" onsubmit="return(validate())")
+    table
+      tbody
+        tr
+          th Targets
+          th Damage
+          th Result
+      tbody
+        each char in primarySuccess
+          tr
+            td #{char.alias()}
+            td #{attack.primaryDamage}
+            td
+              input(type='number' name=char.name+'_damage')
+      tbody
+        each char in primaryFailure
+          tr
+            td #{char.alias()}
+            td(colspan=2) Missed!
+
+      tbody
+        if secondarySuccess.length > 0
+          tr
+            td Secondary targets
+            td #{attack.secondaryDamage}
+            td
+              input(type='number' name='secondary_damage')
+        each char in secondarySuccess
+          tr
+            td #{char.alias()}
+              input(type="hidden" name=char.name+'_damage' value='*')
+            td
+            td
+      tbody
+        each char in secondaryFailure
+          tr
+            td #{char.alias()}
+            td(colspan=2) Missed!
+    input(type="hidden" name="name" value=char.name)
+    input(type="hidden" name="attack" value=attack.name)
+    input(type="hidden" name="stage" value="2")
+    input(type="hidden" name="sec_damage" value=(secondarySuccess.length > 0))
+    if primarySuccess.length > 0 ||secondarySuccess.length > 0
+      button(type="submit") Attack
+      a(onclick="validate()") Test
+    else
+      a(href='/encounter') Encounter
+
+  div(id="errors" class="errors")
+
+  include damage_validation.html
