@@ -3,13 +3,12 @@ extends layout
 block content
   p
   table(class='big')
-    tr
-      td(class='big top')= chars[0].alias()
-      td(class='big top')= chars[0].status()
-    tr
-      td(class='big next')= chars[1].alias()
-      td(class='big next')= chars[1].status()
+    - let char = chars[0]
+    - let style = 'big top'
+    include char_row
+    - char = chars[1]
+    - style = 'big next'
+    include char_row
     each char in chars.slice(2)
-      tr
-        td(class='big')= char.alias()
-        td(class='big')= char.status()
+      - style = 'big'
+      include char_row

@@ -9,6 +9,10 @@ For development, I also use nodemon, and the "go" later assumes it is present
 
 npm install -g nodemon
 
+For favicon I used:
+
+npm install serve-favicon
+
 You do not need to do these, but are noted here because this is how the project was created.
 
 npm install express-generator -g

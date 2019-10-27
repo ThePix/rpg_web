@@ -9,4 +9,8 @@ block content
     each field in fields
       tr
         td #{field.display}
-        td #{char[field.name]}
+        td 
+          if field.type === 'bool'
+            =char[field.name] ? 'Yes' : 'No'
+          else
+            =char[field.name]
