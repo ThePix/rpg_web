@@ -50,7 +50,7 @@ const [Char] = require('./models/char.js')
 const chars = [
   new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, attacks:[
       new Attack("Fireball", {primaryMax:999}),
-      new Attack("Psych-ball", {secondaryMax:999, resist:"will", secondaryDamage:'d6'}),
+      new Attack("Psych-ball", {secondaryMax:999, resist:"will", secondaryDamage:'d6', notes:'Danger!'}),
   ]}),
   new Char({name:"Goblin1", hits:35, next:'Kyle', stunned:true, attacks:[
       new WeaponAttack("Broad sword", 2),

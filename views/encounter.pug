@@ -3,11 +3,13 @@ extends layout
 block content
   p
   h2 Current turn: #{char.alias()}
+  p Effects: #{char.statusReport()}
   if attacks
     ul
       each attack in attacks
         li
           a(href='/encounter?attack=' + attack.name) #{attack.name}
+          |  #{attack.notes}
   else
     p No attacks available
         
@@ -30,6 +32,6 @@ block content
 
   p Other character acting
   ul
-    each char in chars
+    each c in chars.filter(el => !el.link && el !== char)
       li
-        a(href='/encounter?char=' + char.name) #{char.alias()}
+        a(href='/encounter?char=' + c.name) #{c.alias()}

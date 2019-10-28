@@ -28,7 +28,8 @@ const DEFAULT_ATTACK = {
   primaryResolve:false,
   secondaryResolve:false,
   rollForSecondary:true,
-  resist:'reflex'
+  resist:'reflex',
+  notes:'',
 }
 
 

@@ -51,7 +51,7 @@ class Char {
       'shocked',
       'frozen',
       'onFire',
-      'linked',
+      'link',
     ]
   }
 
@@ -92,10 +92,21 @@ class Char {
       console.log(Char.statusFields()[i])
       console.log(this[Char.statusFields()[i]])
       if (this[Char.statusFields()[i]]) {
+        console.log("yes")
         s += '<img src="images/' + Char.statusFields()[i] + '.png" width="32" height="32" />'
       }
     }
     return s
+  }
+  
+  statusReport() {
+    const l = []
+    for (let i = 0; i < Char.statusFields().length; i++) {
+      if (this[Char.statusFields()[i]]) {
+        l.push(Char.statusFields()[i])
+      }
+    }
+    return l.join("; ")
   }
   
   alias() {

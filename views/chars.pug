@@ -1,14 +1,20 @@
 extends layout
 
+mixin row(char, style)
+  tr
+    td(class=style)
+      if char.pc
+        b
+          i= char.alias()
+      else
+        = char.alias()
+    td(class=style)
+      div !{char.status()}
+
 block content
   p
   table(class='big')
-    - let char = chars[0]
-    - let style = 'big top'
-    include char_row
-    - char = chars[1]
-    - style = 'big next'
-    include char_row
+    +row(chars[0], 'big top')
+    +row(chars[1], 'big next')
     each char in chars.slice(2)
-      - style = 'big'
-      include char_row
+      +row(char, 'big')
