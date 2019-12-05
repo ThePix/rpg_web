@@ -1,15 +1,22 @@
 extends layout
 
 block content
-  p
+  h3 Welcome!
+  p The Pixie Encounter Tool is a multi-component system for running RPG games. Ideally, each player will have their chracter displayed on a tablet or smart phone, whilst the summary can be seen by everyone, displayed on a monitor or TV screen. Once these are set up, you  can just leave them; they will update automatically (every 20 seconds).
+  p The GM should go to the Encounter page on a laptop or desktop computer, and control everything from there.
+  hr
   p If you are a player, please click on your character name to see your character status page
   table
     each char in chars
       tr
         td
           a(href='/chars?name=' + char.name) #{char.alias()}
+  hr
+  p If this is screen for everyone to watch, please click on this link:
   p
     a(href='/chars') Character summary
+  hr
+  p If you are the GM, click this link on your computer.
   p
     a(href='/encounter') Encounter
-    | (GM only)
+    |    (GM only)
