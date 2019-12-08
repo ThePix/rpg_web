@@ -2,29 +2,29 @@
 
 /
 
-Home page
-
-/chars?name=Mary
-
-Display the current state of the character
-Players should refresh when it changes (button on page)
+Home page, links to others
 
 /chars
 
 Display a brief overview of the all characters (dead, stunned, elemental states, hit summary) in order
 Refreshes every 10 seconds
 
+/chars?name=Mary
+
+Display the current state of the character
+Players should refresh when it changes (button on page)
+
 /master
 
-Select an encounter
+Select an encounter (TODO)
 
 /setup
 
-Get init for each PC (NPCs default to 10)
+Get init for each PC (NPCs default to 10) (TODO)
 
 /setupresponse
 
-Collects inits, forwards to encounter (via button?)
+Collects inits, forwards to encounter (via button?) (TODO)
 
 /encounter
 

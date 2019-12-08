@@ -19,8 +19,9 @@
 
 const DEFAULT_ATTACK = {
   primaryMax:1,
+  primaryMin:1,
   secondaryMax:0,
-  primaryMin:0,
+  secondaryMin:0,
   secondaryMin:0,
   bonus:0,
   primaryDamage:'d4',
@@ -73,7 +74,6 @@ class Attack {
     this.name = name
     for (let key in DEFAULT_ATTACK) this[key] = data[key] || DEFAULT_ATTACK[key]
   }
-
 }
 
 
@@ -85,7 +85,6 @@ class WeaponAttack extends Attack {
     this.primaryDamage = this.weapon.damage
     this.bonus = skill
   }
-
 }
 module.exports = [Attack, WeaponAttack]
 

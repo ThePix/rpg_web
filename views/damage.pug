@@ -2,10 +2,10 @@ extends layout
 
 block content
   p
-  h2 Current turn: #{char.alias()}
+  h2 Character: #{char.alias()}
   h3 Making attack: #{attack.name}
 
-  form(method="post" action="damage" onsubmit="return(validate())")
+  form(method="post" action="/damage" onsubmit="return(validate())")
     table
       tbody
         tr
@@ -18,7 +18,7 @@ block content
             td #{char.alias()}
             td #{attack.primaryDamage}
             td
-              input(type='number' name=char.name+'_damage')
+              input(type='number' name=char.name+'_damage' class="damage_input")
       tbody
         each char in primaryFailure
           tr
@@ -27,6 +27,7 @@ block content
 
       tbody
         if secondarySuccess.length > 0
+          tr
           tr
             td Secondary targets
             td #{attack.secondaryDamage}
@@ -45,10 +46,11 @@ block content
             td(colspan=2) Missed!
     input(type="hidden" name="name" value=char.name)
     input(type="hidden" name="attack" value=attack.name)
-    input(type="hidden" name="stage" value="2")
     input(type="hidden" name="sec_damage" value=(secondarySuccess.length > 0))
-    if primarySuccess.length > 0 ||secondarySuccess.length > 0
+    br
+    if primarySuccess.length > 0 || secondarySuccess.length > 0
       button(type="submit") Attack
+      | 
       a(onclick="validate()") Test
     else
       a(href='/encounter') Encounter

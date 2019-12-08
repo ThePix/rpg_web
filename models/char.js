@@ -60,9 +60,9 @@ class Char {
     oneBefore.next = this.next
     console.log(oneBefore.name)
 
-    let oneAfter
+    let oneAfter = this
     do {
-      oneAfter = chars.find(el => el.name === this.next)
+      oneAfter = chars.find(el => el.name === oneAfter.next)
     } while (oneAfter.disabled)
     oneAfter.current = true
   
@@ -71,28 +71,31 @@ class Char {
   
     oneAfter.next = this.name
     console.log(oneAfter.name)
+    return oneBefore
   }
   
   nextChar(chars) {
-    let char
+    let char = this
     do {
-      char = chars.find(el => el.name === this.next)
+      char = chars.find(el => el.name === char.next)
       char.current = true
       this.current = false
+      console.log("now: " + char.name)
     } while (char.disabled)
     this.turnCount++
     if (this['afterTurn' + this.turnCount]) this['afterTurn' + this.turnCount]()
+    return char 
   }
   
   status() {
-    console.log(this.name)
-    console.log(Char.statusFields().length)
+    //console.log(this.name)
+    //console.log(Char.statusFields().length)
     let s = ''
     for (let i = 0; i < Char.statusFields().length; i++) {
-      console.log(Char.statusFields()[i])
-      console.log(this[Char.statusFields()[i]])
+      //console.log(Char.statusFields()[i])
+      //console.log(this[Char.statusFields()[i]])
       if (this[Char.statusFields()[i]]) {
-        console.log("yes")
+        //console.log("yes")
         s += '<img src="images/' + Char.statusFields()[i] + '.png" width="32" height="32" />'
       }
     }

@@ -1,5 +1,6 @@
 <script>
   function validate() {
+    console.log("Validating attack...")
     const names = $('input[name="chars"]').val().split(' ')
     const chars = []
     const errors = []
@@ -7,6 +8,7 @@
     let secondaryCount = 0
     for (let i = 0; i < names.length; i++) {
       const d = {name: names[i]}
+      console.log("checking: " + names[i])
       if ($('input[name=' + names[i] + '_pri]').prop("checked")) {
         d.primary = true
         primaryCount++
@@ -18,6 +20,10 @@
       }
       chars.push(d)
     }
+    console.log(primaryCount)
+    console.log(parseInt($('input[name=primaryMax]').val()))
+    console.log(parseInt($('input[name=primaryMin]').val()))
+    console.log(secondaryCount)
     if (primaryCount > parseInt($('input[name=primaryMax]').val())) {
       errors.push("Too many primary targets selected (maximum is " + $('input[name=primaryMax]').val() + ")")
     }
@@ -27,7 +33,7 @@
     if (secondaryCount > parseInt($('input[name=secondaryMax]').val())) {
       errors.push("Too many secondary targets selected (maximum is " + $('input[name=secondaryMax]').val() + ")")
     }
-    if (secondaryCount < parseInt($('input[name=secondaryMax]').val())) {
+    if (secondaryCount < parseInt($('input[name=secondaryMin]').val())) {
       errors.push("Too few secondary targets selected (minimum is " + $('input[name=secondaryMin]').val() + ")")
     }
     
@@ -37,6 +43,7 @@
     }
     
     $('#errors').hide()
+    console.log("...Validated")
     return true
   }
   

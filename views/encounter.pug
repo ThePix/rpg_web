@@ -1,37 +1,57 @@
 extends layout
 
 block content
-  p
-  h2 Current turn: #{char.alias()}
-  p Effects: #{char.statusReport()}
-  if attacks
-    ul
-      each attack in attacks
-        li
-          a(href='/encounter?attack=' + attack.name) #{attack.name}
-          |  #{attack.notes}
-  else
-    p No attacks available
+  table(width="90%")
+    tr
+      td(width="50%")
+        h2 Info
+        p Current character:
+          i  #{char.alias()}
+        p Effects:
+          i  #{char.statusReport()}
         
-  p Other actions
-  
-  form(method="post" action="encounter" class="inline")
-    input(type="hidden" name="action" value="delay")
-    button(type="submit" name="submit_param" value="submit_value" class="link-button") Delay
- 
-  form(method="post" action="encounter" class="inline")
-    input(type="hidden" name="action" value="Next")
-    button(type="submit" name="submit_param" value="submit_value" class="link-button") Next
- 
-  form(method="get" action="encounter" class="inline")
-    input(type="hidden" name="action" value="edit")
-    button(type="submit" name="submit_param" value="submit_value" class="link-button") Edit
- 
-  
-  hr
+        hr
+        
+        h2 Current character non-attack options
+        ul
+          li
+            a(href="/encounter/action?action=delay") Delay
+          li
+            a(href="/encounter/action?action=next") Next
+          li
+            a(href="/encounter/action?action=edit") Edit
+          li
+            a(href="/encounter/action?action=refresh") Refresh
+        
+        hr
 
-  p Other character acting
-  ul
-    each c in chars.filter(el => !el.link && el !== char)
-      li
-        a(href='/encounter?char=' + c.name) #{c.alias()}
+        h2 Current character attacks
+        if attacks
+          ul
+            each attack in attacks
+              li
+                a(href='/encounter/attack?attack=' + attack.name + '&char=' + char.name) #{attack.name}
+                |  #{attack.notes}
+        else
+          p No attacks available
+              
+        hr
+        
+        h2 Other characters
+        ul
+          each c in chars.filter(el => !el.link && el !== char)
+            li
+              a(href='/encounter/char?char=' + c.name) #{c.alias()}
+      td
+        ul
+          each char in chars
+            if !char.link
+              li
+                if char.disabled
+                  =char.name
+                else
+                  b #{char.name} 
+                  | #{char.hits}/#{char.maxHits}
+                  - const status = char.statusReport()
+                  if status.length > 0
+                    |(#{char.statusReport()})
