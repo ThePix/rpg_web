@@ -1,5 +1,5 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin:0px;
 }
 
@@ -41,6 +41,25 @@ td {
   background-color: silver;
   text-align:center;
 }
+
+td.dead {
+  text-align:left;
+  color:#333;
+}  
+
+td.active {
+  text-align:left;
+}  
+
+td.focus {
+  text-align:left;
+  color:#333;
+}  
+
+td.left {
+  text-align:left;
+}  
+
 
 td.big {
   padding: 10px;

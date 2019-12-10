@@ -71,7 +71,7 @@ class Char {
   
     oneAfter.next = this.name
     console.log(oneAfter.name)
-    return oneBefore
+    return oneAfter
   }
   
   nextChar(chars) {

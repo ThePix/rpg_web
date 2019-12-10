@@ -111,7 +111,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(PORT)
-console.log("Listening on post " + PORT)
+console.log("[96mListening on post " + PORT + "[0m")
 
 module.exports = app;
 

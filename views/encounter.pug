@@ -1,31 +1,31 @@
 extends layout
 
 block content
-  table(width="90%")
-    tr
-      td(width="50%")
+  table(width="800px" height="800px")
+    tr(height="80px")
+      td(colspan="2")
         h2 Info
         p Current character:
-          i  #{char.alias()}
-        p Effects:
-          i  #{char.statusReport()}
+          i #{current.alias()}
         
-        hr
-        
-        h2 Current character non-attack options
+    tr
+      td(width="50%" style="vertical-align:top;")
+        h2 Focus: #{char.alias()}
+        h3 Non-attack options
         ul
+          if char === current
+            li
+              a(href="/encounter/action?action=delay&char=" + char.name) Delay
+            li
+              a(href="/encounter/action?action=next&char=" + char.name) Next
           li
-            a(href="/encounter/action?action=delay") Delay
+            a(href="/encounter/action?action=edit&char=" + char.name) Edit
           li
-            a(href="/encounter/action?action=next") Next
-          li
-            a(href="/encounter/action?action=edit") Edit
-          li
-            a(href="/encounter/action?action=refresh") Refresh
+            a(href="/encounter/action?action=refresh&char=" + char.name) Refresh
         
         hr
 
-        h2 Current character attacks
+        h2 Attacks
         if attacks
           ul
             each attack in attacks
@@ -35,23 +35,24 @@ block content
         else
           p No attacks available
               
-        hr
-        
-        h2 Other characters
-        ul
-          each c in chars.filter(el => !el.link && el !== char)
-            li
-              a(href='/encounter/char?char=' + c.name) #{c.alias()}
-      td
-        ul
-          each char in chars
-            if !char.link
-              li
-                if char.disabled
-                  =char.name
+      td(style="vertical-align:top;")
+        table(width="90%")
+          each chr in chars
+            if !chr.link
+              tr
+                if chr.disabled
+                  td(colspan="3" class="dead")
+                    =chr.name
                 else
-                  b #{char.name} 
-                  | #{char.hits}/#{char.maxHits}
-                  - const status = char.statusReport()
-                  if status.length > 0
-                    |(#{char.statusReport()})
+                  if (chr.name === char.name || chr.name === char.link)
+                    td(class="focus" width="35%")
+                      b #{chr.name}
+                  else
+                    td(class="active" width="35%")
+                      a(href="/encounter?focus=" + chr.name)
+                        b #{chr.name}
+                  td(width="15%") #{chr.hits}/#{chr.maxHits}
+                  - const status = chr.statusReport()
+                  td(class="left" width="50%")
+                    if status.length > 0
+                      |(#{chr.statusReport()})

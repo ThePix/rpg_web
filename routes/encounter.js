@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
+
+const log = function(s) {
+  console.log("[93m" + s + "[0m")
+}
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  console.log("*** ENCOUNTER GET ***")
+  log("*** ENCOUNTER GET ***")
   const chars = req.app.get('chars');
   const char = chars.find(el => el.current)
   console.log("char: " + char.name)
-  res.render('encounter', { chars:chars, char:char, attacks:char.attacks, timestamp:req.timestamp });
+  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
 });
 
 
@@ -16,7 +21,7 @@ router.get('/action', function(req, res, next) {
   console.log("*** ENCOUNTER GET/ACTION ***")
   const chars = req.app.get('chars');
   console.log("chars: " + chars.length)
-  let char = chars.find(el => el.current)
+  let char = chars.find(el => el.name === req.query.char)
   console.log("char: " + req.query.char)
   //let char = chars.find(el => el.name === req.query.char)
   console.log("char: " + char.name)
@@ -36,7 +41,7 @@ router.get('/action', function(req, res, next) {
     char = char.nextChar(chars)
   }
   if (!handled) {
-    res.render('encounter', { chars:chars, char:char, attacks:char.attacks, timestamp:req.timestamp });
+    res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
   }
 });
 
