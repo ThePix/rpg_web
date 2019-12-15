@@ -83,25 +83,22 @@ router.get('/attack', function(req, res, next) {
 
 
 
-/*
-router.post('/', function(req, res, next) {
+
+router.post('/edit', function(req, res, next) {
   console.log("*** ENCOUNTER POST ***")
-  console.log(req.query)
+  //console.log(req.query)
   console.log(req.body)
   const chars = req.app.get('chars');
-  let char = chars.find(el => el.current)
-  if (req.body.action) {
-    if (req.body.action === "delay") {
-      char.delay(chars)
-    }
-    else {
-      char.nextChar(chars)
-    }
-    char = chars.find(el => el.current)
-  }
-  res.render('encounter', { chars:chars, char:char, attacks:char.attacks, timestamp:req.timestamp });
+  const current = chars.find(el => el.current)
+  const char = chars.find(el => el.name)
+  
+  char.maxHits = parseInt(req.body.maxHits)
+  char.hits = parseInt(req.body.hits)
+  char.pp = parseInt(req.body.pp)
+
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 });
-*/
+
 
 
 module.exports = router;
