@@ -17,6 +17,19 @@ router.get('/', function(req, res, next) {
 
 
 
+router.get('/focus', function(req, res, next) {
+  console.log("*** ENCOUNTER GET/FOCUS ***")
+  const chars = req.app.get('chars');
+  console.log("chars: " + chars.length)
+  const current = chars.find(el => el.current)
+  const char = chars.find(el => el.name === req.query.char)
+  console.log("char: " + req.query.char)
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+});
+
+
+
+
 router.get('/action', function(req, res, next) {
   console.log("*** ENCOUNTER GET/ACTION ***")
   const chars = req.app.get('chars');

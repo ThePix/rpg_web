@@ -5,12 +5,15 @@ block content
     tr(height="80px")
       td(colspan="2")
         h2 Info
-        p Current character:
+        h3 Current character:
           i #{current.alias()}
         
     tr
       td(width="50%" style="vertical-align:top;")
         h2 Focus: #{char.alias()}
+        
+        hr
+        
         h3 Non-attack options
         ul
           if char === current
@@ -18,6 +21,9 @@ block content
               a(href="/encounter/action?action=delay&char=" + char.name) Delay
             li
               a(href="/encounter/action?action=next&char=" + char.name) Next
+          else
+            li Delay
+            li Next
           li
             a(href="/encounter/action?action=edit&char=" + char.name) Edit
           li
@@ -25,7 +31,7 @@ block content
         
         hr
 
-        h2 Attacks
+        h3 Attacks
         if attacks
           ul
             each attack in attacks
@@ -41,15 +47,18 @@ block content
             if !chr.link
               tr
                 if chr.disabled
-                  td(colspan="3" class="dead")
-                    =chr.name
+                  td(class="dead")
+                    a(href="/encounter/focus?char=" + chr.name)
+                      =chr.name
+                  td --/--
+                  td
                 else
                   if (chr.name === char.name || chr.name === char.link)
                     td(class="focus" width="35%")
                       b #{chr.name}
                   else
                     td(class="active" width="35%")
-                      a(href="/encounter?focus=" + chr.name)
+                      a(href="/encounter/focus?char=" + chr.name)
                         b #{chr.name}
                   td(width="15%") #{chr.hits}/#{chr.maxHits}
                   - const status = chr.statusReport()
