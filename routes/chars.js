@@ -4,13 +4,14 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
+  const refresh = req.app.get('refresh');
   if (req.query.name) {
     const char = chars.find(el => el.name === req.query.name)
     if (char) {
-      res.render('char', { char: char, fields: req.app.get('fields'), timestamp:req.timestamp, refresh:true });
+      res.render('char', { char: char, fields: req.app.get('fields'), timestamp:req.timestamp, refresh:refresh });
     }
     else {
-      res.render('nochar', { name: req.query.name, timestamp:req.timestamp, refresh:true });
+      res.render('nochar', { name: req.query.name, timestamp:req.timestamp, refresh:refresh });
     }
   }
   else {
@@ -25,7 +26,7 @@ router.get('/', function(req, res, next) {
         partList.push(c)
       }
     }
-    res.render('chars', { chars:partList, timestamp:req.timestamp, refresh:true });
+    res.render('chars', { chars:partList, timestamp:req.timestamp, refresh:refresh });
   }
 });
 

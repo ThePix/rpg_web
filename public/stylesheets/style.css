@@ -80,7 +80,7 @@ td.next {
 }
 
 input[type=number]{
-    width: 40px;
+  width: 40px;
 }
 
 .errors {
@@ -89,4 +89,8 @@ input[type=number]{
   padding: 2px;
   margin:50px;
   display:none;
+}
+
+li {
+  text-align:left;
 }

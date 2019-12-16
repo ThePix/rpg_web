@@ -35,8 +35,8 @@ class Char {
   
   static fields() {
     return [
-      { name:'maxHits', type:'int', display:"Hits",},
-      { name:'hits', type:'int', display:"Max. hits"},
+      { name:'hits', type:'int', display:"Hits",},
+      { name:'maxHits', type:'int', display:"Max. hits"},
       { name:'pp', type:'int', display:"Power points"},
       { name:'stunned', type:'bool', display:"Stunned"},
     ]

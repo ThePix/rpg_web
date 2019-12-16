@@ -1,6 +1,7 @@
 "use strict";
 
 const PORT = 8091
+const REFRESH = 60
 
 //const createError = require('http-errors');
 const express = require('express');
@@ -47,6 +48,8 @@ const [ Attack, WeaponAttack ] = require('./models/attack.js')
 
 const [Char] = require('./models/char.js')
 
+
+
 // A char may have more than one place in the list
 const chars = [
   new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, attacks:[
@@ -81,6 +84,7 @@ const chars = [
 
 console.log("Loaded " + chars.length + " characters.")
 
+app.set('refresh', REFRESH)
 app.set('chars', chars)
 app.set('fields', Char.fields())
 
