@@ -8,56 +8,49 @@ const log = function(s) {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  log("*** ENCOUNTER GET ***")
   const chars = req.app.get('chars');
   const char = chars.find(el => el.current)
-  console.log("char: " + char.name)
   res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
 });
 
-
-
 router.get('/focus', function(req, res, next) {
-  console.log("*** ENCOUNTER GET/FOCUS ***")
   const chars = req.app.get('chars');
-  console.log("chars: " + chars.length)
   const current = chars.find(el => el.current)
   const char = chars.find(el => el.name === req.query.char)
-  console.log("char: " + req.query.char)
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 });
 
-
-
-
-router.get('/action', function(req, res, next) {
-  console.log("*** ENCOUNTER GET/ACTION ***")
+router.get('/next', function(req, res, next) {
   const chars = req.app.get('chars');
-  console.log("chars: " + chars.length)
   let char = chars.find(el => el.name === req.query.char)
-  console.log("char: " + req.query.char)
-  //let char = chars.find(el => el.name === req.query.char)
-  console.log("char: " + char.name)
-  console.log("action: " + req.query.action)
-  let handled
-  if (req.query.action === "edit") {
-    console.log("Editing...")
-    handled = true
-    res.render('edit', { char:char, fields: req.app.get('fields'), timestamp:req.timestamp });
-  }
-  else if (req.query.action === "delay") {
-    console.log("Delaying...")
-    char = char.delay(chars)
-  }
-  else if (req.query.action === "next") {
-    console.log("Nexting...")
-    char = char.nextChar(chars)
-  }
-  if (!handled) {
-    res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
-  }
+  char = char.nextChar(chars)
+  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
 });
 
+router.get('/delay', function(req, res, next) {
+  const chars = req.app.get('chars');
+  let char = chars.find(el => el.name === req.query.char)
+  char = char.delay(chars)
+  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+});
+
+router.get('/refresh', function(req, res, next) {
+  const chars = req.app.get('chars');
+  const char = chars.find(el => el.name === req.query.char)
+  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+});
+
+router.get('/edit', function(req, res, next) {
+  const chars = req.app.get('chars');
+  const char = chars.find(el => el.name === req.query.char)
+  res.render('edit', { char:char, fields: req.app.get('fields'), timestamp:req.timestamp });
+});
+
+router.get('/add', function(req, res, next) {
+  //const chars = req.app.get('chars');
+  files = ['one', 'two'];
+  res.render('add', { files:files, timestamp:req.timestamp });
+});
 
 
 router.get('/attack', function(req, res, next) {
@@ -85,20 +78,30 @@ router.get('/attack', function(req, res, next) {
 
 
 router.post('/edit', function(req, res, next) {
-  console.log("*** ENCOUNTER POST ***")
-  //console.log(req.query)
-  console.log(req.body)
+  console.log("*** ENCOUNTER POST/EDIT ***")
   const chars = req.app.get('chars');
   const current = chars.find(el => el.current)
-  const char = chars.find(el => el.name)
-  
-  char.maxHits = parseInt(req.body.maxHits)
-  char.hits = parseInt(req.body.hits)
-  char.pp = parseInt(req.body.pp)
-
+  const char = chars.find(el => el.name === req.body.name)
+  for (let field of req.app.get('fields')) {
+    if (field.type === 'bool') char[field.name] = (req.body[field.name] === 'on')
+    if (field.type === 'int') char[field.name] = parseInt(req.body[field.name])
+    if (field.type === 'string') char[field.name] = req.body[field.name]
+  }
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 });
 
+router.post('/add', function(req, res, next) {
+  console.log("*** ENCOUNTER POST/ADD ***")
+  const chars = req.app.get('chars');
+  const current = chars.find(el => el.current)
+  const char = current
+  delete req.body.submit_param
+  console.log(req.body)
+  for (let file in req.body) {
+    console.log("Adding file: " + file)
+  }
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+});
 
 
 module.exports = router;

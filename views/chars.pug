@@ -9,7 +9,7 @@ mixin row(char, style)
       else
         = char.alias()
     td(class=style)
-      div !{char.status()}
+      div !{char.statusIcons()}
 
 block content
   p

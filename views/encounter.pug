@@ -1,55 +1,60 @@
 extends layout
 
 block content
-  table(width="800px" height="800px")
+  table(width="1200px" height="800px")
     tr(height="80px")
       td(colspan="2")
-        h2 Info
-        h3 Current character:
+        h2 Current character:
           i #{current.alias()}
+        p
+          a(href="/encounter/delay?char=" + char.name)
+            img(src="/images/button-delay.png" width="32" height="32")
+          |&nbsp;
+          a(href="/encounter/next?char=" + char.name)
+            img(src="/images/button-next.png" width="32" height="32")
+          |&nbsp;
+          a(href="/encounter/refresh?char=" + char.name)
+            img(src="/images/button-refresh.png" width="32" height="32")
+          |&nbsp;
+          a(href="/encounter/add")
+            img(src="/images/button-plus.png" width="32" height="32")
         
     tr
-      td(width="50%" style="vertical-align:top;")
-        h2 Focus: #{char.alias()}
-        
-        hr
-        
-        h3 Non-attack options
-        ul
-          if char === current
-            li
-              a(href="/encounter/action?action=delay&char=" + char.name) Delay
-            li
-              a(href="/encounter/action?action=next&char=" + char.name) Next
-          else
-            li Delay
-            li Next
-          li
-            a(href="/encounter/action?action=edit&char=" + char.name) Edit
-          li
-            a(href="/encounter/action?action=refresh&char=" + char.name) Refresh
+      td(width="30%" style="vertical-align:top;")
+        h2 Focus: 
+          i #{char.alias()}
         
         hr
 
         h3 Attacks
         if attacks
-          ul
+          table(width="100%" style="border:none")
             each attack in attacks
-              li
-                a(href='/encounter/attack?attack=' + attack.name + '&char=' + char.name) #{attack.name}
-                |  #{attack.notes}
+              tr
+                td(width="32")
+                  a(href='/encounter/attack?attack=' + attack.name + '&char=' + char.name)
+                    img(src="/images/button-" + attack.icon + ".png" width="32" height="32")
+                td
+                  b #{attack.name}
+                td #{attack.notes}
         else
           p No attacks available
               
       td(style="vertical-align:top;")
-        table(width="90%")
+        table(width="100%" style="border:none")
           each chr in chars
             if !chr.link
               tr
+                td(width="32")
+                  a(href="/encounter/focus?char=" + chr.name)
+                    img(src="/images/button-eye.png" width="32" height="32")
+                td(width="32")
+                  a(href="/encounter/edit?char=" + chr.name)
+                    img(src="/images/button-edit.png" width="32" height="32")
+                
                 if chr.disabled
                   td(class="dead")
-                    a(href="/encounter/focus?char=" + chr.name)
-                      =chr.name
+                    =chr.name
                   td --/--
                   td
                 else
@@ -58,8 +63,7 @@ block content
                       b #{chr.name}
                   else
                     td(class="active" width="35%")
-                      a(href="/encounter/focus?char=" + chr.name)
-                        b #{chr.name}
+                      b #{chr.name}
                   td(width="15%") #{chr.hits}/#{chr.maxHits}
                   - const status = chr.statusReport()
                   td(class="left" width="50%")

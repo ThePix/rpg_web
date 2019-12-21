@@ -31,6 +31,7 @@ const DEFAULT_ATTACK = {
   rollForSecondary:true,
   resist:'reflex',
   notes:'',
+  icon:'melee',
 }
 
 
@@ -84,6 +85,10 @@ class WeaponAttack extends Attack {
     if (this.weapon === undefined) throw "Unknown weapon: " + name
     this.primaryDamage = this.weapon.damage
     this.bonus = skill
+    const chr = this.weapon.atts.charAt(0)
+    if (chr === "f") this.icon = "gun"
+    if (chr === "r") this.icon = "bow"
+    if (this.weapon.name === 'Unarmed') this.icon = "unarmed"
   }
 }
 module.exports = [Attack, WeaponAttack]

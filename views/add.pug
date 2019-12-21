@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h2 Add file
+  p Files available:
+  form(method="post" action="add")
+    ul
+      for file in files
+        li
+          input(type='checkbox' name=file)
+          = file
+    p
+    button(type="submit" name="submit_param" value="submit_value" class="link-button") Submit

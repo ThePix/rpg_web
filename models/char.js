@@ -1,5 +1,5 @@
 
-const DEFAULT_CHAR = {
+const defaultChar = {
   turnCount:0,
   will:0,
   reflex:0,
@@ -20,16 +20,16 @@ const DEFAULT_CHAR = {
   dazed:false,
   dead:false,
   noMagic:false,
-  shocked:false,
+  //shocked:false,
   frozen:false,
-  onFire:false,
+  burning:false,
   attacks:[],
 }
 
 // a character can be given an afterTurn5 attribute, for example, to have something happen when it gets to turn 5.
 class Char {
   constructor(data, attacks) {
-    for (let key in DEFAULT_CHAR) this[key] = data[key] || DEFAULT_CHAR[key]
+    for (let key in defaultChar) this[key] = data[key] || defaultChar[key]
     if (this.maxHits === undefined) this.maxHits = this.hits
   }
   
@@ -38,19 +38,29 @@ class Char {
       { name:'hits', type:'int', display:"Hits",},
       { name:'maxHits', type:'int', display:"Max. hits"},
       { name:'pp', type:'int', display:"Power points"},
+      { name:'shield', type:'int', display:"Shield"},
+      { name:'armour', type:'int', display:"Armour"},
+      { name:'will', type:'int', display:"Will"},
+      { name:'reflex', type:'int', display:"Reflex"},
+      { name:'stamina', type:'int', display:"Stamina"},
+      { name:'none', type:'int', display:"None"},
       { name:'stunned', type:'bool', display:"Stunned"},
+      { name:'frozen', type:'bool', display:"Frozen"},
+      { name:'burning', type:'bool', display:"Burning"},
+      { name:'noMagic', type:'bool', display:"No magic"},
+      { name:'dead', type:'bool', display:"Dead"},
+      { name:'disabled', type:'bool', display:"Disabled"},
     ]
   }
   
   static statusFields() {
     return [
       'stunned',
-      'dazed',
-      'dead',
-      'noMagic',
-      'shocked',
       'frozen',
-      'onFire',
+      'burning',
+      'noMagic',
+      'dead',
+      'disabled',
       'link',
     ]
   }
@@ -87,7 +97,7 @@ class Char {
     return char 
   }
   
-  status() {
+  statusIcons() {
     //console.log(this.name)
     //console.log(Char.statusFields().length)
     let s = ''
