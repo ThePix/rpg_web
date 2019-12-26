@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h2 Set initiatives
+  form(method="post" action="/encounter/inits")
+    table(class='big')
+      for chr in chars
+        if typeof chr.init === "number"
+          tr
+            td
+              =chr.display
+            td
+              =chr.init
+            td
+              input(type="number" name=chr.name value="10")
+    p
+    button(type="submit" name="submit_param" value="submit_value" class="link-button") Submit

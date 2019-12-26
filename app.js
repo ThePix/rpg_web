@@ -1,7 +1,7 @@
 "use strict";
 
 const PORT = 8091
-const REFRESH = 60
+const REFRESH = 10
 
 //const createError = require('http-errors');
 const express = require('express');
@@ -52,7 +52,7 @@ const [Char] = require('./models/char.js')
 
 // A char may have more than one place in the list
 const chars = [
-  new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, attacks:[
+  new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, init:5, attacks:[
       new Attack("Fireball", {primaryMax:999, icon:'magic'}),
       new Attack("Psych-ball", {secondaryMax:999, resist:"will", secondaryDamage:'d6', notes:'Danger!', primaryMin:0, primaryMax:0, rollForSecondary:true, icon:'magic' }),
   ]}),
@@ -75,7 +75,7 @@ const chars = [
       new WeaponAttack("Warhammer", 2),
       new WeaponAttack("Unarmed", 2),
   ]}),
-  new Char({name:"Goblin2", hits:35, next:'Serpent_redux', disabled:true, attacks:[
+  new Char({name:"Goblin2", hits:35, next:'Serpent_redux', init:"Goblin1", attacks:[
       new WeaponAttack("Broad sword", 2),
       new WeaponAttack("Unarmed", 2),
   ]}),
@@ -98,10 +98,14 @@ app.use('/attack', attackRouter);
 app.use('/damage', damageRouter);
 
 // catch 404 and forward to error handler
-/*app.use(function(req, res, next) {
+app.use(function(req, res, next) {
   console.log("Error!!!")
-  next(createError(404, '404'));
-});*/
+  next(createError(req, res));
+});
+
+const createError = function(req, res) {
+  res.render('404', {});
+}
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -115,7 +119,8 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(PORT)
-console.log("[96mListening on post " + PORT + "[0m")
+const ip = require("ip");
+console.log("[96mGo to " + ip.address() + ":" + PORT + " to access the web site[0m")
 
 module.exports = app;
 

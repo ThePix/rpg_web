@@ -7,10 +7,11 @@ block content
       th Attribute
       th Value
     each field in fields
-      tr
-        td #{field.display}
-        td 
-          if field.type === 'bool'
-            =char[field.name] ? 'Yes' : 'No'
-          else
-            =char[field.name]
+      if field.display
+        tr
+          td #{field.display}
+          td 
+            if field.type === 'bool'
+              =char[field.name] ? 'Yes' : 'No'
+            else
+              =char[field.name]

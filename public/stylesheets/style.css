@@ -79,8 +79,20 @@ td.next {
   background-color: yellow;
 }
 
-input[type=number]{
+td.link {
+  color: #888;
+}
+
+input[type=number] {
   width: 40px;
+  font-size: 20px;
+}
+
+button {
+  font-size: 1.5em;
+  padding: 3px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .errors {

@@ -15,28 +15,41 @@ router.get('/', function(req, res, next) {
     }
   }
   else {
+    const first = chars.find(el => el.current)
+    if (!first) {
+      res.render('nochars', { timestamp:req.timestamp, refresh:refresh });
+      return
+    }
+    
+    let c = first
     const list = [];
+    do {
+      if (!c.disabled) list.push(c)
+      c = chars.find(el => el.name === c.next)
+    } while (c !== first)
+    res.render('chars', { chars:list, timestamp:req.timestamp, refresh:refresh });
+  }
+    
+    /*
     const partList = [];
     list.push(chars.find(el => el.current))
     partList.push(list[0])
     for (let i = 1; i < chars.length; i++) {
       const c = chars.find(el => el.name === list[i - 1].next)
+      if (!c) console.log("Failed to find next for 
       list.push(c)
       if (!c.disabled) {
         partList.push(c)
       }
     }
     res.render('chars', { chars:partList, timestamp:req.timestamp, refresh:refresh });
-  }
+  }*/
 });
 
 router.post('/', function(req, res, next) {
-  console.log("Editing " + req.body.name)
   const fields = req.app.get('fields')
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.body.name)
-  console.log(char)
-  console.log(req.body)
   for (let i = 0; i < fields.length; i++) {
     if (fields[i].type === 'int') {
       char[fields[i].name] = parseInt(req.body[fields[i].name])

@@ -6,11 +6,10 @@ block content
   p The GM should go to the Encounter page on a laptop or desktop computer, and control everything from there.
   hr
   p If you are a player, please click on your character name to see your character status page
-  table
-    each char in chars
-      tr
-        td
-          a(href='/chars?name=' + char.name) #{char.alias()}
+  each char in chars
+    ul
+      li
+        a(href='/chars?name=' + char.name) #{char.alias()}
   hr
   p If this is screen for everyone to watch, please click on this link:
   p

@@ -1,42 +1,36 @@
-
-const defaultChar = {
-  turnCount:0,
-  will:0,
-  reflex:0,
-  stamina:0,
-  none:0,
-  hits:20,
-  shield:0,
-  armour:0,
-  pp:0,
-  pc:false,
-  current:false,
-  name:false,
-  display:false,
-  link:false,
-  next:false,
-  disabled:false,
-  stunned:false,
-  dazed:false,
-  dead:false,
-  noMagic:false,
-  //shocked:false,
-  frozen:false,
-  burning:false,
-  attacks:[],
-}
-
 // a character can be given an afterTurn5 attribute, for example, to have something happen when it gets to turn 5.
 class Char {
-  constructor(data, attacks) {
-    for (let key in defaultChar) this[key] = data[key] || defaultChar[key]
-    if (this.maxHits === undefined) this.maxHits = this.hits
+  constructor(data) {
+    for (let field of Char.fields()) {
+      if (data[field.name]) {
+        this[field.name] = data[field.name]
+      }
+      else if (field.default) {
+        this[field.name] = field.default
+      }
+      else if (field.type === 'bool') {
+        this[field.name] = false
+      }
+      else if (field.type === 'int') {
+        this[field.name] = 0
+      }
+    }
+    
+    if (this.maxHits === undefined || this.maxHits == 0) this.maxHits = this.hits
+    if (this.display === undefined || this.display == '') this.display = this.name
+    this.attacks = data.attacks
   }
   
   static fields() {
     return [
-      { name:'hits', type:'int', display:"Hits",},
-      { name:'maxHits', type:'int', display:"Max. hits"},
+      { name:'name', type:'string', display:false},
+      { name:'display', type:'string', display:"Display name",},
+      { name:'link', type:'string', display:false,},
+      { name:'next', type:'string', display:false,},
+
+      { name:'turnCount', type:'int', display:false,},
+      { name:'hits', type:'int', display:"Hits", default:20},
+      { name:'maxHits', type:'int', display:"Max. hits", default:20},
       { name:'pp', type:'int', display:"Power points"},
       { name:'shield', type:'int', display:"Shield"},
       { name:'armour', type:'int', display:"Armour"},
@@ -44,6 +38,10 @@ class Char {
       { name:'reflex', type:'int', display:"Reflex"},
       { name:'stamina', type:'int', display:"Stamina"},
       { name:'none', type:'int', display:"None"},
+      { name:'init', type:'int', display:false},
+      
+      { name:'pc', type:'bool', display:false},
+      { name:'current', type:'bool', display:false},
       { name:'stunned', type:'bool', display:"Stunned"},
       { name:'frozen', type:'bool', display:"Frozen"},
       { name:'burning', type:'bool', display:"Burning"},
@@ -61,14 +59,12 @@ class Char {
       'noMagic',
       'dead',
       'disabled',
-      'link',
     ]
   }
 
   delay(chars) {
     const oneBefore = chars.find(el => el.next === this.name)
     oneBefore.next = this.next
-    console.log(oneBefore.name)
 
     let oneAfter = this
     do {
@@ -80,7 +76,6 @@ class Char {
     this.next = oneAfter.next
   
     oneAfter.next = this.name
-    console.log(oneAfter.name)
     return oneAfter
   }
   
@@ -90,7 +85,6 @@ class Char {
       char = chars.find(el => el.name === char.next)
       char.current = true
       this.current = false
-      console.log("now: " + char.name)
     } while (char.disabled)
     this.turnCount++
     if (this['afterTurn' + this.turnCount]) this['afterTurn' + this.turnCount]()

@@ -38,3 +38,8 @@ Act has the char miss a turn (i.e., the action is resolved outside the system)
 
 Attack needs a target, a roll, and a bonus
 Save target, bonus defaults to 0
+
+Add a custom character
+Add a stock monster
+Add a group
+  All these need a way (set of rules) for adding to the turn system

@@ -1,0 +1,16 @@
+extends layout
+
+mixin row(char, style)
+  tr
+    td(class=char.link ? style + ' link' : style)
+      if char.pc
+        b
+          i= char.alias()
+      else
+        = char.alias()
+    td(class=char.link ? style + ' link' : style)
+      div !{char.statusIcons()}
+
+block content
+  p
+  p Set initiatives for the order of play to be established.

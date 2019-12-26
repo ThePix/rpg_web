@@ -1,13 +1,17 @@
 extends layout
 
 block content
-  h2 Add file
-  p Files available:
+  h2 Add protagonists
+  p
+    =title
+  p NOTE: Will be in  entered into the turn sequence directly after #{char.display}
   form(method="post" action="add")
     ul
-      for file in files
+      for option in options
         li
-          input(type='checkbox' name=file)
-          = file
+          input(type='checkbox' name=option)
+          = option
     p
+    input(type="hidden" name="action" value=action)
+    input(type="hidden" name="name" value=char.name)
     button(type="submit" name="submit_param" value="submit_value" class="link-button") Submit

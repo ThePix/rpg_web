@@ -2,13 +2,13 @@ extends layout
 
 mixin row(char, style)
   tr
-    td(class=style)
+    td(class=char.link ? style + ' link' : style)
       if char.pc
         b
           i= char.alias()
       else
         = char.alias()
-    td(class=style)
+    td(class=char.link ? style + ' link' : style)
       div !{char.statusIcons()}
 
 block content
@@ -19,4 +19,4 @@ block content
     each char in chars.slice(2)
       +row(char, 'big')
   hr
-  p #[i Notes:] This summary indicates the order of play; whoever is in green at the top, it is their turn now. The next player, in yellow, should already be thinking about what he or she will do. Player characters are in bold.
+  p #[i Notes:] This summary indicates the order of play; whoever is in green at the top, it is their turn now. The next player, in yellow, should already be thinking about what he or she will do. Player characters are in bold; a character with a second or third place in the order is in grey.
