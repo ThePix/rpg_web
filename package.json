@@ -15,7 +15,8 @@
     "mongodb": "^3.3.5",
     "morgan": "~1.9.1",
     "pug": "^2.0.4",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "web-push": "^3.4.3"
   },
   "description": "To get this to work, you need to first install Node.js",
   "main": "app.js",

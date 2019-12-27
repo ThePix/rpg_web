@@ -5,13 +5,12 @@ block content
   p
     =title
   p NOTE: Will be in  entered into the turn sequence directly after #{char.display}
-  form(method="post" action="add")
+  form(method="post" action=action)
     ul
       for option in options
         li
           input(type='checkbox' name=option)
           = option
     p
-    input(type="hidden" name="action" value=action)
     input(type="hidden" name="name" value=char.name)
     button(type="submit" name="submit_param" value="submit_value" class="link-button") Submit

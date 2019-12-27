@@ -119,6 +119,15 @@ class Char {
   alias() {
     return this.display ? this.display : this.name
   }
+  
+  clone() {
+    const c = new Char({});
+    for (let field of Char.fields()) {
+      if (this[field.name]) c[field.name] = this[field.name];
+    }
+    c.name = "clone" + Math.random();
+    return c;
+  }
 }
 
 

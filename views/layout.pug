@@ -10,4 +10,7 @@ html
     h1 The Pixie Encounter Tool
     div(class='main')
       block content
-    footer Downloaded at #{timestamp}, copyright The Pixie 2019
+    if timestamp
+      footer Downloaded at #{timestamp}, copyright The Pixie 2019-20
+    if refresh
+      footer This page will update every #{refresh} seconds

@@ -63,9 +63,9 @@ router.get('/add-file', function(req, res, next) {
 
 router.get('/add-stock', function(req, res, next) {
   const chars = req.app.get('chars');
+  const stocks = req.app.get('stocks').map(el => el.display);
   const char = chars.find(el => el.name === req.query.char)
-  monsters = ['orc', 'goblin', 'zombie'];
-  res.render('add', { options:monsters, timestamp:req.timestamp, char:char, title:"Pick one or more stock characters to add", action:'add-stock' });
+  res.render('add', { options:stocks, timestamp:req.timestamp, char:char, title:"Pick one or more stock characters to add", action:'add-stock' });
 });
 
 router.get('/add-custom', function(req, res, next) {
@@ -122,6 +122,27 @@ router.post('/add', function(req, res, next) {
   //console.log(req.body)
   for (let file in req.body) {
     console.log("Adding " + action + " " + file + " after " + char.name)
+  }
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+});
+
+router.post('/add-stock', function(req, res, next) {
+  const chars = req.app.get('chars');
+  const stocks = req.app.get('stocks');
+  const current = chars.find(el => el.current)
+  const char = chars.find(el => el.name === req.body.name)
+  delete req.body.submit_param
+  delete req.body.name
+  //console.log(req.body)
+  let previous = char
+  for (let name in req.body) {
+    console.log("Adding stock " + name + " after " + char.name)
+    const chr = stocks.find(el => el.display === name)
+    const newchar = chr.clone()
+    newchar.next = previous.next
+    previous.next = newchar.name
+    previous = newchar
+    chars.push(newchar)
   }
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 });
