@@ -1,23 +1,41 @@
 extends layout
 
 block content
-  h2 Editing Attributes For #{char.display}
-  form(method="post" action="edit")
-    table
-      tr
-        th Attribute
-        th Value
-      each field in fields
-        if field.display
-          tr
-            td #{field.display}
-            td
-              if field.type === 'int'
-                input(type='number' name=field.name value=char[field.name])
-              else if field.type === 'bool'
-                input(type='checkbox' name=field.name checked=char[field.name])
-              else if field.type === 'string'
-                input(type='text' name=field.name value=char[field.name])
-    input(type="hidden" name="name" value=char.name)
-    p
-    button(type="submit" name="submit_param" value="submit_value" class="link-button") Update
+  h2 Attributes For #{char.display}
+  table(style="border:none")
+    tr
+      td(width="30%" style="background-color:white;")
+        form(method="post" action="edit")
+          table
+            tr
+              th Attribute
+              th Value
+            each field in fields
+              if field.display
+                tr
+                  td #{field.display}
+                  td
+                    if field.type === 'int'
+                      input(type='number' name=field.name value=char[field.name])
+                    else if field.type === 'bool'
+                      input(type='checkbox' name=field.name checked=char[field.name])
+                    else if field.type === 'string'
+                      input(type='text' name=field.name value=char[field.name])
+          input(type="hidden" name="name" value=char.name)
+          p
+          button(type="submit" name="submit_param" value="submit_value" class="link-button") Update
+        td(width="10%" style="background-color:white;")
+        td(width="60%" style="background-color:white;vertical-align:top")
+          if char.alerts
+            div(style="background-color:yellow;padding:5px;padding-top:0px;border:black thin solid")
+              div(style="font-size:1.5em;text-align:left;")
+                h4(style="text-align:center;") Alerts
+                each alert in char.alerts
+                  p #{alert}
+              p
+              form(method="post" action="clear-alerts")
+                input(type="hidden" name="name" value=char.name)
+                button(type="submit" name="submit_param" value="submit_value" class="link-button") Clear
+          else
+            h4 No alerts active
+            

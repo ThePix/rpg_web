@@ -6,9 +6,6 @@ const [Char] = require('./../models/char.js')
 
 
 
-const log = function(s) {
-  console.log("[93m" + s + "[0m")
-}
 
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
@@ -82,22 +79,16 @@ router.get('/add-custom', function(req, res, next) {
 });
 
 
-router.get('/attack', function(req, res, next) {
+
+
+
+router.post('/clear-alerts', function(req, res, next) {
   const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.char)
-  const attack = char.attacks.find(el => el.name === req.query.attack)
-  const handled = true
-  res.render('attack', { 
-    chars:chars.filter(el => !el.link),  // do not want extra places in attack sequence 
-    char:char,
-    attack:attack,
-    charList:chars.map(el => el.name).join(' '),
-    timestamp:req.timestamp
-  });
+  const current = chars.find(el => el.current)
+  const char = chars.find(el => el.name === req.body.name)
+  char.cancelAlerts()
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 });
-
-
-
 
 
 router.post('/edit', function(req, res, next) {

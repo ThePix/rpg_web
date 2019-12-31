@@ -41,8 +41,8 @@ block content
             each attack in attacks
               tr
                 td(width="32")
-                  a(href='/encounter/attack?attack=' + attack.name + '&char=' + char.name)
-                    img(src="/images/button-" + attack.icon + ".png" width="32" height="32" class="Go to thje attack page for this attack")
+                  a(href='/attack?attack=' + attack.name + '&char=' + char.name)
+                    img(src="/images/button-" + attack.icon + ".png" width="32" height="32" title="Go to the attack page for this attack")
                 td
                   b #{attack.name}
                 td #{attack.notes}
@@ -67,11 +67,11 @@ block content
                   td --/--
                   td
                 else
-                  if (chr.name === char.name || chr.name === char.link)
-                    td(class="focus" width="35%")
-                      b #{chr.display}
-                  else
-                    td(class="active" width="35%")
+                  td(class=(chr.alerts ? "active alert" : "active") width="35%" title=(chr.alerts ? "This character has alerts active; go to the edit page to see them" : ""))
+                    if (chr.name === char.name || chr.name === char.link)
+                      i
+                        b #{chr.display}
+                    else
                       b #{chr.display}
                   td(width="15%") #{chr.hits}/#{chr.maxHits} (#{chr.initScore})
                   - const status = chr.statusReport()

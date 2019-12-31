@@ -22,12 +22,15 @@ block content
             case char.tmp_primary
               when consts.CRITICAL_MISS
                 td(colspan="2") Critical miss
+                input(type='hidden' name=char.name+'_damage' value=0)
               when consts.BAD_MISS
               when consts.PLAIN_MISS
                 td(colspan="2") Miss
+                input(type='hidden' name=char.name+'_damage' value=0)
               when consts.CRITICAL_HIT
                 td Critical
                 td #{attack.maxDamage()}
+                input(type='hidden' name=char.name+'_damage' value=attack.maxDamage())
               default
                 td #{attack.primaryDamage}
                 td
@@ -45,7 +48,7 @@ block content
             td
               input(type='number' name='secondary_damage')
         each char in secondary
-          input(type='hidden' name=char.name+'_primary' value=char.tmp_secondary)
+          input(type='hidden' name=char.name+'_secondary' value=char.tmp_secondary)
           tr
             td 
               i #{char.display}

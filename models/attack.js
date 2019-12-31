@@ -28,7 +28,7 @@ const DEFAULT_ATTACK = {
   secondaryDamage:'-',
   rollForSecondary:true,
   resist:'reflex',
-  notes:'',
+  desc:'',
   icon:'melee',
 }
 
@@ -145,6 +145,24 @@ class Attack {
     if (typeof this.primaryDamage !== 'string') return 1
     return this.damageArray[0]
   }
+
+  _targetNote(min, max) {
+    if (min === max)
+      return max.toString()
+    else if (max === 999)
+      return min.toString()  + " or more"
+    else
+      return min.toString() + " to " + max.toString()
+  }
+      
+  primaryTargetNote() {
+    return this._targetNote(this.primaryMin, this.primaryMax)
+  }
+
+  secondaryTargetNote() {
+    return this._targetNote(this.secondaryMin, this.secondaryMax)
+  }
+
 }
 
 
@@ -155,6 +173,7 @@ class WeaponAttack extends Attack {
     if (this.weapon === undefined) throw "Unknown weapon: " + name
     this.primaryDamage = this.weapon.damage
     this.bonus = skill
+    this.desc = this.weapon.desc
     const chr = this.weapon.atts.charAt(0)
     if (chr === "f") this.icon = "gun"
     if (chr === "r") this.icon = "bow"

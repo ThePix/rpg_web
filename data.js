@@ -26,7 +26,7 @@ const chars = [
   new Char({name:"Serpent", next:'Jon', attacks:[
     new WeaponAttack("Unarmed", 5),
   ]}),
-  new Char({name:"Jon", hits:35, next:'Goblin2', pc:true, attacks:[
+  new Char({name:"Jon", hits:35, next:'Goblin2', pc:true, alerts:['One', 'Two'], attacks:[
     new WeaponAttack("Warhammer", 2),
     new WeaponAttack("Unarmed", 2),
   ]}),

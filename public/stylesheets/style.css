@@ -118,3 +118,7 @@ td.secret {
 td.comment {
   color:white;
 }
+
+.alert {
+  background-color:yellow;
+}

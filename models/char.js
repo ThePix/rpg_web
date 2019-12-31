@@ -1,5 +1,6 @@
 'use strict';
 
+const [AttackConsts] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 
 
@@ -70,6 +71,7 @@ class Char {
       { name:'stunned', type:'bool', display:"Stunned"},
       { name:'dead', type:'bool', display:"Dead"},
       { name:'disabled', type:'bool', display:"Disabled"},
+      { name:'alerts', type:'bool', display:false},  // debugging only
 
       { name:'shield', type:'int', display:"Shield"},
       { name:'armour', type:'int', display:"Armour"},
@@ -105,7 +107,7 @@ class Char {
     this.turnCount++
     if (this['afterTurn' + this.turnCount]) this['afterTurn' + this.turnCount]()
     for (let el in this.elements) {
-      console.log(el)
+      //console.log(el)
       this.elements[el].endTurn()
     }
   }
@@ -165,6 +167,32 @@ class Char {
     return l.join("; ")
   }
   
+  statusCheck() {
+    if (!this.dead && this.hits < 0) {
+      this.dead = true
+      if (this.onDeath) {
+        this.alert("On death event triggered")
+        this.onDeath()
+      }
+    }
+    if (!this.dead && !this.bloodied && this.hits < (this.maxHits / 2)) {
+      this.bloodied = true
+      if (this.onBloodied) {
+        this.alert("On bloodied event triggered")
+        this.onBloodied()
+      }
+    }
+  }
+  
+  alert(s) {
+    if (this.alerts === undefined) this.alerts = []
+    this.alerts.push(s)
+  }
+  
+  cancelAlerts() {
+    delete this.alerts
+  }
+  
   clone() {
     const c = new Char({});
     for (let field of Char.fields()) {
@@ -174,23 +202,45 @@ class Char {
     return c;
   }
   
-  resolveDamage(damage, attacker, attack, critical) {
-    console.log('In resolveDamage')
-    console.log(damage)
-    console.log(attacker.name)
-    console.log(attack.name)
-    console.log(critical)
-    let hits = damage
-    if (attack.resist === "reflex" && !attack.ignoreArmour) {
-      hits -= this.armour * attack.diceCount()
+  resolveDamage(attacker, attack, damage, result) {
+    //console.log('In resolveDamage')
+    //console.log(damage)
+    //console.log(attacker.name)
+    //console.log(attack.name)
+    //console.log(result)
+    if (result >= AttackConsts.PLAIN_HIT) {
+      let hits = damage
+      let s = this.display + " is hit by " + attacker.display + " with " + attack.name
+      if (result === AttackConsts.CRITICAL_HIT) s += " (a critical)"
+      if (attack.resist === "reflex" && !attack.ignoreArmour && this.armour) {
+        hits -= this.armour * attack.diceCount()
+        if (hits < 1) hits = 1
+        s += ", doing " + hits + " hits (" + damage + " before armour)."
+      }
+      else {
+        s += ", doing " + hits + " hits."
+      }
+      Log.add(s)
+      //console.log(hits)
+      // what if frozen? etc.? !!!
+      this.hits -= hits
+      // check if bloodied or dead
     }
-    console.log(hits)
-    let s = this.display + " is hit by " + attacker.display + " with " + attack.name
-    if (critical) s += " (a critical)"
-    s += ", doing " + hits + " hits."
-    Log.add(s)
-    this.hits -= hits
-    // check if bloodied or dead
+    else if (result === AttackConsts.CRITICAL_MISS) {
+      Log.add(attacker.display + " misses " + this.display + " by a mile.")
+    }
+    else if (result === AttackConsts.BAD_MISS) {
+      Log.add(attacker.display + " badly misses " + this.display + ".")
+    }
+    else if (result === AttackConsts.SHIELD_MISS) {
+      Log.add(this.display + "'s shield stops " + attacker.display + "'s attack.")
+    }
+    else if (result === AttackConsts.STAT_MISS) {
+      Log.add(this.display + "'s superior " + attack.resist + " stops " + attacker.display + "'s attack.")
+    }
+    else {
+      Log.add(attacker.display + " just misses " + this.display + ".")
+    }
   }
   
   damage(hits, msg) {
@@ -267,14 +317,6 @@ class ElementalEffect {
           this.elementTurnEnd()
         }
       }
-    }
-    if (!this.dead && this.hits < 0) {
-      this.dead = true
-      if (this.onDeath) this.onDeath()
-    }
-    if (!this.dead && !this.bloodied && this.hits < (this.maxHits / 2)) {
-      this.bloodied = true
-      if (this.onBloodied) this.onBloodied()
     }
   }
   

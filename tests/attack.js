@@ -1,70 +1,9 @@
 'use strict';
 
 import test from 'ava';
-const [Char] = require('./models/char.js')
-const [AttackConsts, Attack] = require('./models/attack.js')
+const [Char] = require('../models/char.js')
+const [AttackConsts, Attack] = require('../models/attack.js')
  
-test('standard character', t => {
-  const test = new Char({name: "Tester", size:"Tiny"})
-  t.is(test.name, "Tester");
-  t.is(test.elementalThreshold, 2);
-
-  t.is(test.elements.fire.toString(), false);
-  test.elements.fire.count = 4096
-  t.is(test.elements.fire.toString(), "Fire: 4");
-  for (let i = 0; i < 4; i++) {
-    test.elements.fire.endTurn()
-  }
-  t.is(test.elements.fire.toString(), false);
-
-  test.elements.fire.count = 0
-  test.elementalDamage(2, "fire")
-  t.is(test.elements.fire.count, 2048);
-  
-  
-
-});
- 
-
-
-test('protected from fire', t => {
-  const test = new Char({name: "Tester", protectedFromFire:2})
-  t.is(test.name, "Tester");
-  t.is(test.elementalThreshold, 8);
-
-  t.is(test.elements.fire.vulnProt, 8);
-  t.is(test.elements.fire.toString(), false);
-  test.elements.fire.count = 4096
-  t.is(test.elements.fire.toString(), "Fire: 4, +2 protection");
-  for (let i = 0; i < 2; i++) {
-    test.elements.fire.endTurn()
-  }
-  t.is(test.elements.fire.toString(), false);
-
-  test.elements.fire.count = 0
-  test.elementalDamage(3, "fire")
-  t.is(test.elements.fire.count, 1024);
-
-});
-
-
-test('vulnerable to fire', t => {
-  const test = new Char({name: "Tester", vulnerableToFire:1})
-  t.is(test.name, "Tester");
-  t.is(test.elements.fire.vulnProt, 11);
-  t.is(test.elements.fire.toString(), false);
-  test.elements.fire.count = 4096
-  t.is(test.elements.fire.toString(), "Fire: 4, +1 vulnerability");
-  for (let i = 0; i < 4; i++) {
-    test.elements.fire.endTurn()
-  }
-  t.is(test.elements.fire.toString(), "Fire: 2, +1 vulnerability");
-
-  test.elements.fire.count = 0
-  test.elementalDamage(2, "fire")
-  t.is(test.elements.fire.count, 2048 * 2);
-
-});
 
 
 
@@ -94,6 +33,19 @@ test('weapon 4', t => {
 });
 
 
+test('weapon target desc', t => {
+  const test = new Attack("Test weapon",{})
+  t.is(test.primaryTargetNote(), "1");
+  t.is(test.secondaryTargetNote(), "0");
+  test.primaryMin = 2
+  test.primaryMax = 4
+  test.secondaryMin = 3
+  test.secondaryMax = 999
+  t.is(test.primaryTargetNote(), "2 to 4");
+  t.is(test.secondaryTargetNote(), "3 or more");
+});
+
+
 
 test('attack primaryResolve', t => {
   const weapon = new Attack("Weapon", {primaryDamage:4})
@@ -118,6 +70,5 @@ test('attack secondaryResolve', t => {
   t.is(weapon.secondaryResolve(attacker, target, 11, 0), AttackConsts.PLAIN_HIT);
   t.is(weapon.secondaryResolve(attacker, target, 20, 0), AttackConsts.GOOD_HIT);
 });
-
 
 

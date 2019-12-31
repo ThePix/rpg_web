@@ -2,8 +2,11 @@ extends layout
 
 block content
   p
-  h2 Character: #{char.display}
-  h2 Attack: #{attack.name}
+  h2 
+    img(src="/images/button-" + attack.icon + ".png" width="32" height="32")
+    | 
+    =attack.name
+    |, attack by #{char.display}
 
   form(method="post" action="/attack" onsubmit="return(validate())")
     table
@@ -50,19 +53,10 @@ block content
     button(type="submit") Attack
     a(onclick="validate()") Test
 
-    if attack.primaryMin === attack.primaryMax
-      p Primary targets required: #{attack.primaryMax}
-    else if attack.primaryMax === 999
-      p Primary targets required: #{attack.primaryMin} or more
-    else
-      p Primary targets required: #{attack.primaryMin} to #{attack.primaryMax}
-      
-    if attack.secondaryMin === attack.secondaryMax
-      p Secondary targets required: #{attack.secondaryMax}
-    else if attack.secondaryMax === 999
-      p Secondary targets required: #{attack.secondaryMin} or more
-    else
-      p Secondary targets required: #{attack.secondaryMin} to #{attack.secondaryMax}
+    p #[i Attack type:] #{attack.icon}
+    p #[i Description:] #{attack.desc}
+    p #[i Primary targets:] #{attack.primaryTargetNote()}
+    p #[i Secondary targets:] #{attack.secondaryTargetNote()}
     
 
   div(id="errors" class="errors")
