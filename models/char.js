@@ -69,6 +69,7 @@ class Char {
       { name:'pc', type:'bool', display:false},
       { name:'current', type:'bool', display:false},
       { name:'stunned', type:'bool', display:"Stunned"},
+      { name:'blooded', type:'bool', display:"Blooded"},
       { name:'dead', type:'bool', display:"Dead"},
       { name:'disabled', type:'bool', display:"Disabled"},
       { name:'alerts', type:'bool', display:false},  // debugging only
@@ -175,11 +176,11 @@ class Char {
         this.onDeath()
       }
     }
-    if (!this.dead && !this.bloodied && this.hits < (this.maxHits / 2)) {
-      this.bloodied = true
-      if (this.onBloodied) {
-        this.alert("On bloodied event triggered")
-        this.onBloodied()
+    if (!this.dead && !this.blooded && this.hits < (this.maxHits / 2)) {
+      this.blooded = true
+      if (this.onblooded) {
+        this.alert("On blooded event triggered")
+        this.onblooded()
       }
     }
   }
@@ -215,18 +216,32 @@ class Char {
       if (attack.resist === "reflex" && !attack.ignoreArmour && this.armour) {
         hits -= this.armour * attack.diceCount()
         if (hits < 1) hits = 1
-        s += ", doing " + hits + " hits (" + damage + " before armour)."
+        s += ", doing " + hits + " hits (" + damage + " before armour)"
       }
       else {
-        s += ", doing " + hits + " hits."
+        s += ", doing " + hits + " hits"
       }
-      Log.add(s)
       //console.log(hits)
       // what if frozen? etc.? !!!
+      if (this.elements.ice.condition) {
+        hits *= 2
+        s += " doubled while frozen"
+      }
+      s += "."
+      Log.add(s)
+      
       this.hits -= hits
-      // check if bloodied or dead
+      if (result < AttackConsts.CRITICAL_HIT) {
+        if (attack.onCritical) attack.onCritical(this)
+      }
+      else {
+        if (attack.onHit) attack.onHit(this, damage)
+      }
+      this.statusCheck()
+      return
     }
-    else if (result === AttackConsts.CRITICAL_MISS) {
+    
+    if (result === AttackConsts.CRITICAL_MISS) {
       Log.add(attacker.display + " misses " + this.display + " by a mile.")
     }
     else if (result === AttackConsts.BAD_MISS) {
@@ -241,12 +256,15 @@ class Char {
     else {
       Log.add(attacker.display + " just misses " + this.display + ".")
     }
+    if (attack.onMiss) attack.onMiss(this)
+    this.statusCheck()
+  
   }
   
-  damage(hits, msg) {
+  /*damage(hits, msg) {
     this.hits -= hits
     // other stuff!!!
-  }
+  }*/
 
   elementalDamage(amount, elementName, msg) {
     const element = this.elements[elementName]

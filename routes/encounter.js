@@ -39,6 +39,7 @@ router.get('/delay', function(req, res, next) {
   res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
 });
 
+// This is useful when debugging; probably not otherwise
 router.get('/refresh', function(req, res, next) {
   const chars = req.app.get('chars');
   let char = chars.find(el => el.name === req.query.char)
@@ -104,6 +105,7 @@ router.post('/edit', function(req, res, next) {
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 });
 
+// To do!!!
 router.post('/add', function(req, res, next) {
   const chars = req.app.get('chars');
   const current = chars.find(el => el.current)
@@ -129,7 +131,7 @@ router.post('/add-stock', function(req, res, next) {
   //console.log(req.body)
   let previous = char
   for (let name in req.body) {
-    console.log("Adding stock " + name + " after " + char.name)
+    //console.log("Adding stock " + name + " after " + char.name)
     const chr = stocks.find(el => el.display === name)
     const newchar = chr.clone()
     newchar.next = previous.next

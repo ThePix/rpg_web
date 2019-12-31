@@ -1,20 +1,23 @@
 'use strict';
 /*
+const express = require('express');
+const router = express.Router();
+
+console.log("Here")
+
 import test from 'ava';
 const [Char] = require('./models/char.js')
-const [Attack] = require('./models/attack.js')
+const [AttackConsts, Attack] = require('./models/attack.js')
+const [Log] = require('./models/log.js')
 
-
-const setupRoutes = function() {
-  const req = {}
-  const res = {}
-  const next = {}
-  
-  return [req, res, next]
-}
-
+Log.debug = true
  
 test('standard character', t => {
+  console.log('-----------')
+  console.log(router.params)
+  console.log('-----------')
+  console.log(router._params)
+  console.log('-----------')
   const test = new Char({name: "Tester", size:"Tiny"})
   t.is(test.name, "Tester");
   t.is(test.elementalThreshold, 2);
@@ -33,7 +36,4 @@ test('standard character', t => {
   
   
 
-});
- 
-
-*/
+});*/

@@ -66,7 +66,7 @@ app.use('/damage', damageRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log("Error!!!")
+  console.log("Error 404!")
   next(createError(req, res));
 });
 
@@ -92,6 +92,5 @@ Log.add('secret', 'Refresh is ' + REFRESH + ' seconds')
 Log.add("title", "Go to " + ip.address() + ":" + PORT + " to access the web site")
 
 module.exports = app;
-
 
 

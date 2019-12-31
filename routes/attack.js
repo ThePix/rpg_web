@@ -4,12 +4,12 @@ const express = require('express');
 const router = express.Router();
 const [AttackConsts] = require('../models/attack.js')
 
-
+// Clicking an attack icon on the encouter page brings us here, which sends us to attack.pug
+// Does not change the game state
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.query.char)
   const attack = char.attacks.find(el => el.name === req.query.attack)
-  console.log(attack)
   const handled = true
   res.render('attack', { 
     chars:chars.filter(el => !el.link),  // do not want extra places in attack sequence 
@@ -21,9 +21,9 @@ router.get('/', function(req, res, next) {
 });
 
 
-
+// Submitting attack.pug brings us here, which sends us to damage.pug
+// Does not change the game state
 router.post('/', function(req, res, next) {
-  console.log("ATTACK")
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.body.name)
   const attack = char.attacks.find(el => el.name === req.body.attack)
@@ -46,8 +46,6 @@ router.post('/', function(req, res, next) {
       secondary.push(chars[i])
     }
   }
-  console.log(primary)
-  console.log(secondary)
   
   res.render('damage', {
     char:char,

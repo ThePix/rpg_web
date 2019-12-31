@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
+// Gets the character page that the players see
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
   const refresh = req.app.get('refresh');
@@ -31,21 +31,6 @@ router.get('/', function(req, res, next) {
     } while (c !== first)
     res.render('chars', { chars:list, timestamp:req.timestamp, refresh:refresh });
   }
-    
-    /*
-    const partList = [];
-    list.push(chars.find(el => el.current))
-    partList.push(list[0])
-    for (let i = 1; i < chars.length; i++) {
-      const c = chars.find(el => el.name === list[i - 1].next)
-      if (!c) console.log("Failed to find next for 
-      list.push(c)
-      if (!c.disabled) {
-        partList.push(c)
-      }
-    }
-    res.render('chars', { chars:partList, timestamp:req.timestamp, refresh:refresh });
-  }*/
 });
 
 router.post('/', function(req, res, next) {
@@ -63,7 +48,7 @@ router.post('/', function(req, res, next) {
       char[fields[i].name] = req.body[fields[i].name]
     }
   }
-  console.log(char)
+  //console.log(char)
   res.redirect('/encounter')
 })
 
