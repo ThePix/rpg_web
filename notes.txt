@@ -1,3 +1,11 @@
+ava\lib\concordance-options.js
+  replace blue with cyan
+
+
+
+Good things end at the start of the turn, bad at the end. therefore, delaying cannot be an advantage
+Need to flag if turn start has been done so it does not happen twice (when delaying) and unflag at turn end
+
 
 
 /
@@ -43,3 +51,22 @@ Add a custom character
 Add a stock monster
 Add a group
   All these need a way (set of rules) for adding to the turn system
+
+Perhaps they should be aded after a character, all inserted at that point. Works for summoned.
+
+
+
+
+
+Elemental effect: name, opposed
+count
+conditionFlag
+protectVulnLevel
+baseProtectVulnLevel
+immuneFlag
+
+
+One element effect handler object for each element for each character
+Specific elemental effect handlers for each element
+
+One element effect handler object for each character

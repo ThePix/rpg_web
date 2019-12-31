@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 const [Char] = require('./../models/char.js')
@@ -84,7 +86,7 @@ router.get('/attack', function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.query.char)
   const attack = char.attacks.find(el => el.name === req.query.attack)
-  handled = true
+  const handled = true
   res.render('attack', { 
     chars:chars.filter(el => !el.link),  // do not want extra places in attack sequence 
     char:char,

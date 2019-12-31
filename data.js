@@ -1,11 +1,13 @@
-const [ Attack, WeaponAttack ] = require('./models/attack.js')
+'use strict';
+
+const [AttackConsts, Attack, WeaponAttack] = require('./models/attack.js')
 
 const [Char] = require('./models/char.js')
 
 
 // A char may have more than one place in the list
 const chars = [
-  new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, init:5, attacks:[
+  new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, init:5, turnStarted:true, attacks:[
     new Attack("Fireball", {primaryMax:999, icon:'magic'}),
     new Attack("Psych-ball", {secondaryMax:999, resist:"will", secondaryDamage:'d6', notes:'Danger!', primaryMin:0, primaryMax:0, rollForSecondary:true, icon:'magic' }),
   ]}),

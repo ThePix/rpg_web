@@ -17,6 +17,9 @@ const charsRouter = require('./routes/chars');
 const encounterRouter = require('./routes/encounter');
 const attackRouter = require('./routes/attack');
 const damageRouter = require('./routes/damage');
+const chalk = require('chalk');
+const [Log] = require('./models/log.js')
+//const log = new Log()
 
 const app = express();
 // view engine setup
@@ -40,14 +43,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const [ Attack, WeaponAttack ] = require('./models/attack.js')
+//app.set('log', log)
+
+const [AttackConsts, Attack, WeaponAttack] = require('./models/attack.js')
 const [Char] = require('./models/char.js')
 const [chars, stocks] = require('./data.js')
 
-
-
-
-console.log("Loaded " + chars.length + " characters.")
 
 app.set('refresh', REFRESH)
 app.set('chars', chars)
@@ -86,7 +87,9 @@ app.use(function(err, req, res, next) {
 
 app.listen(PORT)
 const ip = require("ip");
-console.log("[96mGo to " + ip.address() + ":" + PORT + " to access the web site[0m")
+Log.add("secret", "Loaded " + chars.length + " characters")
+Log.add('secret', 'Refresh is ' + REFRESH + ' seconds')
+Log.add("title", "Go to " + ip.address() + ":" + PORT + " to access the web site")
 
 module.exports = app;
 

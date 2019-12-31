@@ -5,7 +5,7 @@ block content
     tr(height="80px")
       td(colspan="2")
         h2 Current character:
-          i #{current.alias()}
+          i #{current.display}
         p
           a(href="/encounter/inits")
             img(src="/images/button-init.png" width="32" height="32" title="Set initiative scores to determine order")
@@ -16,7 +16,7 @@ block content
           a(href="/encounter/next?char=" + current.name)
             img(src="/images/button-next.png" width="32" height="32" title="Next: Move on to the next character's turn.")
           |&nbsp;
-          a(href="/encounter/refresh?char=" + char.name)
+          a(href="/encounter/")
             img(src="/images/button-refresh.png" width="32" height="32" title="Do nothing, just reload the game state (refresh)")
           |&nbsp;
           a(href="/encounter/add-stock?char=" + char.name)
@@ -31,7 +31,7 @@ block content
     tr
       td(width="30%" style="vertical-align:top;")
         h2 Focus: 
-          i #{char.alias()}
+          i #{char.display}
         
         hr
 

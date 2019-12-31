@@ -5,17 +5,17 @@
 // each attack on a primary target gets its own roll
 // all attacks on secondary targets use the same roll
 //
-// primaryMax: max number of primary targets
+// primaryMax: max number of primary targets (use 999 to indicate no limit)
 // secondaryNo: max number of secondary targets
 // bonus: attack bonus
 // primaryDamage
 // secondaryDamage
 // resistanceType: stamina, reflex, will, none
-// primaryResolve: The primary attack success of fail
-// secondaryResolve: The secondary attack success of fail
+// primaryResolve: The primary attack success or fail
+// secondaryResolve: The secondary attack success or fail
 // rollForSecondary: The secondary attack requires a dice roll (and may have a bonus)
 
-
+'use strict';
 
 const DEFAULT_ATTACK = {
   primaryMax:1,
@@ -26,14 +26,24 @@ const DEFAULT_ATTACK = {
   bonus:0,
   primaryDamage:'d4',
   secondaryDamage:'-',
-  primaryResolve:false,
-  secondaryResolve:false,
   rollForSecondary:true,
   resist:'reflex',
   notes:'',
   icon:'melee',
 }
 
+
+const AttackConsts = {
+  CRITICAL_MISS:1,
+  BAD_MISS:2,
+  PLAIN_MISS:3,
+  SHIELD_MISS:4,
+  STAT_MISS:5,
+  PLAIN_HIT:6,
+  GOOD_HIT:7,
+  CRITICAL_HIT:8,
+}
+  
 
 
 const WEAPONS = [
@@ -74,6 +84,66 @@ class Attack {
   constructor(name, data) {
     this.name = name
     for (let key in DEFAULT_ATTACK) this[key] = data[key] || DEFAULT_ATTACK[key]
+    if (typeof this.primaryDamage === 'string') {
+      this.damageArray = this._damageToArray()
+    }
+  }
+  
+  primaryResolve(attacker, target, roll, bonus) {
+    return this.defaultResolve(attacker, target, roll, bonus, true)
+  }
+  
+  secondaryResolve(attacker, target, roll, bonus) {
+    return this.defaultResolve(attacker, target, roll, bonus, false)
+  }
+  
+
+  defaultResolve(attacker, target, roll, bonus, allowCriticals) {
+    if (allowCriticals && roll === 1) return AttackConsts.CRITICAL_MISS
+    if (allowCriticals && roll === 20) return AttackConsts.CRITICAL_HIT
+
+    let result = this.bonus + roll + bonus
+    if (result < 6) return AttackConsts.BAD_MISS
+    if (result < 11) return AttackConsts.PLAIN_MISS
+    result -= target[this.resist]
+    if (result < 11) return AttackConsts.STAT_MISS
+    if (this.resist === 'reflex' && target.shield) {
+      result -= target.shield
+      if (result < 11) return AttackConsts.SHIELD_MISS
+    }
+    return (result > 15 ? AttackConsts.GOOD_HIT : AttackConsts.PLAIN_HIT)
+  }
+  
+  _damageToArray() {
+    const md = /(\d*)d(\d+)(([+-])(\d+))?/.exec(this.primaryDamage)
+    if (md === null) {
+      console.log("Error: Failed to find match for '" + this.primaryDamage + "'")
+      return false;
+    }
+    const result = []
+    result.push(md[1] ? parseInt(md[1]) : 1)
+    result.push(parseInt(md[2]))
+    if (md[4] === "+") {
+      result.push(parseInt(md[5]))
+    }
+    else if (md[4] === "-") {
+      result.push(-parseInt(md[5]))
+    }
+    else {    
+      result.push(0)
+    }
+    return result
+  }
+
+  maxDamage() {
+    if (typeof this.primaryDamage !== 'string') return this.primaryDamage
+    if (this.maxPrimaryDamage !== undefined) return this.maxPrimaryDamage;
+    return this.damageArray[0] * this.damageArray[1] + this.damageArray[2]
+  }
+  
+  diceCount() {
+    if (typeof this.primaryDamage !== 'string') return 1
+    return this.damageArray[0]
   }
 }
 
@@ -90,8 +160,11 @@ class WeaponAttack extends Attack {
     if (chr === "r") this.icon = "bow"
     if (this.weapon.name === 'Unarmed') this.icon = "unarmed"
   }
+  
 }
-module.exports = [Attack, WeaponAttack]
+
+
+module.exports = [AttackConsts, Attack, WeaponAttack]
 
 
 

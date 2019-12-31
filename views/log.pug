@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h3
+    =title
+  table
+    tr
+      th Time
+      th Event
+    each el in log
+      tr
+        td
+          =el.timestamp
+        td(class=el.type)
+          =el.text

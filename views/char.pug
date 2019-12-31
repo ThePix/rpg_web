@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h2 Character Sheet For #{char.alias()}
+  h2 Character Sheet For #{char.display}
   table(class='big')
     tr
       th Attribute
@@ -9,9 +9,12 @@ block content
     each field in fields
       if field.display
         tr
-          td #{field.display}
           td 
-            if field.type === 'bool'
+            i #{field.display}
+          td 
+            if field.type === 'element'
+              =char.elements[field.name].toString('')
+            else if field.type === 'bool'
               =char[field.name] ? 'Yes' : 'No'
             else
               =char[field.name]

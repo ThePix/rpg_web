@@ -5,9 +5,9 @@ mixin row(char, style)
     td(class=char.link ? style + ' link' : style)
       if char.pc
         b
-          i= char.alias()
+          i= char.display
       else
-        = char.alias()
+        = char.display
     td(class=char.link ? style + ' link' : style)
       div !{char.statusIcons()}
 

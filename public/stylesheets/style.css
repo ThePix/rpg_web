@@ -106,3 +106,15 @@ button {
 li {
   text-align:left;
 }
+
+
+td.title {
+  font-weight:bold;
+}
+
+td.secret {
+  color:#888;
+}
+td.comment {
+  color:white;
+}

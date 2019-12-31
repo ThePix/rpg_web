@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "ava"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -20,7 +21,9 @@
   },
   "description": "To get this to work, you need to first install Node.js",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "ava": "^2.4.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ThePix/rpg_web.git"
