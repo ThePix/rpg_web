@@ -70,5 +70,3 @@ test('attack secondaryResolve', t => {
   t.is(weapon.secondaryResolve(attacker, target, 11, 0), AttackConsts.PLAIN_HIT);
   t.is(weapon.secondaryResolve(attacker, target, 20, 0), AttackConsts.GOOD_HIT);
 });
-
-

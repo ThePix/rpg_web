@@ -80,8 +80,15 @@ class Char {
       { name:'reflex', type:'int', display:"Reflex"},
       { name:'stamina', type:'int', display:"Stamina"},
       { name:'none', type:'int', display:"None"},
-      { name:'init', type:'int', display:false},
+      { name:'init', type:'int', display:false, default:0},
       { name:'size', type:'int', display:false, default:-1},
+      
+      { name:'applyDamage', type:'function' },
+      { name:'onDeath', type:'function' },
+      { name:'onBlooded', type:'function' },
+      { name:'onDone75', type:'function' },
+      { name:'onDone25', type:'function' },
+      { name:'ignoreAttackTypes', type:'function' },
     ]
   }
   
@@ -92,6 +99,7 @@ class Char {
       'burning',
       'noMagic',
       'dead',
+      'blooded',
       'disabled',
     ]
   }
@@ -171,16 +179,36 @@ class Char {
   statusCheck() {
     if (!this.dead && this.hits < 0) {
       this.dead = true
+      this.done75 = true
+      this.blooded = true
+      this.done25 = true
       if (this.onDeath) {
         this.alert("On death event triggered")
         this.onDeath()
       }
     }
-    if (!this.dead && !this.blooded && this.hits < (this.maxHits / 2)) {
+    if (!this.done75 && this.hits < (this.maxHits / 4)) {
+      this.done25 = true
+      this.done75 = true
       this.blooded = true
-      if (this.onblooded) {
+      if (this.onDone75) {
+        this.alert("On Done75 event triggered")
+        this.onDone75()
+      }
+    }
+    if (!this.blooded && this.hits < (this.maxHits / 2)) {
+      this.done25 = true
+      this.blooded = true
+      if (this.onBlooded) {
         this.alert("On blooded event triggered")
-        this.onblooded()
+        this.onBlooded()
+      }
+    }
+    if (!this.done25 && this.hits < (this.maxHits / 4)) {
+      this.done25 = true
+      if (this.onDone25) {
+        this.alert("On Done25 event triggered")
+        this.onDone75()
       }
     }
   }
@@ -228,16 +256,7 @@ class Char {
         s += " doubled while frozen"
       }
       s += "."
-      Log.add(s)
-      
-      this.hits -= hits
-      if (result < AttackConsts.CRITICAL_HIT) {
-        if (attack.onCritical) attack.onCritical(this)
-      }
-      else {
-        if (attack.onHit) attack.onHit(this, damage)
-      }
-      this.statusCheck()
+      this.applyDamage(hits, s, attack, result)
       return
     }
     
@@ -261,11 +280,28 @@ class Char {
   
   }
   
-  /*damage(hits, msg) {
-    this.hits -= hits
-    // other stuff!!!
-  }*/
-
+  // Separated so characters can override if necessary
+  applyDamage(hits, s, attack, result) {
+    if (this.ignoreAttackTypes && this.ignoreAttackTypes.includes(attack.special)) {
+      s += " Sadly " + this.display + " is not affected by attacks of that type."
+      Log.add(s)
+    }
+    else {
+      this.hits -= hits
+      Log.add(s)
+      if (result === AttackConsts.CRITICAL_HIT) {
+        if (attack.onCritical) attack.onCritical(this, hits)
+      }
+      else {
+        if (attack.onHit) {
+          attack.onHit(this, hits)
+        }
+      }
+      this.statusCheck()
+    }
+  }
+  
+  
   elementalDamage(amount, elementName, msg) {
     const element = this.elements[elementName]
     const opposed = this.elements[element.getOpposed()]

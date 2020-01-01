@@ -13,7 +13,6 @@
 // resistanceType: stamina, reflex, will, none
 // primaryResolve: The primary attack success or fail
 // secondaryResolve: The secondary attack success or fail
-// rollForSecondary: The secondary attack requires a dice roll (and may have a bonus)
 
 'use strict';
 
@@ -26,12 +25,14 @@ const DEFAULT_ATTACK = {
   bonus:0,
   primaryDamage:'d4',
   secondaryDamage:'-',
-  rollForSecondary:true,
   resist:'reflex',
   desc:'',
   icon:'melee',
+  special:false,  // or silver, ice, fire, shock, nether
+  onMiss:false,
+  onHit:false,
+  onCritical:false,
 }
-
 
 const AttackConsts = {
   CRITICAL_MISS:1,
@@ -43,8 +44,6 @@ const AttackConsts = {
   GOOD_HIT:7,
   CRITICAL_HIT:8,
 }
-  
-
 
 const WEAPONS = [
   {name:"Unarmed", damage:"d4", atts:"mX", desc:"Useful when you have lost your weapons! Skill in unarmed will increase damage."},
@@ -82,8 +81,11 @@ const WEAPONS = [
 
 class Attack {
   constructor(name, data) {
+    if (data === undefined) data = {}
     this.name = name
-    for (let key in DEFAULT_ATTACK) this[key] = data[key] || DEFAULT_ATTACK[key]
+    for (let key in DEFAULT_ATTACK) {
+      this[key] = data[key] === undefined ? DEFAULT_ATTACK[key] : data[key]
+    }
     if (typeof this.primaryDamage === 'string') {
       this.damageArray = this._damageToArray()
     }
@@ -167,13 +169,13 @@ class Attack {
 
 
 class WeaponAttack extends Attack {
-  constructor(name, skill) {
-    super(name, {})
+  constructor(name, skill, data) {
+    super(name, data)
     this.weapon = WEAPONS.find(el => el.name === name)
     if (this.weapon === undefined) throw "Unknown weapon: " + name
     this.primaryDamage = this.weapon.damage
     this.bonus = skill
-    this.desc = this.weapon.desc
+    this.desc += this.weapon.desc
     const chr = this.weapon.atts.charAt(0)
     if (chr === "f") this.icon = "gun"
     if (chr === "r") this.icon = "bow"
