@@ -5,18 +5,18 @@ const REFRESH = 10
 
 //const createError = require('http-errors');
 const express = require('express');
+const router = express.Router();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
 //const webpush = require('web-push');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const charsRouter = require('./routes/chars');
-const encounterRouter = require('./routes/encounter');
-const attackRouter = require('./routes/attack');
-const damageRouter = require('./routes/damage');
+
+//const damageRouter = require('./routes/damage');
+
+//router.post('/', require('./routes/damage'))
+
 const chalk = require('chalk');
 const [Log] = require('./models/log.js')
 //const log = new Log()
@@ -56,13 +56,30 @@ app.set('stocks', stocks)
 app.set('fields', Char.fields())
 
 
+const [indexGetFun, logGetFun] = require('./routes/index');
+app.get('/', indexGetFun);
+app.get('/log', logGetFun);
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/chars', charsRouter);
+const [charsGetFun, charsPostFun] = require('./routes/chars');
+app.get('/chars', charsGetFun);
+app.post('/chars', charsPostFun);
+
+const [charGetFun, charPostFun] = require('./routes/char');
+app.get('/char', charGetFun);
+app.post('/char', charPostFun);
+
+const [attackGetFun, attackPostFun] = require('./routes/attack');
+app.get('/attack', attackGetFun);
+app.post('/attack', attackPostFun);
+
+const [damagePostFun] = require('./routes/damage');
+app.post('/damage', damagePostFun);
+
+const encounterRouter = require('./routes/encounter');
 app.use('/encounter', encounterRouter);
-app.use('/attack', attackRouter);
-app.use('/damage', damageRouter);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // Gets the character page that the players see
-router.get('/', function(req, res, next) {
+const charsGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const refresh = req.app.get('refresh');
   if (req.query.name) {
@@ -31,9 +31,9 @@ router.get('/', function(req, res, next) {
     } while (c !== first)
     res.render('chars', { chars:list, timestamp:req.timestamp, refresh:refresh });
   }
-});
+}
 
-router.post('/', function(req, res, next) {
+const charsPostFun = function(req, res, next) {
   const fields = req.app.get('fields')
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.body.name)
@@ -50,7 +50,7 @@ router.post('/', function(req, res, next) {
   }
   //console.log(char)
   res.redirect('/encounter')
-})
+}
 
 
-module.exports = router;
+module.exports = [charsGetFun, charsPostFun];

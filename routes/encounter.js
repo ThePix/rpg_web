@@ -47,12 +47,7 @@ router.get('/refresh', function(req, res, next) {
   res.render('encounter', { chars:chars, char:char , current:char, attacks:char.attacks, timestamp:req.timestamp });
 });
 
-router.get('/edit', function(req, res, next) {
-  const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.char)
-  console.log(char)
-  res.render('edit', { char:char, fields: req.app.get('fields'), timestamp:req.timestamp });
-});
+
 
 router.get('/add-file', function(req, res, next) {
   const chars = req.app.get('chars');
@@ -92,18 +87,7 @@ router.post('/clear-alerts', function(req, res, next) {
 });
 
 
-router.post('/edit', function(req, res, next) {
-  const chars = req.app.get('chars');
-  const current = chars.find(el => el.current)
-  const char = chars.find(el => el.name === req.body.name)
-  for (let field of req.app.get('fields')) {
-    if (!field.display) continue
-    if (field.type === 'bool') char[field.name] = (req.body[field.name] === 'on')
-    if (field.type === 'int') char[field.name] = parseInt(req.body[field.name])
-    if (field.type === 'string') char[field.name] = req.body[field.name]
-  }
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
-});
+
 
 // To do!!!
 router.post('/add', function(req, res, next) {

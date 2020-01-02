@@ -6,7 +6,7 @@ const [AttackConsts] = require('../models/attack.js')
 
 // Clicking an attack icon on the encouter page brings us here, which sends us to attack.pug
 // Does not change the game state
-router.get('/', function(req, res, next) {
+const attackGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.query.char)
   const attack = char.attacks.find(el => el.name === req.query.attack)
@@ -18,12 +18,12 @@ router.get('/', function(req, res, next) {
     charList:chars.map(el => el.name).join(' '),
     timestamp:req.timestamp
   });
-});
+}
 
 
 // Submitting attack.pug brings us here, which sends us to damage.pug
 // Does not change the game state
-router.post('/', function(req, res, next) {
+const attackPostFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.body.name)
   const attack = char.attacks.find(el => el.name === req.body.attack)
@@ -56,6 +56,6 @@ router.post('/', function(req, res, next) {
     consts:AttackConsts,
     timestamp:req.timestamp
   });
-})
+}
 
-module.exports = router;
+module.exports = [attackGetFun, attackPostFun];
