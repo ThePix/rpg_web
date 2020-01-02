@@ -144,3 +144,23 @@ test('resolveDamageElemental', t => {
 });
 
 
+test('resolveDamage with additional', t => {
+  const weapon = new Attack("Weapon", {primaryDamage:4, resist:"reflex", additionalDamage:6})
+  const attacker = new Char({name: "Attacker", attacks: [weapon]})
+  const target = new Char({name: "Target", hits:80})
+
+  target.resolveDamage(attacker, weapon, 10, AttackConsts.PLAIN_HIT)
+  t.is(target.hits, 70);
+  t.is(Log.last, "Target is hit by Attacker with Weapon, doing 10 hits.");
+
+  target.armour = 2
+  target.resolveDamage(attacker, weapon, 10, AttackConsts.PLAIN_HIT)
+  t.is(target.hits, 62);
+  t.is(Log.last, "Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).");
+
+  target.resolveDamage(attacker, weapon, 10, AttackConsts.CRITICAL_HIT)
+  t.is(target.hits, 54);
+  t.is(Log.last, "Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).");
+});
+
+

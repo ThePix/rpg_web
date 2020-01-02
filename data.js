@@ -8,7 +8,8 @@ const [Char] = require('./models/char.js')
 // A char may have more than one place in the list
 const chars = [
   new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, init:5, turnStarted:true, attacks:[
-    new Attack("Fireball", {primaryMax:999, icon:'magic', special:'fire'}),
+    new Attack("Fireball", {primaryMax:999, icon:'magic', special:'fire', primaryDamage:'d6', additionalDamage:'d4',
+  additionalType:'fire'}),
     new Attack("Psych-ball", {secondaryMax:999, resist:"will", secondaryDamage:'d6', desc:'Affects anyone in AoE!', primaryMin:0, primaryMax:0, icon:'magic', special:'mind' }),
   ]}),
   new Char({name:"Goblin1", hits:35, next:'Kyle', stunned:true, attacks:[

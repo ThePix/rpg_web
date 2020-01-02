@@ -5,14 +5,14 @@ const router = express.Router();
 
 // Submitting damage.pug brings us here, which sends us, via redirect, back to encounter.pug
 // This is the only part of the attack process that changes the game state
-router.post('/', function(req, res, next) {
+const damageRouteFun = function(req, res, next) {
   //console.log("ATTACK/DAMAGE")
   //console.log(req.body)
   const chars = req.app.get('chars');
   const attacker = chars.find(el => el.name === req.body.name)
   const attack = attacker.attacks.find(el => el.name === req.body.attack)
   
-  secondary_damage = req.body.secondary_damage
+  const secondary_damage = req.body.secondary_damage
   delete req.body.name
   delete req.body.attack
   delete req.body.secondary_damage
@@ -28,7 +28,8 @@ router.post('/', function(req, res, next) {
       //console.log("Result " + result)
       const char = chars.find(el => el.name === name)
       const damage = parseInt(req.body[name + "_damage"])
-      char.resolveDamage(attacker, attack, damage, result)
+      const additional = req.body[name + "_additional"] ? parseInt(req.body[name + "_additional"]) : false
+      char.resolveDamage(attacker, attack, damage, result, additional)
     }
     if (key.endsWith("_secondary")) {
       //console.log("Doing " + key)
@@ -42,6 +43,8 @@ router.post('/', function(req, res, next) {
   }
 
   res.redirect('/encounter');
-})
+}
+
+router.post('/', damageRouteFun)
 
 module.exports = router;

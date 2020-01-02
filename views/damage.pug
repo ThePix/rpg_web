@@ -9,10 +9,13 @@ block content
     table(width="600")
       tbody
         tr
-          th(width="50%") Targets
-          th(width="10%") Armour
-          th(width="20%") Damage
-          th(width="20%") Result
+          th(width="300") Targets
+          th(width="60") Armour
+          th(width="120") Damage
+          th(width="120") Result
+          if typeof attack.additionalDamage === "string"
+            th(width="120") Additional
+            th(width="120") Result
       tbody
         each char in primary
           input(type='hidden' name=char.name+'_primary' value=char.tmp_primary)
@@ -35,7 +38,20 @@ block content
                 td #{attack.primaryDamage}
                 td
                   input(type='number' name=char.name+'_damage' class="damage_input")
-
+            if typeof attack.additionalDamage === "string"
+              if char.tmp_primary < consts.PLAIN_HIT
+                td
+                td
+                input(type='hidden' name=char.name+'_additional' value=0)
+              else if char.tmp_primary === consts.CRITICAL_HIT && attack.additionalCritsMax
+                td
+                td #{attack.additionalMaxDamage()}
+                input(type='hidden' name=char.name+'_additional' value=attack.additionalMaxDamage())
+              else
+                td #{attack.additionalDamage}
+                td
+                  input(type='number' name=char.name+'_additional' class="damage_input")
+              
 
       tbody
         tr
@@ -47,6 +63,9 @@ block content
             td #{attack.secondaryDamage}
             td
               input(type='number' name='secondary_damage')
+            if typeof attack.additionalDamage === "string"
+              td
+              td
         each char in secondary
           input(type='hidden' name=char.name+'_secondary' value=char.tmp_secondary)
           tr
@@ -58,6 +77,9 @@ block content
                 | Miss
               else
                 | Hit
+            if typeof attack.additionalDamage === "string"
+              td
+              td
 
 
     input(type="hidden" name="name" value=char.name)
@@ -66,7 +88,9 @@ block content
     button(type="submit") Resolve
 
   div(id="errors" class="errors")
-  
-  | Secondary targets are in italics
+  p
+    | Secondary targets are in italics
+  if attack.additionalExplanation()
+    p Additional damage: #{attack.additionalExplanation()}
 
   include damage_validation.html

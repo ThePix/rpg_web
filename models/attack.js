@@ -24,6 +24,7 @@ const DEFAULT_ATTACK = {
   secondaryMin:0,
   bonus:0,
   primaryDamage:'d4',
+  maxPrimaryDamage:false,
   secondaryDamage:'-',
   resist:'reflex',
   desc:'',
@@ -32,6 +33,10 @@ const DEFAULT_ATTACK = {
   onMiss:false,
   onHit:false,
   onCritical:false,
+  additionalDamage:false,
+  additionalType:false,
+  additionalDesc:false,
+  additionalCritsMax:false,
 }
 
 const AttackConsts = {
@@ -87,7 +92,10 @@ class Attack {
       this[key] = data[key] === undefined ? DEFAULT_ATTACK[key] : data[key]
     }
     if (typeof this.primaryDamage === 'string') {
-      this.damageArray = this._damageToArray()
+      this.damageArray = this._damageToArray(this.primaryDamage)
+    }
+    if (typeof this.additionalDamage === 'string') {
+      this.additionalDamageArray = this._damageToArray(this.additionalDamage)
     }
   }
   
@@ -116,10 +124,10 @@ class Attack {
     return (result > 15 ? AttackConsts.GOOD_HIT : AttackConsts.PLAIN_HIT)
   }
   
-  _damageToArray() {
-    const md = /(\d*)d(\d+)(([+-])(\d+))?/.exec(this.primaryDamage)
+  _damageToArray(damageString) {
+    const md = /(\d*)d(\d+)(([+-])(\d+))?/.exec(damageString)
     if (md === null) {
-      console.log("Error: Failed to find match for '" + this.primaryDamage + "'")
+      console.log("Error: Failed to find match for '" + damageString + "'")
       return false;
     }
     const result = []
@@ -139,10 +147,15 @@ class Attack {
 
   maxDamage() {
     if (typeof this.primaryDamage !== 'string') return this.primaryDamage
-    if (this.maxPrimaryDamage !== undefined) return this.maxPrimaryDamage;
+    if (this.maxPrimaryDamage) return this.maxPrimaryDamage;
     return this.damageArray[0] * this.damageArray[1] + this.damageArray[2]
   }
   
+  maxAdditionalDamage() {
+    if (typeof this.additionalDamage !== 'string') return this.additionalDamage
+    return this.additionalDamageArray[0] * this.additionalDamageArray[1] + this.additionalDamageArray[2]
+  }
+
   diceCount() {
     if (typeof this.primaryDamage !== 'string') return 1
     return this.damageArray[0]
@@ -164,7 +177,13 @@ class Attack {
   secondaryTargetNote() {
     return this._targetNote(this.secondaryMin, this.secondaryMax)
   }
-
+  
+  additionalExplanation() {
+    if (this.additionalDesc) return this.additionalDesc
+    if (this.additionalType && this.additionalDamage) return "Special damage (" + this.additionalType + ")"
+    if (this.special && this.additionalDamage) return "Special damage (" + this.special + ")"
+    return false
+  }
 }
 
 
@@ -172,8 +191,13 @@ class WeaponAttack extends Attack {
   constructor(name, skill, data) {
     super(name, data)
     this.weapon = WEAPONS.find(el => el.name === name)
-    if (this.weapon === undefined) throw "Unknown weapon: " + name
+    if (this.weapon === undefined) throw new Error("AttackException", "Unknown weapon: " + name)
     this.primaryDamage = this.weapon.damage
+
+    if (typeof this.primaryDamage === 'string') {
+      this.damageArray = this._damageToArray(this.primaryDamage)
+    }
+
     this.bonus = skill
     this.desc += this.weapon.desc
     const chr = this.weapon.atts.charAt(0)

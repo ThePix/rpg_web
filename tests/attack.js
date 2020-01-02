@@ -2,11 +2,11 @@
 
 import test from 'ava';
 const [Char] = require('../models/char.js')
-const [AttackConsts, Attack] = require('../models/attack.js')
+const [AttackConsts, Attack, WeaponAttack] = require('../models/attack.js')
  
 
 
-
+// Need to test Weaponattack !!!
 
 test('weapon d3', t => {
   const test = new Attack("Test weapon", {primaryDamage:'d3'})
@@ -31,6 +31,25 @@ test('weapon 4', t => {
   t.is(test.maxDamage(), 4);
   t.is(test.diceCount(), 1);
 });
+
+
+
+test('weaponattack basic', t => {
+  const test = new WeaponAttack("Warhammer", 4)
+  t.is(test.maxDamage(), 20);
+  t.is(test.diceCount(), 2);
+});
+
+test('weaponattack not recognised', t => {
+  t.throws(() => { new WeaponAttack("Nonsense", 4) });
+});
+
+test('weaponattack additional', t => {
+  const test = new WeaponAttack("Warhammer", 4, {secondaryDamage:'3d6'})
+  t.is(test.secondaryDamage, '3d6');
+});
+
+
 
 
 test('weapon target desc', t => {
