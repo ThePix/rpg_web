@@ -1,11 +1,8 @@
 'use strict';
 
 const [AttackConsts, Attack, WeaponAttack] = require('./models/attack.js')
-
 const [Char] = require('./models/char.js')
 
-
-// A char may have more than one place in the list
 const chars = [
   new Char({name:"Lara", hits:45, next:'Goblin1', pc:true, current:true, init:5, turnStarted:true, will:2, attacks:[
     new Attack("Fireball", {primaryMax:999, icon:'magic', special:'fire', primaryDamage:'d6', additionalDamage:'d4',
@@ -24,7 +21,7 @@ const chars = [
     this.alert("Ogre does Storm of rage when blooded.")
   }, attacks:[
     new WeaponAttack("Warhammer", 2),
-    new Attack("Storm of rage (when blooded)", {primaryMax:999, bonus:3, primaryDamage:'d6', desc:'Targets all foes within 1 square.'}),
+    new Attack("Storm of rage", {comment:"when blooded", primaryMax:999, bonus:3, primaryDamage:'d6', desc:'Targets all foes within 1 square.'}),
     new WeaponAttack("Unarmed", 2),
   ]}),
   new Char({name:"Serpent", next:'Jon', attacks:[

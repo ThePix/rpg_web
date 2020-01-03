@@ -1,6 +1,9 @@
 'use strict';
 
+const LOGFILE = 'data/log.txt'
+
 const chalk = require('chalk');
+const fs = require('fs');
 
 class Log {
   
@@ -10,7 +13,9 @@ class Log {
       b = a
       a = 'msg'
     }
-    this.data.push({type:a, text:b, timestamp:new Date(Date.now()).toLocaleTimeString('en-US')})
+    const c = new Date(Date.now()).toLocaleTimeString('en-US')
+    this.data.push({type:a, text:b, timestamp:c})
+
     if (!this.debug) {
       switch (a) {
         case 'title': console.log(''); console.log(chalk.yellowBright(b)); break;
@@ -19,6 +24,11 @@ class Log {
         case 'comment': console.log(chalk.cyanBright(b)); break;
       }
     }
+
+    fs.appendFile('log.txt', a + '~' + b + '~' + c, function (err) {
+      if (err) throw err;
+    });    
+
     this.last = b  // useful for tests!
   }
   
@@ -27,6 +37,16 @@ class Log {
     return this.data.slice(this.data.length - n, this.data.length).reverse()
   }
   
+  static recover() {
+    fs.readFile(LOGFILE, function(err, s) {
+      if (err) throw err;
+      const ary = String(s).split('\n')
+      this.data = ary.map(function(el) {
+        const vals = el.split('~')
+        return {type:vals[0], text:vals[1], timestamp:vals[2]}
+      })
+    });  
+  }
 } 
 
 

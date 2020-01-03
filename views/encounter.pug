@@ -48,6 +48,9 @@ block content
                     img(src="/images/button-" + attack.icon + ".png" width="32" height="32" title="Go to the attack page for this attack")
                 td
                   b #{attack.name}
+                  if attack.comment
+                    br
+                    =attack.comment
                 td #{attack.notes}
         else
           p No attacks available
@@ -65,12 +68,16 @@ block content
                     img(src="/images/button-edit.png" width="32" height="32" title="Edit the stats for this character")
                 
                 if chr.disabled
-                  td(class="dead")
+                  td(class="disabled")
                     =chr.display
                   td --/--
                   td
                 else
-                  td(class=(chr.alerts ? "active alert" : "active") width="35%" title=(chr.alerts ? "This character has alerts active; go to the edit page to see them" : ""))
+                  - let classList = "active"
+                  - if (chr.pc) classList += " pc"
+                  - if (chr.alerts) classList += " alert"
+                  - if (chr.dead) classList += " dead"
+                  td(class=classList width="35%" title=(chr.alerts ? "This character has alerts active; go to the edit page to see them" : ""))
                     if (chr.name === char.name || chr.name === char.link)
                       i
                         b #{chr.display}

@@ -23,7 +23,11 @@ block content
                       input(type='text' name=field.name value=char[field.name])
           input(type="hidden" name="name" value=char.name)
           p
+          input(type="text" name="comment")
+          p
           button(type="submit" name="submit_param" value="submit_value" class="link-button") Update
+          |
+          button(type="button" onclick="window.location.href = '/encounter'" class="link-button") Forget it
         td(width="10%" style="background-color:white;")
         td(width="60%" style="background-color:white;vertical-align:top")
           if char.alerts

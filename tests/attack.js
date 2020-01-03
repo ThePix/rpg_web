@@ -6,8 +6,6 @@ const [AttackConsts, Attack, WeaponAttack] = require('../models/attack.js')
  
 
 
-// Need to test Weaponattack !!!
-
 test('weapon d3', t => {
   const test = new Attack("Test weapon", {primaryDamage:'d3'})
   t.is(test.maxDamage(), 3);

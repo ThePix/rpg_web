@@ -18,7 +18,7 @@ const indexGetFun = function(req, res, next) {
 
 const logGetFun = function(req, res, next) {
   const refresh = req.app.get('refresh');
-  res.render('log', { log:Log.getData(LENGTH), timestamp:req.timestamp, refreshRate:refresh, title:'Log of last ' + LENGTH + ' events' });
+  res.render('log', { log:Log.getData(LENGTH), timestamp:req.timestamp, refresh:refresh, title:'Log of last ' + LENGTH + ' events' });
 }
 
 

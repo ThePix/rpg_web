@@ -108,11 +108,8 @@ class Char {
     const regexp = /character~(\w+)\[([\s\S]*?)\]/
     const ary = s.split('\n\n')
     ary.pop() // last is blank!
-    //console.log(ary.length)
-    //console.log(ary[0].match(regexp))
     for (let el of ary) {
       const md = el.match(regexp)
-      //console.log("Name is " + md[1])
       const char = chars.find(el => el.name === md[1])
       if (!char) throw new Error("CharacterLoadException", "Unknown character: " + md[1])
       const data = md[2].split('\n')
@@ -127,8 +124,6 @@ class Char {
         if (field.type === 'int') char[field.name] = parseInt(md[2])
         if (field.type === 'string') char[field.name] = md[2]
         if (field.type === 'element') char.elements[field.name].load(md[2])
-        //console.log("Field is " + field.name)
-        //console.log("Value is " + char[field.name])
       }
     }
   }
@@ -285,11 +280,6 @@ class Char {
   }
   
   resolveDamage(attacker, attack, damage, result) {
-    //console.log('In resolveDamage')
-    //console.log(damage)
-    //console.log(attacker.name)
-    //console.log(attack.name)
-    //console.log(result)
     if (result >= AttackConsts.PLAIN_HIT) {
       let hits = damage
       let s = this.display + " is hit by " + attacker.display + " with " + attack.name
@@ -302,8 +292,6 @@ class Char {
       else {
         s += ", doing " + hits + " hits"
       }
-      //console.log(hits)
-      // what if frozen? etc.? !!!
       if (this.elements.ice.condition) {
         hits *= 2
         s += " doubled while frozen"

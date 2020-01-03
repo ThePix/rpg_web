@@ -192,7 +192,6 @@ test('save and load', t => {
   const test3 = new Char({name: "Tester3", shield:2})
 
   const s = Char.saveData([test1, test2, test3])
-  console.log(s)
   Char.loadData([test1, test2, test3], s)
   
   t.is(test1.elements.fire.vulnProt, 11)

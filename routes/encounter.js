@@ -1,6 +1,6 @@
 'use strict';
 
-const SAVEFILE = 'save.txt'
+const SAVEFILE = 'data/save.txt'
 
 const fs = require('fs');
 const express = require('express');
@@ -18,6 +18,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/inits', function(req, res, next) {
   const chars = req.app.get('chars');
+  Log.add("Turn sequence set")
   res.render('inits', { chars:chars, timestamp:req.timestamp });
 });
 
@@ -35,7 +36,9 @@ router.get('/next', function(req, res, next) {
   fs.writeFile(SAVEFILE, Char.saveData(chars), function (err) {
     if (err) throw err;
     console.log('Saved!');
+    Log.add("comment", "Game state saved")
   });
+  Log.add("title", "Next!")
   res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
 });
 
@@ -45,6 +48,7 @@ router.get('/load', function(req, res, next) {
     const chars = req.app.get('chars');
     Char.loadData(chars, String(s))
     const char = chars.find(el => el.current)
+    Log.recover()
     res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
   });  
 });
@@ -52,6 +56,7 @@ router.get('/load', function(req, res, next) {
 router.get('/delay', function(req, res, next) {
   const chars = req.app.get('chars');
   let char = chars.find(el => el.name === req.query.char)
+  Log.add(char.display + " delays a turn")
   char = char.delay(chars)
   res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
 });

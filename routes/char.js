@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const [Char] = require('./../models/char.js')
+const [Log] = require('../models/log.js')
 
 
 const charGetFun = function(req, res, next) {
@@ -23,6 +24,8 @@ const charPostFun = function(req, res, next) {
     if (field.type === 'int') char[field.name] = parseInt(req.body[field.name])
     if (field.type === 'string') char[field.name] = req.body[field.name]
   }
+  Log.add(char.display + " edited. " + req.body.comment)
+  
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 }
 

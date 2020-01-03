@@ -28,6 +28,7 @@ const DEFAULT_ATTACK = {
   secondaryDamage:'-',
   resist:'reflex',
   desc:'',
+  comment:false,
   icon:'melee',
   special:false,  // or silver, ice, fire, shock, nether
   onMiss:false,

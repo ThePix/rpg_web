@@ -42,14 +42,26 @@ td {
   text-align:center;
 }
 
+td.active {
+  text-align:left;
+  color:#a00
+}  
+
+td.pc {
+  text-align:left;
+  color:#008
+}  
+
 td.dead {
+  text-align:left;
+  color:#fff;
+}  
+
+td.disabled {
   text-align:left;
   color:#333;
 }  
 
-td.active {
-  text-align:left;
-}  
 
 td.focus {
   text-align:left;
@@ -84,7 +96,13 @@ td.link {
 }
 
 input[type=number] {
-  width: 40px;
+  width: 60px;
+  font-size: 20px;
+  text-align:right;
+}
+
+input[type=text] {
+  width: 200px;
   font-size: 20px;
 }
 
