@@ -49,6 +49,13 @@ test('weaponattack additional', t => {
   t.is(test.secondaryDamage, '3d6');
 });
 
+test('weaponattack altName', t => {
+  const test = new WeaponAttack("Warhammer", 4, {altName:"Swinging warhammer"})
+  t.is(test.name, "Swinging warhammer");
+  t.is(test.maxDamage(), 20);
+  t.is(test.diceCount(), 2);
+});
+
 
 
 

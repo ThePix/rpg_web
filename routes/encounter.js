@@ -1,5 +1,8 @@
 'use strict';
 
+const SAVEFILE = 'save.txt'
+
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const [Char] = require('./../models/char.js')
@@ -29,7 +32,21 @@ router.get('/next', function(req, res, next) {
   const chars = req.app.get('chars');
   let char = chars.find(el => el.name === req.query.char)
   char = char.nextChar(chars)
+  fs.writeFile(SAVEFILE, Char.saveData(chars), function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
   res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+});
+
+router.get('/load', function(req, res, next) {
+  fs.readFile(SAVEFILE, function(err, s) {
+    if (err) throw err;
+    const chars = req.app.get('chars');
+    Char.loadData(chars, String(s))
+    const char = chars.find(el => el.current)
+    res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+  });  
 });
 
 router.get('/delay', function(req, res, next) {

@@ -164,3 +164,39 @@ test('resolveDamage with additional', t => {
 });
 
 
+test('load', t => {
+  const test1 = new Char({name: "Tester1", vulnerableToFire:1})
+  const test2 = new Char({name: "Tester2", hits:40})
+  const test3 = new Char({name: "Tester3", shield:2})
+
+  const s = 'character~Tester1[\n  hits~15\n  stunned~true\n]\n\ncharacter~Tester2[\n  hits~30\n  blooded~true\n  fire~5~true~8\n]\n\n'
+  Char.loadData([test1, test2, test3], s)
+  t.is(test1.hits, 15)
+  t.is(test1.stunned, true)
+  t.is(test1.blooded, false)
+  
+  t.is(test2.hits, 30)
+  t.is(test2.stunned, false)
+  t.is(test2.blooded, true)
+  t.is(test2.elements.fire.count, 5)
+  t.is(test2.elements.fire.condition, true)
+  t.is(test2.elements.fire.vulnProt, 8)
+  
+})
+
+
+
+test('save and load', t => {
+  const test1 = new Char({name: "Tester1", vulnerableToFire:1})
+  const test2 = new Char({name: "Tester2", hits:40})
+  const test3 = new Char({name: "Tester3", shield:2})
+
+  const s = Char.saveData([test1, test2, test3])
+  console.log(s)
+  Char.loadData([test1, test2, test3], s)
+  
+  t.is(test1.elements.fire.vulnProt, 11)
+  t.is(test2.hits, 40)
+  t.is(test3.shield, 2)
+  
+})

@@ -197,7 +197,7 @@ class WeaponAttack extends Attack {
     if (typeof this.primaryDamage === 'string') {
       this.damageArray = this._damageToArray(this.primaryDamage)
     }
-
+    if (data && data.altName) this.name = data.altName;
     this.bonus = skill
     this.desc += this.weapon.desc
     const chr = this.weapon.atts.charAt(0)

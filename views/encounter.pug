@@ -14,7 +14,10 @@ block content
             img(src="/images/button-delay.png" width="32" height="32" title="Delay this character's turn until after the next character")
           |&nbsp;
           a(href="/encounter/next?char=" + current.name)
-            img(src="/images/button-next.png" width="32" height="32" title="Next: Move on to the next character's turn.")
+            img(src="/images/button-next.png" width="32" height="32" title="Next: Move on to the next character's turn (and save the game state).")
+          |&nbsp;
+          a(href="/encounter/load")
+            img(src="/images/button-load.png" width="32" height="32" title="Load: Re-load the game state as it was at the start o the current turn (last time \"Next\" was clicked).")
           |&nbsp;
           a(href="/encounter/")
             img(src="/images/button-refresh.png" width="32" height="32" title="Do nothing, just reload the game state (refresh)")

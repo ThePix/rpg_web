@@ -51,9 +51,9 @@ class Char {
 
   static fields() {
     return [
-      { name:'name', type:'string', display:false},
-      { name:'display', type:'string', display:false},
-      { name:'link', type:'string', display:false},
+      { name:'name', type:'string', display:false, disableSave:true},
+      { name:'display', type:'string', display:false, disableSave:true},
+      { name:'link', type:'string', display:false, disableSave:true},
       { name:'next', type:'string', display:false},
 
       { name:'turnCount', type:'int', display:false},
@@ -66,7 +66,7 @@ class Char {
       { name:'shock', type:'element', display:'Shock'},
       { name:'nether', type:'element', display:'Nether'},
 
-      { name:'pc', type:'bool', display:false},
+      { name:'pc', type:'bool', display:false, disableSave:true},
       { name:'current', type:'bool', display:false},
       { name:'stunned', type:'bool', display:"Stunned"},
       { name:'blooded', type:'bool', display:"Blooded"},
@@ -103,6 +103,59 @@ class Char {
       'disabled',
     ]
   }
+  
+  static loadData(chars, s) {
+    const regexp = /character~(\w+)\[([\s\S]*?)\]/
+    const ary = s.split('\n\n')
+    ary.pop() // last is blank!
+    //console.log(ary.length)
+    //console.log(ary[0].match(regexp))
+    for (let el of ary) {
+      const md = el.match(regexp)
+      //console.log("Name is " + md[1])
+      const char = chars.find(el => el.name === md[1])
+      if (!char) throw new Error("CharacterLoadException", "Unknown character: " + md[1])
+      const data = md[2].split('\n')
+      data.shift()
+      data.pop()
+      for (let datum of data) {
+        const regexp = /  (\w+)~(.*)$/
+        const md = datum.match(regexp)
+        const field = Char.fields().find(el => el.name === md[1])
+        if (!field) throw new Error("CharacterLoadException", "Unknown field: " + md[1])
+        if (field.type === 'bool') char[field.name] = (md[2] === 'true')
+        if (field.type === 'int') char[field.name] = parseInt(md[2])
+        if (field.type === 'string') char[field.name] = md[2]
+        if (field.type === 'element') char.elements[field.name].load(md[2])
+        //console.log("Field is " + field.name)
+        //console.log("Value is " + char[field.name])
+      }
+    }
+  }
+
+  static saveData(chars) {
+    let s = ''
+    for (let char of chars) {
+      s += char._getSaveData()
+    }
+    return s
+  }
+
+  _getSaveData() {
+    let s = 'character~' + this.name + '[\n'
+    for (let field of Char.fields()) {
+      if (field.disableSave || field.type === 'function') continue
+      if (field.type === 'element') {
+        s += '  ' + field.name + '~' + this.elements[field.name].save() + '\n'
+      }
+      else {
+        s += '  ' + field.name + '~' + this[field.name] + '\n'
+      }
+    }
+    return s + ']\n\n'
+  }
+    
+
   
   startTurn() {
     if (this.turnStarted) return
@@ -336,8 +389,6 @@ class Char {
 
 
 
-
-
 class ElementalEffect {
   constructor(owner, data) {
     this.owner = owner
@@ -354,6 +405,18 @@ class ElementalEffect {
       this.vulnProt = data["vulnerableTo" + this.getName()] + 10
     }
   }
+  
+  save() {
+    return this.count + '~' + this.condition + '~' + this.vulnProt
+  }
+  
+  load(s) {
+    const ary = s.split('~')
+    this.count = parseInt(ary[0])
+    this.condition = (ary[1] === 'true')
+    this.vulnProt = parseInt(ary[2])
+  }
+  
   
   startTurn() {
     if (this.condition && this.elementTurnStart) {
