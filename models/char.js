@@ -368,6 +368,15 @@ class Char {
 
 
   }
+
+  getAttackModifier() {
+    return -Math.floor(4 * (this.maxHits - this.hits) / this.maxHits)
+  }
+
+  getDefenceModifier(resist) {
+    return this[resist]
+  }
+
 }
 
 

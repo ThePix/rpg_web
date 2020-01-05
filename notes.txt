@@ -1,51 +1,9 @@
-ava\lib\concordance-options.js
-  replace blue with cyan
-
-
-
-Good things end at the start of the turn, bad at the end. therefore, delaying cannot be an advantage
-Need to flag if turn start has been done so it does not happen twice (when delaying) and unflag at turn end
 
 
 
 /
 
-Home page, links to others
-
-/chars
-
-Display a brief overview of the all characters (dead, stunned, elemental states, hit summary) in order
-Refreshes every 10 seconds
-
-/chars?name=Mary
-
-Display the current state of the character
-Players should refresh when it changes (button on page)
-
-/master
-
 Select an encounter (TODO)
-
-/setup
-
-Get init for each PC (NPCs default to 10) (TODO)
-
-/setupresponse
-
-Collects inits, forwards to encounter (via button?) (TODO)
-
-/encounter
-
-Run an encounter
-
-Skip or act or attack or add NPCs
-
-Skip drops char down the action list one place
-
-Act has the char miss a turn (i.e., the action is resolved outside the system)
-
-Attack needs a target, a roll, and a bonus
-Save target, bonus defaults to 0
 
 Add a custom character
 Add a stock monster
@@ -58,15 +16,98 @@ Perhaps they should be aded after a character, all inserted at that point. Works
 
 
 
-Elemental effect: name, opposed
-count
-conditionFlag
-protectVulnLevel
-baseProtectVulnLevel
-immuneFlag
 
 
-One element effect handler object for each element for each character
-Specific elemental effect handlers for each element
 
-One element effect handler object for each character
+
+
+
+
+
+The great city of Deloth is threatened by a terrible frost dragon. Many adventurers have tried to defeat it, but all died. Jasiri, an old scholar, has a plan. She has researched artifacts that might offer protection, and has identified three that seem to offer the most hope.
+
+
+Three or four great adventurers meet to try to defeat it. 
+
+
+Three heroes, say level 10, giving us 24 points to spend.
+Start level 3 with 10 points, get two points per level
+
+
+
+
+A used to be high up in a criminal organisation called X, until somethyinmg happened, and he got thrown out
+
+A fighter with two attacks a round (Warrior (10), Rogue(8), also Bodyshock (3), Ranger (3)
+Two weapon fighting, short sword (-1 in RH, -4 in LH), +8, +3 attacks (total 5)
++16 hits
++2 reflex, +2 init, +6 hits, AC1, +2d12 damage with CA
+Also tentacle attacks!
+
+
+A tank with positional skills (Warrior (16), Defender (12), also Living Stone, Social climber)
+Broad sword and shield (+3 shield), +8, +3 attacks (total 4)
++16 hits
++5 fortitude
++32 hits
+Mark V
+Various attack steps
+Stone skin II (+3 armour, -1 to reflex/speed)
+Bash I (unarmed does 2d8)
+very minor noble, have tiny villa in city, one staff, one +1 weapon or item (well made)
+
+
+
+
+A wizard (Elementalist, some Shadow-dancer, Meta-mage, Linguist, Observer
+Firedart
+Ice shard (slowed)
+Ice armour (+1 armour)
+Resist fire/ice/storm
+Shock dagger (+3 storm damage, whilst held and attuned)
+Fireblast (burning damage)
+Wall of fire/ice
+Lightning blast (affect a 3x3 square adjacent to you, target can do no magic for a turn)
+Shock sword (+5 storm damage, whilst held and attuned)
+Flaming-cloak (3 fire damage to anyone within a square whilst attuned)
+Ice storm (5x5 square, slowed)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Three encounters
+The Ring of Hathragaad lies in an ancient crypt a few miles north of the city.
+Undead
+Hoard of zombies
+Two ghosts (immune to normal weapons)
+A lich
+
+The ring gives very good protection from fire and ice, so will be useful when getting:
+
+
+
+The Sword of Flame is currently being used by an ogre; you will need to travel to their realm to find him.
+A mechanism that can be used as a weapon by either side
+Ogre
+Orcs
+Goblins
+
+The sword of flame is especally good when...
+
+The chill rod of Zath is in a wizard's tower not far away. Zath was a very powerful elemental wizard who nevertheless over-reached himself. The tower is consequently amok with elemental creatures.
+
+Elementals
+Huge ice elemental spawns smaller ones
+
+
+
+A dragon

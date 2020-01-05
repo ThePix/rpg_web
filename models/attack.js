@@ -113,10 +113,10 @@ class Attack {
     if (allowCriticals && roll === 1) return AttackConsts.CRITICAL_MISS
     if (allowCriticals && roll === 20) return AttackConsts.CRITICAL_HIT
 
-    let result = this.bonus + roll + bonus
+    let result = this.bonus + roll + bonus + attacker.getAttackModifier()
     if (result < 6) return AttackConsts.BAD_MISS
     if (result < 11) return AttackConsts.PLAIN_MISS
-    result -= target[this.resist]
+    result -= target.getDefenceModifier(this.resist)
     if (result < 11) return AttackConsts.STAT_MISS
     if (this.resist === 'reflex' && target.shield) {
       result -= target.shield

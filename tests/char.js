@@ -7,7 +7,7 @@ const [Log] = require('../models/log.js')
 
 
 Log.debug = true
- 
+
 test('standard character', t => {
   const test = new Char({name: "Tester", size:"Tiny"})
   t.is(test.name, "Tester");
@@ -24,9 +24,6 @@ test('standard character', t => {
   test.elements.fire.count = 0
   test.elementalDamage(2, "fire")
   t.is(test.elements.fire.count, 2048);
-  
-  
-
 });
  
 
@@ -71,6 +68,20 @@ test('vulnerable to fire', t => {
 });
 
 
+
+test('getAttackModifier', t => {
+  const test = new Char({name: "Tester", size:"Tiny", hits:40 })
+  t.is(test.getAttackModifier(), -0);
+  test.hits = 31
+  t.is(test.getAttackModifier(), -0);
+  test.hits = 30
+  t.is(test.getAttackModifier(), -1);
+  test.hits = 10
+  t.is(test.getAttackModifier(), -3);
+  test.hits = 1
+  t.is(test.getAttackModifier(), -3);
+});
+ 
 
 
 

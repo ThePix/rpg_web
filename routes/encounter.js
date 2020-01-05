@@ -45,10 +45,12 @@ router.get('/next', function(req, res, next) {
 router.get('/load', function(req, res, next) {
   fs.readFile(SAVEFILE, function(err, s) {
     if (err) throw err;
+    Log.add("comment", "About to load last saved game...")
     const chars = req.app.get('chars');
     Char.loadData(chars, String(s))
     const char = chars.find(el => el.current)
     Log.recover()
+    Log.add("comment", "...Load last saved game")
     res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
   });  
 });
