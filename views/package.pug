@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h2 The "#{pack.name}" Profession Package
+  
+  each note in pack.notes
+    p 
+      =note
+  
+  table(class='big')
+    each i in [...Array(maxLevel).keys()]
+      tr
+        td
+          =i + 1
+        td !{pack.getBonuses(i + 1).join('<br/>')}
+            

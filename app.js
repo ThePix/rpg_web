@@ -3,6 +3,13 @@
 const PORT = 8091
 const REFRESH = 10
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+
+
 //const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
@@ -77,6 +84,9 @@ app.post('/damage', damagePostFun);
 
 const encounterRouter = require('./routes/encounter');
 app.use('/encounter', encounterRouter);
+
+const packagesRouter = require('./routes/packages');
+app.use('/packages', packagesRouter);
 
 
 

@@ -4,13 +4,58 @@
 
 class Package {
   constructor(name, data) {
-    if (data === undefined) data = {}
-    this.name = name
+    this.name = name.trim()
+    for (let key in data) this[key] = data[key]
+    if (!Array.isArray(this.bonuses)) throw new Error('No bonus array set for package ' + name)
   }
   
-  getBonuses(level, char) {
-    
+  setBonuses(char, level) {
+    for (let bonus of this.bonuses) {
+      bonus.apply(char, level)
+    }
+    if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * level)
   }
+
+  getBonuses(level) {
+    let result = []
+    for (let bonus of this.bonuses) {
+      const n = bonus.applies(level)
+      if (n === 1) result.push("Gain:  " + bonus.name)
+      if (n === 2) result.push("+1 to: " + bonus.name)
+    }
+    return result
+  }
+
+/*  getBonusesAsHtml(level) {
+    const ary = getBonuses(level)
+    if (ary.length === 0) return ''
+    return ary.*/
+    
+
+  to_js() {
+    let s = "    new Package('" + this.name + "', {notes:[\n"
+    for (let note of this.notes) {
+      s += "      \"" + note + "\",\n"
+    }
+    s += "    ], bonuses:[\n"
+    for (let bonus of this.bonuses) {
+      s += bonus.to_js()
+    }
+    return s + "    ]}),\n"
+  }
+    
+  to_wiki() {
+    let s = "### " + this.name + "\n\n"
+    for (let note of this.notes) {
+      s += "_" + note + "_\n"
+    }
+    s += "\n"
+    for (let bonus of this.bonuses) {
+      s += bonus.to_wiki()
+    }
+    return s + "\n\n"
+  }
+    
 }
 
 
@@ -20,7 +65,7 @@ class Bonus {
   constructor(name, data) {
     if (data === undefined) data = {}
     for (let key in data) this[key] = data[key]
-    this.name = name
+    this.name = name.trim()
   }
   
   title(level) {
@@ -30,13 +75,41 @@ class Bonus {
   description(level) {
     
   }
-
-  applies(level) {
-    
+  
+  to_js() {
+    let s = "      new Bonus('" + this.name + "', {progression:" + this.progression + ", flags:\"" + this.flags + "\""
+    if (this.notes && this.notes.length > 0) {
+      s += ", notes:[\n"
+      for (let note of this.notes) {
+        s += "        \"" + note + "\",\n"
+      }
+      s += "      ]"
+    }
+    return s + "}),\n"
   }
 
-  apply(level, char) {
-    
+  // return 1 if the skill is gained at this level, 2 if it is improved, 0 otherwise
+  applies(level) {
+    if (Array.isArray(this.progression)) {
+      if (this.progression[0] === level) return 1
+      return this.progression.includes(level) ? 2 : 0
+    }
+    if (this.progression === 'primary') {
+      return this._appliesPrimary(level)
+    }
+    if (typeof this.progression === 'number') {
+      return level === this.progression ? 1 : 0
+    }
+    if (this.progression.match(/^secondary/)) {
+      return this._appliesSecondary(level)
+    }
+  }
+
+  apply(char, level) {
+    const grade = this._grade(level)
+    if (grade === 0) return
+    if (char[this.name] === undefined) char[this.name] = 0
+    char[this.name] += grade
   }
   
   _grade(level) {
@@ -76,6 +149,17 @@ class Bonus {
     }
   }
   
+  _appliesPrimary(level) {
+    if (level < 1) return 0
+    if (level === 1) return 1
+    
+    if (level <= 5) return 2
+    if (level <= 15) return level % 2 === 1 ? 2 : 0
+    if (level <= 30) return level % 3 === 0 ? 2 : 0
+    if (level <= 50) return level % 4 === 2 ? 2 : 0
+    return level % 5 === 0 ? 2 : 0
+  }
+  
   _gradeSecondary(level) {
     if (this.secondaryOffset === undefined) {
       if (this.progression.match(/^secondary\d$/)) {
@@ -87,28 +171,17 @@ class Bonus {
     }
     return Math.floor((level + 3 - this.secondaryOffset) / 3)
   }
-}
 
-
-
-class LevelBonus extends Bonus {
-  constructor(name, data) {
-    super(name, data)
-  }
-}
-
-class MultiBonus extends Bonus {
-  constructor(name, levels) {
-    super(name, {})
-    this.levels = levels
-  }
-  
-  
-}
-
-class SkillBonus extends Bonus {
-  constructor(name, skillType) {
-    super(name, {skillType:skillType})
+  _appliesSecondary(level) {
+    if (this.secondaryOffset === undefined) {
+      if (this.progression.match(/^secondary\d$/)) {
+        this.secondaryOffset = parseInt(this.progression.replace('secondary', ''))
+      }
+      else {
+        this.secondaryOffset = 1
+      }
+    }
+    return (level - this.secondaryOffset) % 3 === 0 ? (level < 4 ? 1 : 2) : 0
   }
 }
 
@@ -197,7 +270,7 @@ x - Special rules apply.
         'as Mark 4, but Opportunity Attacks due to a Mark have combat advantage',
       ]}),
       new Bonus('Draw in', {progression:8, flags:'F', note:'on successful attack, you and foe move one square in your direction'}),
-      new Bonus('Push back', {progression:8, flags:'F', note:'on successful attack, you and foe move one square in foe's direction'}),
+      new Bonus('Push back', {progression:8, flags:'F', note:'on successful attack, you and foe move one square in foe\'s direction'}),
       new Bonus('Dance of blades', {progression:8, flags:'F', note:'on successful attack, you and foe each move one square in any direction'}),
     ],
   }),
@@ -304,39 +377,7 @@ Flaming blade*/
 
   new Package('Druid', {
     notes:[
-      'The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform rituals (for the druid disease, cleansing, fertility, alter weather, fertlity).'
-    ],
-    hitsPerLevel:0,
-    bonuses:[
-      new Bonus('Casting', {progression:'primary', notes:['Casting spells from this list']}),
-      new Bonus('Nature', {progression:'secondary2'}),
-      new Bonus('Religion', {progression:'secondary1'}),
-      
-      new Bonus('Light', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Beast tongue', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Tremors', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Hostile trees', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Surefoot', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Calm beast', {progression:1, flags:'S', notes:['']}),
-      new Bonus('Renewal', {progression:1, flags:'Sr', notes:['second wind has double effect for you and all friends within three squares until end of your next turn']}),
-      new Bonus('Waterwalking', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Beastform', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Stoneflesh', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Beast mastery', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Calm', {progression:1, flags:'S', notes:['']}),
-      new Bonus('Call lightning', {progression:1, flags:'S', notes:['from sky only']}),
-      new Bonus('Protection from elements', {progression:1, flags:'So', notes:['']}),
-    ],
-  }),
-
-
-
-
-
-
-  new Package('Druid', {
-    notes:[
-      'The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform rituals (for the druid disease, cleansing, fertility, alter weather, fertlity).'
+      'The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform rituals (for the druid disease, cleansing, fertility, alter weather, fertility).'
     ],
     hitsPerLevel:0,
     bonuses:[
@@ -367,14 +408,13 @@ Flaming blade*/
 
 
 
- 
 ]
 
 
 
 
 
-module.exports = [Package, packages, Bonus, LevelBonus, MultiBonus, SkillBonus]
+module.exports = [Package, packages, Bonus]
 
 
 
