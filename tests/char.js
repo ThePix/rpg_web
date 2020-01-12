@@ -8,6 +8,18 @@ const [Log] = require('../models/log.js')
 
 Log.debug = true
 
+
+test('fieldsInclude', t => {
+  const test = new Char({name: "Tester", size:"Tiny"})
+  t.is(test.fieldsInclude("will"), true);
+  t.is(test.fieldsInclude("armour"), true);
+  t.is(test.fieldsInclude("shield"), true);
+  t.is(test.fieldsInclude("hats"), false);
+  t.is(test.fieldsInclude("ghost"), false);
+});
+ 
+
+
 test('standard character', t => {
   const test = new Char({name: "Tester", size:"Tiny"})
   t.is(test.name, "Tester");

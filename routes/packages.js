@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const [Package, packages, Bonus] = require('../models/package.js')
+const [AttackConsts, Attack, WeaponAttack, WEAPONS] = require('../models/attack.js')
+const [Char] = require('../models/char.js')
 
 const maxLevel = 20
 
@@ -95,11 +97,39 @@ router.get('/import', function(req, res, next) {
       if (err) throw err;
     });    
     console.log("Done")
-  
-  
   });  
-  
   res.render('packages', { packages:packages, timestamp:req.timestamp });
+});
+
+
+router.post('/', function(req, res, next) {
+  console.log("Here")
+  const data = {packages:[]}
+  data.name = req.body.name || ''
+  data.sex = req.body.sex || ''
+  data.race = req.body.race || ''
+  data.profession = req.body.profession || ''
+  data.level = parseInt(req.body.level || '4')
+  data.points = 0
+  const char = new Char(data)
+  for (let key in req.body) {
+    if (!key.startsWith('package_')) continue
+    const name = key.replace('package_', '')
+    data.packages[name] = parseInt(req.body[key])
+    data.points += data.packages[name]
+    const p = packages.find(el => el.name === name)
+    p.setBonuses(char, data.packages[name])
+  }
+  for (let n of [1, 2, 3, 4]) {
+    data['weapon' + n] = req.body['weapon' + n]
+  }
+  console.log(data)
+  
+  console.log(char)
+  
+  const warning = (data.points < data.level * 2 + 2) ? "tooLow" : ((data.points > data.level * 2 + 2) ? "tooHigh" : "okay")
+  
+  res.render('creator', { data:data, timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, warning:warning });
 });
 
 

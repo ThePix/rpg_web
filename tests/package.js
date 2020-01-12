@@ -142,7 +142,7 @@ test('getBonuses2', t => {
   const tester = { shield:0, armour:0, maxHits:20 }
   const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
     new Bonus('nature', {progression:'secondary2'}),
-    new Bonus('shield', {progression:[3, 7, 11]}),
+    new Bonus('Shield', {progression:[3, 7, 11], altName:'shield'}),
     new Bonus('armour', {progression:2}),
   ]})
 

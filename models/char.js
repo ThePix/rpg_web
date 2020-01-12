@@ -89,6 +89,9 @@ class Char {
       { name:'onDone75', type:'function' },
       { name:'onDone25', type:'function' },
       { name:'ignoreAttackTypes', type:'function' },
+      { name:'attacks', type:'function' },
+      { name:'elementalThreshold', type:'function' },
+      { name:'elements', type:'function' },
     ]
   }
   
@@ -150,7 +153,10 @@ class Char {
     return s + ']\n\n'
   }
     
-
+  fieldsInclude(s) {
+    const res = Char.fields().find(el => el.name.toLowerCase() === s.toLowerCase())
+    return (res !== undefined)
+  }
   
   startTurn() {
     if (this.turnStarted) return

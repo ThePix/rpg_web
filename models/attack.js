@@ -210,7 +210,7 @@ class WeaponAttack extends Attack {
 }
 
 
-module.exports = [AttackConsts, Attack, WeaponAttack]
+module.exports = [AttackConsts, Attack, WeaponAttack, WEAPONS]
 
 
 

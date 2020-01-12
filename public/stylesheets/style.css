@@ -30,9 +30,24 @@ table {
   border: black 1px solid;
 }
 
-table.big {
-  font: 28px "Lucida Grande", Helvetica, Arial, sans-serif;
+table.unseen {
+  border: none;
 }
+
+td.unseen {
+  background-color: white;
+}
+
+td.okay {
+  /*background:green;*/
+}
+td.tooHigh {
+  background:red;
+}
+td.tooLow {
+  background:yellow;
+}
+
 
 td {
   padding: 5px;
@@ -97,13 +112,17 @@ td.link {
 
 input[type=number] {
   width: 60px;
-  font-size: 20px;
+  font-size: 24px;
   text-align:right;
 }
 
 input[type=text] {
   width: 200px;
-  font-size: 20px;
+  font-size: 24px;
+}
+
+select {
+  font-size: 24px;
 }
 
 button {
@@ -112,6 +131,31 @@ button {
   padding-left: 12px;
   padding-right: 12px;
 }
+
+button.small {
+  font-size: 1em;
+  padding: 3px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #00B7FF;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1em;
+  padding:0;
+}
+.link-button:focus {
+  outline: none;
+}
+.link-button:active {
+  color:red;
+}
+
+
 
 .errors {
   background-color: yellow;

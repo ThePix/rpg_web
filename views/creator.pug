@@ -1,0 +1,109 @@
+extends layout
+
+block content
+  h2 Create A Character
+  table(class="unseen")
+    tr
+      td
+        form(method="post" action="/packages")
+          table(class='big')
+            tbody
+              tr
+                td(colspan=4)
+                  button(type="submit" name="submit_param" value="refresh" class="small") Refresh
+                  |  
+                  button(type="submit" name="submit_param" value="create" class="small") Create
+            tbody
+              tr
+                th Attribute
+                th Value
+                th Attribute
+                th Value
+              tr
+                td Name
+                td
+                  input(type='text' name='name' value=data.name)
+                td Sex
+                td
+                  input(type='text' name='sex' value=data.sex)
+              tr
+                td Profession
+                td
+                  input(type='text' name='profession' value=data.profession)
+                td Race
+                td
+                  input(type='text' name='race' value=data.race)
+              tr
+                td Level
+                td
+                  input(type='number' name='level' value=data.level)
+                td Points
+                td(class=warning) #{data.points}/#{data.level * 2 + 2}
+
+            tbody
+              tr
+                th Weapons
+              tr
+                td Weapon 1
+                td
+                  select(name="weapon1")
+                    option None
+                    each weapon in weapons
+                      option(selected=(data.weapon1 === weapon.name))
+                        =weapon.name
+                td Weapon 2
+                td
+                  select(name="weapon2")
+                    option None
+                    each weapon in weapons
+                      option(selected=(data.weapon2 === weapon.name))
+                        =weapon.name
+              tr
+                td Weapon 3
+                td
+                  select(name="weapon3")
+                    option None
+                    each weapon in weapons
+                      option(selected=(data.weapon3 === weapon.name))
+                        =weapon.name
+                td Weapon 4
+                td
+                  select(name="weapon4")
+                    option None
+                    each weapon in weapons
+                      option(selected=(data.weapon4 === weapon.name))
+                        =weapon.name
+
+            tbody
+              tr
+                th(colspan=3) Package
+                th Ranks
+
+            tbody
+              each p in packages
+                tr
+                  td(colspan=3 style="text-align:left")
+                    a(href='/packages/' + p.name target="_blank") #{p.name}
+                  td
+                    input(type='number' name='package_' + p.name value=(data.packages[p.name] ? data.packages[p.name] : 0))
+
+      td(class="unseen")
+        p  
+      td(style="vertical-align:top")
+        p 
+          b
+            i Derived attributes
+        ul
+          li Armour (+#{char.Armour})
+          li Shield (+#{char.Shield})
+          li Initiative (+#{char.Init})
+          li Reflex (+#{char.Reflex})
+          li Stamina (+#{char.Stamina})
+          li Will (+#{char.Will})
+        p 
+          b
+            i Skills, spells, etc.
+        ul
+          each value, name in char
+            if !char.fieldsInclude(name)
+              li #{name} (+#{value})
