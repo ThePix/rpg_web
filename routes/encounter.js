@@ -100,6 +100,17 @@ router.get('/add-custom', function(req, res, next) {
 
 
 
+router.get('/db-reset', function(req, res, next) {
+  Char.clearDb()
+  res.redirect('/')
+});
+router.get('/db-load', function(req, res, next) {
+  const chars = req.app.get('chars');
+  Char.loadFromDb(chars)
+  res.redirect('/')
+});
+
+
 
 
 router.post('/clear-alerts', function(req, res, next) {

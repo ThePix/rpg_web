@@ -1,7 +1,13 @@
 'use strict';
 
+//const mongo = require('mongodb'); 
+
 const [AttackConsts] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
+
+const MongoClient = require('mongodb').MongoClient
+const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
+const mongoUrl = 'mongodb://localhost:27017/rpg';
 
 
 class Char {
@@ -36,6 +42,8 @@ class Char {
       shock:new ShockElement(this, data),
       nether:new NetherElement(this, data),
     }
+    
+    this.saveToDb()
   }
   
   static sizes() {
@@ -382,11 +390,66 @@ class Char {
   getDefenceModifier(resist) {
     return this[resist]
   }
+  
+  saveToDb() {
+    const data = {name:this.name, data:stringify(this)}
+/*    for (let key in this) {
+      if (Array.isArray(this[key])) {
+        for (let subkey of this[key]) {
+          data[key + '_' + subkey] = this[key][subkey]
+        }
+      }
+      else if (typeof this[key] === 'object') {
+        console.log(key)
+        data[key] = this[key].name
+      }
+      else {
+        data[key] = this[key]
+      }
+    }*/
+    MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
+      if (err) throw err;
 
+      const db = client.db("rpg");
+      db.collection("chars").insertOne(data, function(err, res) {
+        if (err) throw err
+        console.log("1 document inserted")
+      })
+      client.close();
+    });
+  }  
+  
+  static clearDb() {
+    MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
+      if (err) throw err;
+
+      const db = client.db("rpg");
+      db.collection("chars").deleteMany({}, function(err, res) {
+        if (err) throw err
+        console.log(res.result.n + " document(s) deleted");
+      })
+      client.close();
+    });
+  }  
+
+  static loadFromDb(chars) {
+    MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
+      if (err) throw err;
+
+      const db = client.db("rpg");
+      db.collection("chars").find({}).toArray(function(err, res) {
+        if (err) throw err
+        console.log(res.length + " document(s) found");
+        chars.length = 0
+        for (let data of res) {
+          const c = new Char(data)
+          chars.pop(c)
+        }
+      })
+      client.close();
+    });
+  }  
 }
-
-
-
 
 
 
