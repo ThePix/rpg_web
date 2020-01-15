@@ -9,6 +9,7 @@ const MongoClient = require('mongodb').MongoClient
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
 const mongoUrl = 'mongodb://localhost:27017/rpg';
 
+//const {parse, stringify} = require('flatted/cjs');
 
 class Char {
   constructor(data) {
@@ -391,9 +392,9 @@ class Char {
     return this[resist]
   }
   
-  saveToDb() {
-    const data = {name:this.name, data:stringify(this)}
-/*    for (let key in this) {
+  flatten() {
+    const data = {}
+    for (let key in this) {
       if (Array.isArray(this[key])) {
         for (let subkey of this[key]) {
           data[key + '_' + subkey] = this[key][subkey]
@@ -406,12 +407,18 @@ class Char {
       else {
         data[key] = this[key]
       }
-    }*/
+    }
+    return data
+  }
+  
+  saveToDb() {
+    const data = {name:this.name, data:this.flatten()}
+    const query = {name:this.name}
     MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
       if (err) throw err;
 
       const db = client.db("rpg");
-      db.collection("chars").insertOne(data, function(err, res) {
+      db.collection("chars").findOneAndReplace(query, data, {upsert:true}, function(err, res) {
         if (err) throw err
         console.log("1 document inserted")
       })
@@ -419,21 +426,32 @@ class Char {
     });
   }  
   
-  static clearDb() {
-    MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
+  static async clearDb() {
+    console.log("here 1");
+    test = 1
+    await MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
       if (err) throw err;
-
+    test = 2
       const db = client.db("rpg");
+      console.log("here 2");
       db.collection("chars").deleteMany({}, function(err, res) {
         if (err) throw err
         console.log(res.result.n + " document(s) deleted");
+    test = 3
       })
       client.close();
     });
+    console.log("Done" + test);
   }  
 
-  static loadFromDb(chars) {
-    MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
+
+  static unflatten(data) {
+    const char = new Char(data)
+  }
+
+
+  static async loadFromDb(chars) {
+    await MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
       if (err) throw err;
 
       const db = client.db("rpg");
@@ -442,17 +460,17 @@ class Char {
         console.log(res.length + " document(s) found");
         chars.length = 0
         for (let data of res) {
-          const c = new Char(data)
-          chars.pop(c)
+          chars.pop(Char.unflatten(data))
         }
       })
       client.close();
     });
+    console.log("Done");
   }  
 }
 
 
-
+let test = 0
 
 
 class ElementalEffect {
