@@ -43,8 +43,6 @@ class Char {
       shock:new ShockElement(this, data),
       nether:new NetherElement(this, data),
     }
-    
-    this.saveToDb()
   }
   
   static sizes() {
@@ -392,85 +390,44 @@ class Char {
     return this[resist]
   }
   
-  flatten() {
-    const data = {}
-    for (let key in this) {
-      if (Array.isArray(this[key])) {
-        for (let subkey of this[key]) {
-          data[key + '_' + subkey] = this[key][subkey]
-        }
-      }
-      else if (typeof this[key] === 'object') {
-        console.log(key)
-        data[key] = this[key].name
-      }
-      else {
-        data[key] = this[key]
-      }
-    }
-    return data
-  }
-  
-  saveToDb() {
-    const data = {name:this.name, data:this.flatten()}
+  async saveToDb() {
+    const data = {name:this.name, data:this._getSaveData()}
     const query = {name:this.name}
-    MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
-      if (err) throw err;
-
-      const db = client.db("rpg");
-      db.collection("chars").findOneAndReplace(query, data, {upsert:true}, function(err, res) {
-        if (err) throw err
-        console.log("1 document inserted")
-      })
-      client.close();
-    });
+    const client = await MongoClient.connect(mongoUrl, mongoOpts).catch(err => { console.log("\n\n" + err + "\n\n"); })
+    const db = client.db("rpg");
+    const res = await db.collection("chars").findOneAndReplace(query, data, {upsert:true}).catch(err => { console.log(err); })
+    console.log("1 document inserted (" + this.name + ")")
+    client.close();
   }  
   
   static async clearDb() {
-    console.log("here 1");
-    test = 1
-    await MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
-      if (err) throw err;
-    test = 2
-      const db = client.db("rpg");
-      console.log("here 2");
-      db.collection("chars").deleteMany({}, function(err, res) {
-        if (err) throw err
-        console.log(res.result.n + " document(s) deleted");
-    test = 3
-      })
-      client.close();
-    });
-    console.log("Done" + test);
+    const client = await MongoClient.connect(mongoUrl, mongoOpts).catch(err => { console.log(err); })
+    const db = client.db("rpg");
+    const res = await db.collection("chars").deleteMany({}).catch(err => { console.log(err); })
+    console.log(res.result.n + " document(s) deleted");
+    client.close();
   }  
 
-
-  static unflatten(data) {
-    const char = new Char(data)
+  static async saveToDb(chars) {
+    for (let char of chars) {
+      if (char.name) char.saveToDb()
+    }
   }
 
-
   static async loadFromDb(chars) {
-    await MongoClient.connect(mongoUrl, mongoOpts, (err, client) => {
-      if (err) throw err;
-
-      const db = client.db("rpg");
-      db.collection("chars").find({}).toArray(function(err, res) {
-        if (err) throw err
-        console.log(res.length + " document(s) found");
-        chars.length = 0
-        for (let data of res) {
-          chars.pop(Char.unflatten(data))
-        }
-      })
-      client.close();
-    });
+    const client = await MongoClient.connect(mongoUrl, mongoOpts).catch(err => { console.log(err); })
+    const db = client.db("rpg");
+    const res = await db.collection("chars").find({}).catch(err => { console.log(err); })
+    console.log(res.length + " document(s) found");
+    chars.length = 0
+    for (let data of res) {
+      chars.pop(Char.unflatten(data))
+    }
+    client.close();
     console.log("Done");
   }  
 }
 
-
-let test = 0
 
 
 class ElementalEffect {

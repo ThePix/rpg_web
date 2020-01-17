@@ -222,25 +222,3 @@ test('save and load', t => {
   t.is(test3.shield, 2)
   
 })
-
-
-
-
-
-test('db save and load', t => {
-  const test1 = new Char({name: "Tester1", vulnerableToFire:1, hits:40})
-  
-  test1.saveToDb()
-  
-  
-
-  const s = Char.saveData([test1, test2, test3])
-  Char.loadData([test1, test2, test3], s)
-  
-  t.is(test1.elements.fire.vulnProt, 11)
-  t.is(test2.hits, 40)
-  t.is(test3.shield, 2)
-  
-})
-
-

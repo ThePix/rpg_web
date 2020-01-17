@@ -109,6 +109,11 @@ router.get('/db-load', function(req, res, next) {
   Char.loadFromDb(chars)
   res.redirect('/')
 });
+router.get('/db-save', function(req, res, next) {
+  const chars = req.app.get('chars');
+  Char.saveToDb(chars)
+  res.redirect('/')
+});
 
 
 
