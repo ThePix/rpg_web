@@ -45,6 +45,16 @@ class Char {
     }
   }
   
+  
+  
+  static create(name, packages, data) {
+    const c = new Char({name:name, shield:0, armour:0, maxHits:20, packages:data })
+    Package.setBonuses(packages, c)
+    return c
+  }
+  
+  
+  
   static sizes() {
     return [
       "microscopic",  // literally
@@ -99,6 +109,7 @@ class Char {
       { name:'attacks', type:'function' },
       { name:'elementalThreshold', type:'function' },
       { name:'elements', type:'function' },
+      { name:'packages', type:'function' },
     ]
   }
   
@@ -559,4 +570,20 @@ class NetherElement extends ElementalEffect {
 }
 
 module.exports = [Char]
+
+const [Package, packages, Bonus] = require('../models/package.js')
+
+const getTester = function(level) {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
+    new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
+    new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
+  ]})
+  const tester = Char.create("Tester", [test], {Package:level})
+
+  return tester  
+}
+
+const tester = getTester(10)  
+console.log(tester)
 

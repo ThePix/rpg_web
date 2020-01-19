@@ -10,10 +10,16 @@ class Package {
   }
   
   setBonuses(char, level) {
+    console.log("Here 1")
+    if (level === undefined) level = char.packages[this.name] || 0
+    if (char.notes === undefined) char.notes = []
+    console.log("Here 2: " + level)
     for (let bonus of this.bonuses) {
       bonus.apply(char, level)
     }
+    console.log("Here 3")
     if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * level)
+    console.log("Here 4")
   }
 
   getBonuses(level) {
@@ -55,7 +61,12 @@ class Package {
     }
     return s + "\n\n"
   }
-    
+  
+  static setBonuses(packages, char) {
+    for (let p of packages) {
+      p.setBonuses(char)
+    }
+  }
 }
 
 
@@ -110,7 +121,22 @@ class Bonus {
     if (grade === 0) return
     const name = this.altName ? this.altName : this.name
     if (char[name] === undefined) char[name] = 0
+    
     char[name] += grade
+    
+    if (this.script) this.script(char)
+    
+    if (this.notes) {
+      if (typeof this.notes === "string") {
+        char.notes.push(this.notes)
+      }
+      else if (typeof this.notes === "function") {
+        char.notes.push(this.notes(grade))
+      }
+      else if (Array.isArray(this.notes)) {
+        char.notes.push(this.notes[grade - 1])
+      }
+    }
   }
   
   _grade(level) {

@@ -2,6 +2,7 @@
 
 import test from 'ava';
 const [Package, packages, Bonus] = require('../models/package.js')
+const [Char] = require('../models/char.js')
  
 
 
@@ -122,16 +123,19 @@ test('appliesSecondary2', t => {
   //console.log(r)
 
 
-test('getBonuses1', t => {
-  const tester = { shield:0, armour:0, maxHits:20 }
+const getTester = function(level) {
   const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2'}),
-    new Bonus('shield', {progression:[3, 7, 11]}),
-    new Bonus('armour', {progression:2}),
+    new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
+    new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
+    new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
   ]})
+  const tester = Char.create("Tester", [test], {Package:level})
 
-  test.setBonuses(tester, 1)
-  
+  return tester  
+}
+
+test('getBonuses1', t => {
+  const tester = getTester(1)  
   t.is(tester.maxHits, 20)
   t.is(tester.shield, 0)
   t.is(tester.nature, undefined)
@@ -139,15 +143,7 @@ test('getBonuses1', t => {
 });
 
 test('getBonuses2', t => {
-  const tester = { shield:0, armour:0, maxHits:20 }
-  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2'}),
-    new Bonus('Shield', {progression:[3, 7, 11], altName:'shield'}),
-    new Bonus('armour', {progression:2}),
-  ]})
-
-  test.setBonuses(tester, 2)
-  
+  const tester = getTester(2)
   t.is(tester.maxHits, 21)
   t.is(tester.shield, 0)
   t.is(tester.nature, 1)
@@ -155,36 +151,27 @@ test('getBonuses2', t => {
 });
 
 test('getBonuses10', t => {
-  const tester = { shield:0, armour:0, maxHits:20 }
-  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2'}),
-    new Bonus('shield', {progression:[3, 7, 11]}),
-    new Bonus('armour', {progression:2}),
-  ]})
-
-  test.setBonuses(tester, 10)
-  
+  const tester = getTester(10)  
   t.is(tester.maxHits, 25)
   t.is(tester.shield, 2)
   t.is(tester.nature, 3)
   t.is(tester.armour, 1)
+
+  t.is(tester.notes[0], "Good at nature skill")
+  t.is(tester.notes[1], "Medium shield")
+  t.is(tester.notes[2], "Armour 1")
 });
 
 test('getBonuses20', t => {
-  const tester = { shield:0, armour:0, maxHits:20 }
-  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2'}),
-    new Bonus('shield', {progression:[3, 7, 11]}),
-    new Bonus('armour', {progression:2}),
-  ]})
-
-  test.setBonuses(tester, 20)
-  
+  const tester = getTester(20)  
   t.is(tester.maxHits, 30)
   t.is(tester.shield, 3)
   t.is(tester.nature, 7)
   t.is(tester.armour, 1)
 });
+
+
+
 
 
 

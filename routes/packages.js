@@ -103,7 +103,6 @@ router.get('/import', function(req, res, next) {
 
 
 router.post('/', function(req, res, next) {
-  console.log("Here")
   const data = {packages:[]}
   data.name = req.body.name || ''
   data.sex = req.body.sex || ''
@@ -111,20 +110,19 @@ router.post('/', function(req, res, next) {
   data.profession = req.body.profession || ''
   data.level = parseInt(req.body.level || '4')
   data.points = 0
-  const char = new Char(data)
   for (let key in req.body) {
     if (!key.startsWith('package_')) continue
     const name = key.replace('package_', '')
     data.packages[name] = parseInt(req.body[key])
     data.points += data.packages[name]
-    const p = packages.find(el => el.name === name)
-    p.setBonuses(char, data.packages[name])
+    //const p = packages.find(el => el.name === name)
+    //p.setBonuses(char, data.packages[name])
   }
   for (let n of [1, 2, 3, 4]) {
     data['weapon' + n] = req.body['weapon' + n]
   }
   console.log(data)
-  
+  const char = Char.create(data, packages, data)
   console.log(char)
   
   const warning = (data.points < data.level * 2 + 2) ? "tooLow" : ((data.points > data.level * 2 + 2) ? "tooHigh" : "okay")
