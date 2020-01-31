@@ -1,11 +1,12 @@
 extends layout
 
 block content
-  h2 Create A Character
+  h2 Create A #{title}
   table(class="unseen")
     tr
-      td
+      td(width="680")
         form(method="post" action="/packages")
+          input(type='hidden' id='maxPoints' value=char.maxPoints)
           table(class='big')
             tbody
               tr
@@ -22,23 +23,23 @@ block content
               tr
                 td Name
                 td
-                  input(type='text' name='name' value=data.name title='Your character must have a unique name')
+                  input(type='text' name='name' value=char.name title='Your character must have a unique name')
                 td Sex
                 td
-                  input(type='text' name='sex' value=data.sex title='Probably male or female (no effect on skills, stats, etc.)')
+                  input(type='text' name='sex' value=char.sex title='Probably male or female (no effect on skills, stats, etc.)')
               tr
                 td Profession
                 td
-                  input(type='text' name='profession' value=data.profession title='How your character makes a living (no effect on skills, stats, etc.)')
+                  input(type='text' name='profession' value=char.profession title='How your character makes a living (no effect on skills, stats, etc.)')
                 td Race
                 td
-                  input(type='text' name='race' value=data.race title='Your character\'s species, race or ethnicity, as agree with the GM (no effect on skills, stats, etc.)')
+                  input(type='text' name='race' value=char.race title='Your character\'s species, race or ethnicity, as agree with the GM (no effect on skills, stats, etc.)')
               tr
                 td Level
                 td
-                  input(type='number' name='level' value=data.level title='Your character\'s level, as specified by the GM')
+                  input(type='number' name='level' id='level' value=char.level title='Your character\'s level, as specified by the GM')
                 td Points
-                td(class=warning title='How many points you have spent, over the total available; if this is yellow you have some to spend, if it is red you have spent too many') #{data.points}/#{data.level * 2 + 2}
+                td(id='points' class=warning title='How many points you have spent, over the total available; if this is yellow you have some to spend, if it is red you have spent too many') ---
 
             tbody
               - const weaponTip = 'You can select up to four weapons, but your character will only have skill in them if the appropriate packages are also selected'
@@ -50,14 +51,14 @@ block content
                   select(name="weapon1" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(data.weapon1 === weapon.name))
+                      option(selected=(char.weapon1 === weapon.name))
                         =weapon.name
                 td Weapon 2
                 td
                   select(name="weapon2" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(data.weapon2 === weapon.name))
+                      option(selected=(char.weapon2 === weapon.name))
                         =weapon.name
               tr
                 td Weapon 3
@@ -65,14 +66,14 @@ block content
                   select(name="weapon3" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(data.weapon3 === weapon.name))
+                      option(selected=(char.weapon3 === weapon.name))
                         =weapon.name
                 td Weapon 4
                 td
                   select(name="weapon4" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(data.weapon4 === weapon.name))
+                      option(selected=(char.weapon4 === weapon.name))
                         =weapon.name
 
             tbody
@@ -82,27 +83,30 @@ block content
 
             tbody
               each p in packages
-                tr
-                  td(colspan=3 style="text-align:left")
-                    a(href='/packages/' + p.name target="_blank" title='Click here for information on this package (opens in a new tab)') #{p.name}
-                  td
-                    input(
-                      type='number' 
-                      name='package_' + p.name
-                      value=(data.packages[p.name] ? data.packages[p.name] : 0)
-                      min=0
-                      max=data.level
-                      title='Gain skills and abilities from this package by spending points up to the character\'s current level'
-                    )
+                if !p.excludes || !p.excludes.includes(char.charType)
+                  tr
+                    td(colspan=3 style="text-align:left")
+                      a(href='/packages/' + p.name target="_blank" title='Click here for information on this package (opens in a new tab)') #{p.name}
+                    td
+                      input(
+                        type='number' 
+                        name='package_' + p.name
+                        value=(char.packages[p.name] ? char.packages[p.name] : 0)
+                        min=0
+                        max=char.level
+                        title='Gain skills and abilities from this package by spending points up to the character\'s current level'
+                        id='package_' + p.name.replace(/[^a-zA-Z0-9]/g, '_')
+                        data-group=p.group
+                      )
 
       td(class="unseen")
         p  
-      td(style="vertical-align:top")
+      td(style="vertical-align:top" width="400")
         p 
           b
             i Derived attributes
         ul
-          each att in ["Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
+          each att in ["Attack", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
             - const value = char[att.toLowerCase()]
             li #{att} (#{value === 0 ? '-' : '+' + value})
         p 
@@ -110,5 +114,14 @@ block content
             i Skills, spells, etc.
         ul
           each value, name in char
-            if !char.fieldsInclude(name)
+            if name.match(/^[A-Z]/)
               li #{name} (+#{value})
+        p 
+          b
+            i Notes
+        ul
+          each s in char.notes
+            li #{s}
+
+
+  script(src="javascripts/creator.js")

@@ -102,32 +102,48 @@ router.get('/import', function(req, res, next) {
 });
 
 
+const charTypes = {
+  pc:{name:'Player Character'},
+  npc:{name:'Non-Player Character'},
+  min:{name:'Minion'},
+  std:{name:'Standard Monster'},
+  elite:{name:'Elite Monster (counts as 2 standard)'},
+  boss:{name:'Boss Monster (counts as four standard)'},
+  solo:{name:'Solo Monster'},
+}
+
 router.post('/', function(req, res, next) {
-  const data = {packages:[]}
-  data.name = req.body.name || ''
-  data.sex = req.body.sex || ''
-  data.race = req.body.race || ''
-  data.profession = req.body.profession || ''
-  data.level = parseInt(req.body.level || '4')
-  data.points = 0
+  const data = {}
+  let points = 0
   for (let key in req.body) {
     if (!key.startsWith('package_')) continue
     const name = key.replace('package_', '')
-    data.packages[name] = parseInt(req.body[key])
-    data.points += data.packages[name]
+    data[name] = parseInt(req.body[key])
+    points += data[name]
     //const p = packages.find(el => el.name === name)
     //p.setBonuses(char, data.packages[name])
   }
+  const char = Char.create(req.body.name || '', packages, data)
+
+  char.charType = req.body.charType || 'pc'
+  char.sex = req.body.sex || ''
+  char.race = req.body.race || ''
+  char.profession = req.body.profession || ''
+  char.level = parseInt(req.body.level || '4')
+  char.points = points
+  char.maxPoints = char.level * 2 + 2
+  
+  
   for (let n of [1, 2, 3, 4]) {
-    data['weapon' + n] = req.body['weapon' + n]
+    char['weapon' + n] = req.body['weapon' + n]
   }
-  console.log(data)
-  const char = Char.create(data, packages, data)
+  console.log('--------------')
   console.log(char)
+  console.log('--------------')
   
-  const warning = (data.points < data.level * 2 + 2) ? "tooLow" : ((data.points > data.level * 2 + 2) ? "tooHigh" : "okay")
+  const warning = (char.points < char.level * 2 + 2) ? "tooLow" : ((char.points > char.level * 2 + 2) ? "tooHigh" : "okay")
   
-  res.render('creator', { data:data, timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, warning:warning });
+  res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, warning:warning, title:charTypes[char.charType].name });
 });
 
 

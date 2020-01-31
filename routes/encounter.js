@@ -182,8 +182,8 @@ router.post('/inits', function(req, res, next) {
   }
   chars.sort(function(a, b) {
     if (a.initScore !== b.initScore) return b.initScore - a.initScore;
-    if (a.pc) return 1;
-    if (!b.pc) return -1;
+    if (a.charType === 'pc') return 1;
+    if (b.charType !== 'pc') return -1;
     return 1;
   })
 

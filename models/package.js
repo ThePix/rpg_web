@@ -13,13 +13,11 @@ class Package {
     console.log("Here 1")
     if (level === undefined) level = char.packages[this.name] || 0
     if (char.notes === undefined) char.notes = []
-    console.log("Here 2: " + level)
+
     for (let bonus of this.bonuses) {
       bonus.apply(char, level)
     }
-    console.log("Here 3")
     if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * level)
-    console.log("Here 4")
   }
 
   getBonuses(level) {
@@ -218,22 +216,24 @@ class Bonus {
 
 const packages = [
   new Package('Warrior (sword and shield)', {
+    group:'warrior',
     notes:[
       'You can select up to THREE weapons to specialise in (recommend at least one melee and one ranged). Bonuses from this package apply only to those three weapons.'
     ],
     hitsPerLevel:1,
     bonuses:[
-      new Bonus('Attack', {progression:'primary'}),
-      new Bonus('Shield', {progression:[1, 3, 7, 12]}),
+      new Bonus('attack', {progression:'primary'}),
+      new Bonus('shield', {progression:[1, 3, 7, 12]}),
     ],
   }),
   new Package('Warrior (marksman)', {
+    group:'warrior',
     notes:[
       'You can select up to THREE weapons to specialise in (recommend at least one melee and one ranged). Bonuses from this package apply only to those three weapons.'
     ],
     hitsPerLevel:1,
     bonuses:[
-      new Bonus('Attack', {progression:'primary'}),
+      new Bonus('attack', {progression:'primary'}),
       new Bonus('Ranged', {progression:[3, 9, 17]}),
     ],
   }),
@@ -287,49 +287,51 @@ x - Special rules apply.
     ],
     hitsPerLevel:2,
     bonuses:[
-      new Bonus('Armour', {progression:[2, 5, 14]}),
-      new Bonus('Stamina', {progression:'secondary2'}),
-      new Bonus('Mark', {progression:[1, 4, 7, 10, 13], flags:'Fof', note:[
+      new Bonus('armour', {progression:[2, 5, 14]}),
+      new Bonus('stamina', {progression:'secondary2'}),
+      new Bonus('Mark', {progression:[1, 4, 7, 10, 13], flags:'Fof', notes:[
         'Marked foe is at -2 when an attack does not target you',
-        'as Mark 1, but in addition you get an Opportunity Attack if the target makes an an attack that does not target you',
-        'as Mark 2, but in addition you get an Opportunity Attack if the target moves or shifts under his own volition',
-        'as Mark 3, but Opportunity Attack stops the move if successful',
+        'as Mark 1, but in addition you get an Opportunity attack if the target makes an an attack that does not target you',
+        'as Mark 2, but in addition you get an Opportunity attack if the target moves or shifts under his own volition',
+        'as Mark 3, but Opportunity attack stops the move if successful',
         'as Mark 4, but Opportunity Attacks due to a Mark have combat advantage',
       ]}),
-      new Bonus('Draw in', {progression:8, flags:'F', note:'on successful attack, you and foe move one square in your direction'}),
-      new Bonus('Push back', {progression:8, flags:'F', note:'on successful attack, you and foe move one square in foe\'s direction'}),
-      new Bonus('Dance of blades', {progression:8, flags:'F', note:'on successful attack, you and foe each move one square in any direction'}),
+      new Bonus('Draw in', {progression:8, flags:'F', notes:'on successful attack, you and foe move one square in your direction'}),
+      new Bonus('Push back', {progression:8, flags:'F', notes:'on successful attack, you and foe move one square in foe\'s direction'}),
+      new Bonus('Dance of blades', {progression:8, flags:'F', notes:'on successful attack, you and foe each move one square in any direction'}),
     ],
   }),
   
   new Package('Rogue (striker)', {
+    group:'striker',
     notes:[
     ],
     hitsPerLevel:0.5,
     bonuses:[
-      new Bonus('Reflex', {progression:[1, 8, 17]}),
-      new Bonus('Armour', {progression:[7]}),
-      new Bonus('Init', {progression:'secondary3'}),
+      new Bonus('reflex', {progression:[1, 8, 17]}),
+      new Bonus('armour', {progression:[7]}),
+      new Bonus('init', {progression:'secondary3'}),
       new Bonus('Subterfuge', {progression:'secondary1'}),
-      new Bonus('Sneak attack', {progression:[3, 9, 15, 21], flags:'Fa', note:'Bonus 2d6 damage on a successful hit, once per turn, when you have combat advantage. Each addition rank gives an extra d6.'}),
+      new Bonus('Sneak attack', {progression:[3, 9, 15, 21], flags:'Fa', notes:'Bonus 2d6 damage on a successful hit, once per turn, when you have combat advantage. Each addition rank gives an extra d6.'}),
     ],
   }),
 
   new Package('Barbarian (striker)', {
+    group:'striker',
     notes:[
     ],
     hitsPerLevel:0.5,
     bonuses:[
-      new Bonus('Armour', {progression:[4, 12]}),
-      new Bonus('Stamina', {progression:'secondary3'}),
+      new Bonus('armour', {progression:[4, 12]}),
+      new Bonus('stamina', {progression:'secondary3'}),
       new Bonus('Survival', {progression:'secondary2'}),
       new Bonus('Nature', {progression:'secondary1'}),
-      new Bonus('Onslaught', {progression:[3, 9, 15, 21], flags:'Fa', note:'+5 to damage each successive round you hit a foe (not necessarily the same one), up to a max of +5.  Each addition rank gives an extra 5 to the maximum.'}),
+      new Bonus('Onslaught', {progression:[3, 9, 15, 21], flags:'Fa', notes:'+5 to damage each successive round you hit a foe (not necessarily the same one), up to a max of +5.  Each addition rank gives an extra 5 to the maximum.'}),
     ],
   }),
  
 
-
+/*
   new Package('Elementalist', {
     notes:[
       'The elementalist taps into the raw elements of fire, frost and storm. These are relatively powerful, but you need to attune first, and can only access spells from one element at a time. Could be suitable for a mage-fighter hybrid.'
@@ -344,7 +346,7 @@ x - Special rules apply.
       new Bonus('Ice shard', {progression:1, flags:'S', notes:['']}),
     ],
   }),
-
+*/
 
 /*
 
@@ -439,7 +441,7 @@ Flaming blade*/
       new Bonus('Arcana', {progression:"secondary", flags:"undefined"}),
       new Bonus('Initiative', {progression:[1,7,13,19], flags:"undefined"}),
       new Bonus('Attune', {progression:1, flags:"", notes:[
-        "You become attuned to either fire, ice or storm, last about 15 minutes or until you attune again; allows you to cast either fire OR ice OR storm spells, on-going spells terminate when you re-cast Attune",
+        "You become attuned to either fire, ice or storm, last about 10 minutes or until you attune again; allows you to cast either fire OR ice OR storm spells, on-going spells terminate when you re-cast Attune",
       ]}),
       new Bonus('Light', {progression:2, flags:""}),
       new Bonus('Firedart', {progression:3, flags:""}),
@@ -566,8 +568,8 @@ Flaming blade*/
     ], bonuses:[
       new Bonus('Casting spells from this list', {progression:"primary", flags:"undefined"}),
       new Bonus('Athletics', {progression:"secondary", flags:"undefined"}),
-      new Bonus('Reflex', {progression:[2,8,14,20], flags:"undefined"}),
-      new Bonus('Init', {progression:[1,7,13,19], flags:"undefined"}),
+      new Bonus('reflex', {progression:[2,8,14,20], flags:"undefined"}),
+      new Bonus('init', {progression:[1,7,13,19], flags:"undefined"}),
       new Bonus('Jump ', {progression:1, flags:"S"}),
       new Bonus('Wallwalking ', {progression:2, flags:"So"}),
       new Bonus('Haste', {progression:3, flags:""}),
@@ -680,7 +682,7 @@ Flaming blade*/
     ], bonuses:[
       new Bonus('Casting spells from this list', {progression:"primary", flags:"undefined"}),
       new Bonus('Either intimidation OR bluff OR diplomacy', {progression:"secondary", flags:"undefined"}),
-      new Bonus('Will', {progression:[2,5,8,11,14], flags:"undefined"}),
+      new Bonus('will', {progression:[2,5,8,11,14], flags:"undefined"}),
       new Bonus('Study ', {progression:1, flags:"A", notes:[
         "+1 to attack OR +2 to spells on this list, +2 to impersonate",
       ]}),
@@ -718,7 +720,7 @@ Flaming blade*/
     new Package('Shapeshifter', {notes:[
       "A shapeshifter changes shape by putting on a magical cloak (but see No cloak). There is a special link between the cloak and the shift; no one else will be affected when wearing the cloak, and the shifter can only be connected to a limited number of cloaks (can unlink to a cloak at any time).",
     ], bonuses:[
-      new Bonus('Init', {progression:[1,2,3,7,13,17,21], flags:"undefined"}),
+      new Bonus('init', {progression:[1,2,3,7,13,17,21], flags:"undefined"}),
       new Bonus('Change I ', {progression:1, flags:"A", notes:[
         "You don your second skin to transform into your beast form; or you take it off to become normal",
       ]}),
@@ -846,7 +848,7 @@ Flaming blade*/
 
     new Package('Acrobat', {notes:[
     ], bonuses:[
-      new Bonus('Init', {progression:"secondary", flags:"undefined"}),
+      new Bonus('init', {progression:"secondary", flags:"undefined"}),
       new Bonus('Acrobatics', {progression:"secondary", flags:"undefined"}),
       new Bonus('Movement', {progression:[3,9,15,19], flags:"undefined"}),
     ]}),
@@ -881,45 +883,10 @@ Flaming blade*/
 
 
 
-    new Package('Perception', {notes:[
-      "Specialist in perception other than vision.",
-    ], bonuses:[
-      new Bonus('Perception I', {progression:1, flags:"", notes:[
-        "+2 to perception for hearing",
-      ]}),
-      new Bonus('Shadow vision', {progression:2, flags:"", notes:[
-        "Vision only; can see in poor light as though in good light",
-      ]}),
-      new Bonus('Mimicry I', {progression:3, flags:"", notes:[
-        "Sound only; can perfectly mimic any normal voice",
-      ]}),
-      new Bonus('Pheromones I', {progression:4, flags:"", notes:[
-        "Taste/smell only; can perfectly mimic any normal pheromones",
-      ]}),
-      new Bonus('Perception II', {progression:5, flags:"", notes:[
-        "+4 to perception for hearing",
-      ]}),
-      new Bonus('Dark sense', {progression:6, flags:"", notes:[
-        "Can see in complete darkness OR can navigate though the sense of smell or hearing",
-      ]}),
-      new Bonus('Perception III', {progression:7, flags:"", notes:[
-        "+2 to perception for hearing",
-      ]}),
-      new Bonus('Mimicry II', {progression:8, flags:"", notes:[
-        "Sound only; can perfectly mimic any sound in the normal range of hearing",
-      ]}),
-      new Bonus('Pheromones II', {progression:9, flags:"", notes:[
-        "Taste/smell only; can perfectly mimic any subtle smell - nothing too strong!",
-      ]}),
-      new Bonus('Perception I', {progression:10, flags:"", notes:[
-        "+4 to perception for vision, +8 for other senses",
-      ]}),
-    ]}),
 
 
 
-
-    new Package('Smell and taste expert', {notes:[
+    new Package('Olfactory master', {notes:[
       "Character must specialise in one sense: vision, sound or taste/smell. Can purchase the package multiple times for multiple senses.",
     ], bonuses:[
       new Bonus('Perception I', {progression:1, flags:"", notes:[
@@ -1015,7 +982,7 @@ Flaming blade*/
         "Can communicate a simple, pre-arranged message - such as 'attack now' - to any allies within sight, range unlimited, without foes noticing; this can be done as a free action, once per turn",
       ]}),
       new Bonus('Goad ', {progression:3, flags:"Am", notes:[
-        "Causes a foe to attack, subject to Will save",
+        "Causes a foe to attack, subject to will save",
       ]}),
       new Bonus('Inspire II ', {progression:4, flags:"Am", notes:[
         "As Inspire I, but applies to up to two allies",
@@ -1030,7 +997,7 @@ Flaming blade*/
         "As Inspire I, but applies to up to three allies",
       ]}),
       new Bonus('Incite ', {progression:8, flags:"Am", notes:[
-        "Any neutral character within 10 squares will join your side; character must be capable to hearing and understanding you; powerful characters get a save against Will; this can be done as a minor action; affected characters may or may not choose to continue after one turn",
+        "Any neutral character within 10 squares will join your side; character must be capable to hearing and understanding you; powerful characters get a save against will; this can be done as a minor action; affected characters may or may not choose to continue after one turn",
       ]}),
       new Bonus('Coordinate II ', {progression:9, flags:"Ae", notes:[
         "As Coordinate I, but applies to up to two allies",
@@ -1133,6 +1100,26 @@ Flaming blade*/
         "Character has wings, either like a demon or angel; can fly at movement speed.",
       ]}),
       new Bonus('Winged IV', {progression:10, flags:"C", notes:[
+        "Character has wings, either like a demon or angel; can fly at movement speed + 3.",
+      ]}),
+    ]}),
+
+    new Package('Non-corporeal Undead', { excludes:['pc'], notes:[
+      "You should devise a reason for why your character has wings!",
+    ], bonuses:[
+      new Bonus('Ghost 1', {progression:1, flags:"C", notes:[
+        "Character has wings, either like a demon or angel, but non-functional.",
+      ]}),
+      new Bonus('Ghost II', {progression:3, flags:"C", notes:[
+        "Character has wings, either like a demon or angel, cannot fly, can extends leaps by 10 foot vertically and 3 squares horizontally.",
+      ]}),
+      new Bonus('Ghost III', {progression:5, flags:"C", notes:[
+        "Character has wings, either like a demon or angel, cannot fly, can extends leaps by 15 foot vertically and 5 squares horizontally, reducing damage from falls by 20 hits.",
+      ]}),
+      new Bonus('Ghost IV', {progression:8, flags:"C", notes:[
+        "Character has wings, either like a demon or angel; can fly at movement speed.",
+      ]}),
+      new Bonus('Ghost IV', {progression:10, flags:"C", notes:[
         "Character has wings, either like a demon or angel; can fly at movement speed + 3.",
       ]}),
     ]}),

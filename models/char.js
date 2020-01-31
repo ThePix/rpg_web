@@ -50,6 +50,7 @@ class Char {
   static create(name, packages, data) {
     const c = new Char({name:name, shield:0, armour:0, maxHits:20, packages:data })
     Package.setBonuses(packages, c)
+    c.hits = c.maxHits
     return c
   }
   
@@ -72,6 +73,7 @@ class Char {
       { name:'display', type:'string', display:false, disableSave:true},
       { name:'link', type:'string', display:false, disableSave:true},
       { name:'next', type:'string', display:false},
+      { name:'charType', type:'string', display:false, disableSave:true},
 
       { name:'turnCount', type:'int', display:false},
       { name:'hits', type:'int', display:"Hits", default:20},
@@ -83,7 +85,6 @@ class Char {
       { name:'shock', type:'element', display:'Shock'},
       { name:'nether', type:'element', display:'Nether'},
 
-      { name:'pc', type:'bool', display:false, disableSave:true},
       { name:'current', type:'bool', display:false},
       { name:'stunned', type:'bool', display:"Stunned"},
       { name:'blooded', type:'bool', display:"Blooded"},
@@ -572,18 +573,4 @@ class NetherElement extends ElementalEffect {
 module.exports = [Char]
 
 const [Package, packages, Bonus] = require('../models/package.js')
-
-const getTester = function(level) {
-  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
-    new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
-    new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
-  ]})
-  const tester = Char.create("Tester", [test], {Package:level})
-
-  return tester  
-}
-
-const tester = getTester(10)  
-console.log(tester)
 

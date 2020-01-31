@@ -4,6 +4,7 @@ import test from 'ava';
 const [Char] = require('../models/char.js')
 const [AttackConsts, Attack] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
+const [Package, packages, Bonus] = require('../models/package.js')
 
 
 Log.debug = true
@@ -220,5 +221,27 @@ test('save and load', t => {
   t.is(test1.elements.fire.vulnProt, 11)
   t.is(test2.hits, 40)
   t.is(test3.shield, 2)
+  
+})
+
+
+
+test('Char.create', t => {
+  const test1 = new Package('Package1', { hitsPerLevel:0.5, bonuses:[
+    new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
+    new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
+    new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
+  ]})
+  const test2 = new Package('Package2', { bonuses:[
+    new Bonus('talking', {progression:'primary', notes:"Good at talking"}),
+    new Bonus('shield', {progression:2}),
+  ]})
+  const tester = Char.create("Tester", [test1, test2], {Package1:10, Package2:4})
+  
+  t.is(tester.hits, 25)
+  t.is(tester.armour, 1)
+  t.is(tester.shield, 3)
+  t.is(tester.nature, 3)
+  t.is(tester.talking, 4)
   
 })

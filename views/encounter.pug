@@ -74,7 +74,7 @@ block content
                   td
                 else
                   - let classList = "active"
-                  - if (chr.pc) classList += " pc"
+                  - if (chr.charType === 'pc') classList += " pc"
                   - if (chr.alerts) classList += " alert"
                   - if (chr.dead) classList += " dead"
                   td(class=classList width="35%" title=(chr.alerts ? "This character has alerts active; go to the edit page to see them" : ""))

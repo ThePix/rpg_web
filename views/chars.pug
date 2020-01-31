@@ -3,7 +3,7 @@ extends layout
 mixin row(char, style)
   tr
     td(class=char.link ? style + ' link' : style)
-      if char.pc
+      if char.charType === 'pc'
         b
           i= char.display
       else

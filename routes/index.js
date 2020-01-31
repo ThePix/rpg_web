@@ -12,7 +12,7 @@ const LENGTH = 50
 const indexGetFun = function(req, res, next) {
   //console.log(req.app.get('chars'))
   const refresh = req.app.get('refresh');
-  const chars = req.app.get('chars').filter(el => el.pc);
+  const chars = req.app.get('chars').filter(el => el.charType === 'pc');
   res.render('index', { chars:chars, timestamp:req.timestamp, refreshRate:refresh });
 }
 
