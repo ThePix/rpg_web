@@ -3,12 +3,18 @@ body {
   margin:0px;
 }
 
-h1 {
+h1, h1 > a {
   margin:0px;
   background-color: #006;
   color: white;
   padding: 2px;
   padding-left: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+h2 {
+  padding-bottom: 0;
 }
 
 footer {
@@ -28,14 +34,29 @@ a {
 
 table {
   border: black 1px solid;
+  border-collapse: collapse;
 }
 
 table.unseen {
   border: none;
 }
 
+tbody {
+  border-top: #666 1px solid;
+}
+
+th {
+  background-color: #006;
+  color: white;
+}
+
 td.unseen {
   background-color: white;
+  
+}
+
+table.unseen > tbody {
+  border:none;
 }
 
 td.okay {
@@ -53,7 +74,7 @@ td {
   padding: 5px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: silver;
+  background-color: #ddd;
   text-align:center;
 }
 
@@ -114,15 +135,18 @@ input[type=number] {
   width: 60px;
   font-size: 24px;
   text-align:right;
+  border-radius: 5px;
 }
 
 input[type=text] {
   width: 200px;
   font-size: 24px;
+  border-radius: 5px;
 }
 
 select {
   font-size: 24px;
+  border-radius: 5px;
 }
 
 button {
@@ -130,6 +154,7 @@ button {
   padding: 3px;
   padding-left: 12px;
   padding-right: 12px;
+  border-radius: 5px;
 }
 
 button.small {
@@ -183,4 +208,15 @@ td.comment {
 
 .alert {
   background-color:yellow;
+}
+
+#helpDiv {
+  display:none;
+  border:#ccc 1px solid;
+  padding-left:20px;
+  padding-right:20px;
+  background-color:#eee;
+  margin:15px;
+  border-radius: 5px;
+  text-align:justify;
 }

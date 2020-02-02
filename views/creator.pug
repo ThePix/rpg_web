@@ -4,9 +4,21 @@ block content
   h2 Create A #{title}
   table(class="unseen")
     tr
+      td(colspan=3 class="unseen")
+        p(style="text-align:left;font-size:small")
+          a(onclick="$('#helpDiv').toggle()" style="cursor: pointer") Help (toggle)
+        div(id='helpDiv')
+          p Give your character a #[b name]. The system uses this to track the character, so once it is saved, it cannot be changeed, so choosely wisely! And please capitalise it. You can also give your character a #[b profession], #[b sex] and #[b race], but these are optional and have no tactical effect. If you want to play a race with special abilities, you need to buy those abilities.
+          p Your #[b level] should be whatever your GM says; it will probably start at 4. You will have a number of #[b points] to spent on profession packages equal to twice your level plus 2. Note that if you do change the level, you should Refresh the page so the validation gets updated.
+          p Although you can select up to four #[b weapons], the number you can actually use (i.e., have skill in) will be show in the table on the right, and defaults to 1. You can increase that by getting at least three ranks in combat-orientated packages. Remember to get a ranged weapon if that is your thing.
+          p Click on the #[b package] name to see details (in a new tab). The points you spent will be displayed as you spend them. If the box is yellow you have more to spend, if it is red you have over spent. If it is green you are good to go. You cannot have more points on one package than your level. Also, some similar packages are grouped and if you spend points on one you cannot spend points on the others;  for example you can only spend points on one warrior package.
+          p The table on the right shows your character's stats, abilities and so on; all the bonuses from the packages you pick. Click the refresh button to update it. Note that the "attack" bonus applies to melee and ranged attacks, but not to spells and other special effects.
+  
+    tr
       td(width="680")
         form(method="post" action="/packages")
           input(type='hidden' id='maxPoints' value=char.maxPoints)
+          input(type='hidden' id='exists' value=char.exists)
           table(class='big')
             tbody
               tr
@@ -14,7 +26,10 @@ block content
                   button(type="submit" name="submit_param" value="refresh" class="small") Refresh
                   |  
                   button(type="submit" name="submit_param" value="create" class="small") Create
+
             tbody
+              tr
+                td(colspan=4)
               tr
                 th Attribute
                 th Value
@@ -23,7 +38,7 @@ block content
               tr
                 td Name
                 td
-                  input(type='text' name='name' value=char.name title='Your character must have a unique name')
+                  input(type='text' name='name' value=char.name required=true title='Your character must have a unique name' disabled=char.exists)
                 td Sex
                 td
                   input(type='text' name='sex' value=char.sex title='Probably male or female (no effect on skills, stats, etc.)')
@@ -39,19 +54,22 @@ block content
                 td
                   input(type='number' name='level' id='level' value=char.level title='Your character\'s level, as specified by the GM')
                 td Points
-                td(id='points' class=warning title='How many points you have spent, over the total available; if this is yellow you have some to spend, if it is red you have spent too many') ---
+                td(id='points' title='How many points you have spent, over the total available; if this is yellow you have some to spend, if it is red you have spent too many') ---
+
 
             tbody
+              tr
+                td(colspan=4)
               - const weaponTip = 'You can select up to four weapons, but your character will only have skill in them if the appropriate packages are also selected'
               tr
-                th Weapons
+                th(colspan=4) Weapons
               tr
                 td Weapon 1
                 td
                   select(name="weapon1" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(char.weapon1 === weapon.name))
+                      option(selected=(char.weapon1 === weapon.name || (char.weapon1 === undefined && weapon.name === 'Dagger')))
                         =weapon.name
                 td Weapon 2
                 td
@@ -78,10 +96,10 @@ block content
 
             tbody
               tr
+                td(colspan=4)
+              tr
                 th(colspan=3) Package
                 th Ranks
-
-            tbody
               each p in packages
                 if !p.excludes || !p.excludes.includes(char.charType)
                   tr
@@ -105,10 +123,11 @@ block content
         p 
           b
             i Derived attributes
-        ul
-          each att in ["Attack", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
-            - const value = char[att.toLowerCase()]
-            li #{att} (#{value === 0 ? '-' : '+' + value})
+        table(width="100%")
+          each att in ["Hits", "Attack", "Weapons", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
+            tr
+              td #{att}
+              td #{char[att.toLowerCase()]}
         p 
           b
             i Skills, spells, etc.
@@ -124,4 +143,4 @@ block content
             li #{s}
 
 
-  script(src="javascripts/creator.js")
+  script(src="/javascripts/creator.js")

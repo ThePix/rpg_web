@@ -67,9 +67,6 @@ router.get('/import', function(req, res, next) {
         }
         else {
           b = new Bonus(ary[0].slice(2, -1), {progression:count, notes:[toSentenceCase(ary[1]).replace(')', '')]})
-          console.log('------')
-          console.log(b.name)
-          console.log(b.notes[0])
         }
         const ary2 = ary[0].split('[')
         if (ary2.length === 2) {
@@ -112,6 +109,39 @@ const charTypes = {
   solo:{name:'Solo Monster'},
 }
 
+router.post('/:page', function(req, res, next) {
+  const chars = req.app.get('chars')
+  const char = chars.find(el => el.name === req.params.page)
+  
+  if (char === undefined) {
+    console.log("----------------")
+    console.log("Failed to find character = " + req.params.page)
+    console.log("----------------")
+    console.log("length=" + chars.length)
+    console.log("----------------")
+    for (let c of chars) {
+      console.log(c.name)
+    }
+    res.redirect('/')
+    return
+  }
+  
+  let points = 0
+  for (let key in req.body) {
+    if (!key.startsWith('package_')) continue
+    const name = key.replace('package_', '')
+    data[name] = parseInt(req.body[key])
+    points += data[name]
+  }
+  char.level = parseInt(req.body.level || '4')
+  char.points = points
+  char.maxPoints = char.level * 2 + 2
+  char.exists = req.body.true
+  res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name });
+})
+
+
+
 router.post('/', function(req, res, next) {
   const data = {}
   let points = 0
@@ -132,18 +162,30 @@ router.post('/', function(req, res, next) {
   char.level = parseInt(req.body.level || '4')
   char.points = points
   char.maxPoints = char.level * 2 + 2
-  
+  char.exists = req.body.exists
   
   for (let n of [1, 2, 3, 4]) {
     char['weapon' + n] = req.body['weapon' + n]
   }
-  console.log('--------------')
-  console.log(char)
-  console.log('--------------')
   
-  const warning = (char.points < char.level * 2 + 2) ? "tooLow" : ((char.points > char.level * 2 + 2) ? "tooHigh" : "okay")
-  
-  res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, warning:warning, title:charTypes[char.charType].name });
+  if (req.body.submit_param === "create") {
+    const chars = req.app.get('chars')
+    for( var i = 0; i < chars.length; i++){ 
+       if (chars[i].name === char.name) {
+         chars.splice(i, 1); 
+       }
+    }
+    char.exists = true
+    chars.push(char)
+    res.redirect('/')
+    
+    //console.log(chars.length)
+    req.app.set('chars', chars);
+    const chars2 = req.app.get('chars');
+  }
+  else {
+    res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name });
+  }
 });
 
 

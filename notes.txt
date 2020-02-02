@@ -14,11 +14,34 @@ Perhaps they should be aded after a character, all inserted at that point. Works
 
 
 
+Persistence
+Need to be able to save characters
+
+Link attacks and weapons
+
+Weird effects and spells
+
+Elements
+
+Monster catalogue
+
+Encounter builder
 
 
 
 
 
+
+Some packages can increase the number of weapons, say three ranks in warrior, striker
+
+
+
+
+    return -Math.floor(4 * (this.maxHits - this.hits) / this.maxHits)
+
+
+maxHits 12
+hits 11
 
 
 

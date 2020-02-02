@@ -17,7 +17,7 @@ function packageCountUpdate(event) {
   let disabledGroups = []
   for (let s of inputArray) {
     const inp = $('#' + s)[0]
-    const n = parseInt(inp.value)
+    let n = parseInt(inp.value)
     if (n > level) n = inp.value = level
     if (inp.dataset.group && n > 0) {
       disabledGroups.push(inp.dataset.group)

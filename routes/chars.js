@@ -10,7 +10,8 @@ const charsGetFun = function(req, res, next) {
   if (req.query.name) {
     const char = chars.find(el => el.name === req.query.name)
     if (char) {
-      res.render('char', { char: char, fields: req.app.get('fields'), timestamp:req.timestamp, refresh:refresh });
+      char.penalty = char.getAttackModifier()
+      res.render('char', { char: char, fields:req.app.get('fields'), timestamp:req.timestamp, refresh:refresh });
     }
     else {
       res.render('nochar', { name: req.query.name, timestamp:req.timestamp, refresh:refresh });
@@ -48,6 +49,7 @@ const charsPostFun = function(req, res, next) {
       char[fields[i].name] = req.body[fields[i].name]
     }
   }
+  char.statusCheck()
   //console.log(char)
   res.redirect('/encounter')
 }

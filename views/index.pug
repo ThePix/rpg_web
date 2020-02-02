@@ -6,8 +6,8 @@ block content
   p The GM should go to the Encounter page on a laptop or desktop computer, and control everything from there.
   hr
   p If you are a player, please click on your character name to see your character status page
-  each char in chars
-    ul
+  ul
+    each char in chars
       li
         a(href='/chars?name=' + char.name) #{char.display}
   hr
@@ -20,11 +20,21 @@ block content
     a(href='/encounter') Encounter
     |    (GM only)
   hr
+  p ... or click here to resolve the turn order.
+  p
+    a(href='/encounter/inits') Initiatives
+    |    (GM only)
+  hr
   p Go here to see a log of recent events.
   p
     a(href='/log') Log
   hr
-  p Create a new character.
-  form(method="post" action="/packages")
-    p
-      input(type="submit" name="submit_param" value="Here" class="link-button")
+  p Create a new character or edit an existing one.
+  ul
+    li
+      form(method="post" action="/packages")
+        input(type="submit" name="submit_param" value="New" class="link-button")
+    each char in chars
+      li
+        form(method="post" action="/packages/" + char.name)
+          input(type="submit" name="submit_param" value=char.name class="link-button")

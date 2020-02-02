@@ -4,6 +4,10 @@ block content
   h2 Set initiatives
   form(method="post" action="/encounter/inits")
     table(class='big')
+      tr
+        th Character
+        th Bonus
+        th Roll
       for chr in chars
         if typeof chr.init === "number"
           tr
@@ -15,3 +19,5 @@ block content
               input(type="number" name=chr.name value="10")
     p
     button(type="submit" name="submit_param" value="submit_value" class="link-button") Submit
+    
+  p Note that clicking "Submit" will also reset the hits of the above characters to their maximum.

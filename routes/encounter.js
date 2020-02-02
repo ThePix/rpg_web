@@ -6,6 +6,7 @@ const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const [Char] = require('./../models/char.js')
+const [Log] = require('../models/log.js')
 
 
 
@@ -172,6 +173,7 @@ router.post('/inits', function(req, res, next) {
   for (let chr of chars) {
     if (typeof chr.init === "number") {
       chr.initScore = chr.init + parseInt(req.body[chr.name])
+      chr.hits = chr.maxHits
     }
   }
   for (let chr of chars) {

@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  p
   table(width="1200px" height="800px")
     tr(height="80px")
       td(colspan="2")
@@ -36,11 +37,10 @@ block content
         h2 Focus: 
           i #{char.display}
         
-        hr
-
-        h3 Attacks
         if attacks
           table(width="100%" style="border:none")
+            tr
+              td(colspan=3) #[i #[b Attacks]]
             each attack in attacks
               tr
                 td(width="32")

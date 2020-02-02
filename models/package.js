@@ -10,7 +10,6 @@ class Package {
   }
   
   setBonuses(char, level) {
-    console.log("Here 1")
     if (level === undefined) level = char.packages[this.name] || 0
     if (char.notes === undefined) char.notes = []
 
@@ -222,6 +221,7 @@ const packages = [
     ],
     hitsPerLevel:1,
     bonuses:[
+      new Bonus('weapons', {progression:3}),
       new Bonus('attack', {progression:'primary'}),
       new Bonus('shield', {progression:[1, 3, 7, 12]}),
     ],
@@ -233,6 +233,7 @@ const packages = [
     ],
     hitsPerLevel:1,
     bonuses:[
+      new Bonus('weapons', {progression:3}),
       new Bonus('attack', {progression:'primary'}),
       new Bonus('Ranged', {progression:[3, 9, 17]}),
     ],
@@ -287,6 +288,7 @@ x - Special rules apply.
     ],
     hitsPerLevel:2,
     bonuses:[
+      new Bonus('weapons', {progression:3}),
       new Bonus('armour', {progression:[2, 5, 14]}),
       new Bonus('stamina', {progression:'secondary2'}),
       new Bonus('Mark', {progression:[1, 4, 7, 10, 13], flags:'Fof', notes:[
@@ -308,6 +310,7 @@ x - Special rules apply.
     ],
     hitsPerLevel:0.5,
     bonuses:[
+      new Bonus('weapons', {progression:3}),
       new Bonus('reflex', {progression:[1, 8, 17]}),
       new Bonus('armour', {progression:[7]}),
       new Bonus('init', {progression:'secondary3'}),
@@ -322,6 +325,7 @@ x - Special rules apply.
     ],
     hitsPerLevel:0.5,
     bonuses:[
+      new Bonus('weapons', {progression:3}),
       new Bonus('armour', {progression:[4, 12]}),
       new Bonus('stamina', {progression:'secondary3'}),
       new Bonus('Survival', {progression:'secondary2'}),

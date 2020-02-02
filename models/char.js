@@ -48,7 +48,7 @@ class Char {
   
   
   static create(name, packages, data) {
-    const c = new Char({name:name, shield:0, armour:0, maxHits:20, packages:data })
+    const c = new Char({name:name, shield:0, armour:0, maxHits:20, attack:0, weapons:1, packages:data })
     Package.setBonuses(packages, c)
     c.hits = c.maxHits
     return c
@@ -76,9 +76,12 @@ class Char {
       { name:'charType', type:'string', display:false, disableSave:true},
 
       { name:'turnCount', type:'int', display:false},
-      { name:'hits', type:'int', display:"Hits", default:20},
       { name:'maxHits', type:'int', display:"Max. hits"},
-      { name:'pp', type:'int', display:"Power points"},
+      { name:'hits', type:'int', display:"Hits", default:20},
+      { name:'pp', type:'int', display:false},
+      { name:'weapons', type:'int', display:false},
+      { name:'attack', type:'int', display:false},
+      { name:'penalty', type:'int', display:'Penalty'},
       
       { name:'ice', type:'element', display:'Ice'},
       { name:'fire', type:'element', display:'Fire'},
@@ -111,6 +114,7 @@ class Char {
       { name:'elementalThreshold', type:'function' },
       { name:'elements', type:'function' },
       { name:'packages', type:'function' },
+      { name:'notes', type:'function' },
     ]
   }
   
@@ -260,7 +264,7 @@ class Char {
         this.onDeath()
       }
     }
-    if (!this.done75 && this.hits < (this.maxHits / 4)) {
+    if (!this.done75 && this.hits <= (this.maxHits / 4)) {
       this.done25 = true
       this.done75 = true
       this.blooded = true
@@ -269,7 +273,7 @@ class Char {
         this.onDone75()
       }
     }
-    if (!this.blooded && this.hits < (this.maxHits / 2)) {
+    if (!this.blooded && this.hits <= (this.maxHits / 2)) {
       this.done25 = true
       this.blooded = true
       if (this.onBlooded) {
@@ -277,7 +281,7 @@ class Char {
         this.onBlooded()
       }
     }
-    if (!this.done25 && this.hits < (this.maxHits / 4)) {
+    if (!this.done25 && this.hits <= (this.maxHits / 4)) {
       this.done25 = true
       if (this.onDone25) {
         this.alert("On Done25 event triggered")
@@ -389,9 +393,6 @@ class Char {
       element.condition = true
       conditionStartFunc()
     }
-      
-
-
   }
 
   getAttackModifier() {
@@ -490,19 +491,6 @@ class ElementalEffect {
     }
   }
   
-  /*
-  increase wants to be 1024 * amount * n
-  where n is 1 when vulnProt is 10
-  2   11
-  3   12
-  1/2 9
-  1/3 8
-  
-  
-  reverse if protection should make the number bigger
-  
-  11 -> 9
-  */
   modifyAmount(amount, reverse) {
     const vulnProt = reverse ? 20 - this.vulnProt : this.vulnProt
     const n = amount * (1 << 10)

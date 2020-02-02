@@ -24,6 +24,7 @@ const charPostFun = function(req, res, next) {
     if (field.type === 'int') char[field.name] = parseInt(req.body[field.name])
     if (field.type === 'string') char[field.name] = req.body[field.name]
   }
+  char.statusCheck()
   Log.add(char.display + " edited. " + req.body.comment)
   
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
