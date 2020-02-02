@@ -1,19 +1,6 @@
 
 
 
-/
-
-Select an encounter (TODO)
-
-Add a custom character
-Add a stock monster
-Add a group
-  All these need a way (set of rules) for adding to the turn system
-
-Perhaps they should be aded after a character, all inserted at that point. Works for summoned.
-
-
-
 Persistence
 Need to be able to save characters
 
@@ -27,21 +14,12 @@ Monster catalogue
 
 Encounter builder
 
+Adding a group of characters (how is init handled?)
 
 
 
 
 
-Some packages can increase the number of weapons, say three ranks in warrior, striker
-
-
-
-
-    return -Math.floor(4 * (this.maxHits - this.hits) / this.maxHits)
-
-
-maxHits 12
-hits 11
 
 
 

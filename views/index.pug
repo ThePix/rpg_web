@@ -2,34 +2,13 @@ extends layout
 
 block content
   h3 Welcome!
-  p The Pixie Encounter Tool is a multi-component system for running RPG games. Ideally, each player will have their chracter displayed on a tablet or smart phone, whilst the summary can be seen by everyone, displayed on a monitor or TV screen. Once these are set up, you  can just leave them; they will update automatically (every #{refreshRate} seconds).
+  p The Pixie Encounter Tool is a multi-component system for running RPG games. Ideally, each player will have their character displayed on a tablet or smart phone, whilst the summary can be seen by everyone, displayed on a monitor or TV screen. Once these are set up, you  can just leave them; they will update automatically (every #{refreshRate} seconds).
   p The GM should go to the Encounter page on a laptop or desktop computer, and control everything from there.
+  
   hr
-  p If you are a player, please click on your character name to see your character status page
-  ul
-    each char in chars
-      li
-        a(href='/chars?name=' + char.name) #{char.display}
-  hr
-  p If this is screen for everyone to watch, please click on this link:
-  p
-    a(href='/chars') Character summary
-  hr
-  p If you are the GM, click this link on your computer.
-  p
-    a(href='/encounter') Encounter
-    |    (GM only)
-  hr
-  p ... or click here to resolve the turn order.
-  p
-    a(href='/encounter/inits') Initiatives
-    |    (GM only)
-  hr
-  p Go here to see a log of recent events.
-  p
-    a(href='/log') Log
-  hr
-  p Create a new character or edit an existing one.
+  h3 For Players
+  
+  p Create a new character or edit an existing one (best done on a bigger screen).
   ul
     li
       form(method="post" action="/packages")
@@ -38,3 +17,33 @@ block content
       li
         form(method="post" action="/packages/" + char.name)
           input(type="submit" name="submit_param" value=char.name class="link-button")
+
+  p Click here to see your character status page.
+  ul
+    each char in chars
+      li
+        a(href='/chars?name=' + char.name) #{char.display}
+        
+  p If this is screen for everyone to watch, please click on this link:
+  p
+    a(href='/chars') Character summary
+    
+  hr
+  h3 For The GM
+  
+  p Click here to resolve the turn order, then start the encounter.
+  p
+    a(href='/encounter/inits') Initiatives
+    |    (GM only)
+    
+  p Or go straight to the encounter.
+  p
+    a(href='/encounter') Encounter
+    |    (GM only)
+    
+  p Go here to see a log of recent events.
+  p
+    a(href='/log') Log
+    
+  hr
+  p You can click on the title at the top of every page to get back to this page.
