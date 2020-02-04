@@ -67,8 +67,9 @@ const [indexGetFun, logGetFun] = require('./routes/index');
 app.get('/', indexGetFun);
 app.get('/log', logGetFun);
 
-const [charsGetFun, charsPostFun] = require('./routes/chars');
+const [charsGetFun, charsGetPdfFun, charsPostFun] = require('./routes/chars');
 app.get('/chars', charsGetFun);
+app.get('/chars.pdf', charsGetPdfFun);
 app.post('/chars', charsPostFun);
 
 const [charGetFun, charPostFun] = require('./routes/char');
@@ -79,12 +80,15 @@ const [attackGetFun, attackPostFun] = require('./routes/attack');
 app.get('/attack', attackGetFun);
 app.post('/attack', attackPostFun);
 
+// 
 const [damagePostFun] = require('./routes/damage');
 app.post('/damage', damagePostFun);
 
+// Pages for the GM to control the encounter
 const encounterRouter = require('./routes/encounter');
 app.use('/encounter', encounterRouter);
 
+// Pages for creating and editing characters
 const packagesRouter = require('./routes/packages');
 app.use('/packages', packagesRouter);
 

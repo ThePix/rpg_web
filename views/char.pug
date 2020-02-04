@@ -2,19 +2,43 @@ extends layout
 
 block content
   h2 Character Sheet For #{char.display}
-  table(class='big')
+  table(class="unseen")
     tr
-      th Attribute
-      th Value
-    each field in fields
-      if field.display
-        tr
-          td 
-            i #{field.display}
-          td 
-            if field.type === 'element'
-              =char.elements[field.name].toString('')
-            else if field.type === 'bool'
-              =char[field.name] ? 'Yes' : 'No'
-            else
-              =char[field.name]
+      td(style="vertical-align:top")
+        
+        table(class='big')
+          tr
+            th Attribute
+            th Value
+          each field in fields
+            if field.display
+              tr
+                td 
+                  i #{field.display}
+                td 
+                  if field.type === 'element'
+                    =char.elements[field.name].toString('')
+                  else if field.type === 'bool'
+                    =char[field.name] ? 'Yes' : 'No'
+                  else
+                    =char[field.name]
+              
+      td(class="unseen")
+        p  
+        
+      td(style="vertical-align:top")
+
+        table(class='big')
+          tr
+            th Messages
+          each msg in char.getMessages().reverse().slice(0, 20)
+            tr 
+              td(class=msg.type) #[b #{msg.title}:] #{msg.content}
+              
+    tr
+      td(colspan=3)
+
+    tr
+      td(colspan=3)
+        form
+          textarea

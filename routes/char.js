@@ -14,6 +14,11 @@ const charGetFun = function(req, res, next) {
 }
 
 
+
+
+
+
+
 const charPostFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const current = chars.find(el => el.current)
@@ -29,6 +34,9 @@ const charPostFun = function(req, res, next) {
   
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 }
+
+
+
 
 
 module.exports = [charGetFun, charPostFun];

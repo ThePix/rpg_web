@@ -4,6 +4,7 @@
 
 const [AttackConsts] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
+const [Message] = require('../models/message.js')
 
 const MongoClient = require('mongodb').MongoClient
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
@@ -74,6 +75,9 @@ class Char {
       { name:'link', type:'string', display:false, disableSave:true},
       { name:'next', type:'string', display:false},
       { name:'charType', type:'string', display:false, disableSave:true},
+      { name:'profession', type:'string', display:false},
+      { name:'race', type:'string', display:false},
+      { name:'sex', type:'string', display:false},
 
       { name:'turnCount', type:'int', display:false},
       { name:'maxHits', type:'int', display:"Max. hits"},
@@ -288,6 +292,19 @@ class Char {
         this.onDone75()
       }
     }
+  }
+  
+  getMessages() {
+    const ary = []
+    for (let msg of Message.data) {
+      if (msg.sender === this.name) {
+        ary.push({type:'sent', title:'To ' + msg.recipient, content:msg.body})
+      }
+      else if (msg.recipient === this.name) {
+        ary.push({type:'received', title:'From ' + msg.sender, content:msg.body})
+      }
+    }
+    return ary
   }
   
   alert(s) {

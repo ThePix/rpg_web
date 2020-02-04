@@ -13,7 +13,7 @@ const chars = [
     new WeaponAttack("Broad sword", 2),
     new WeaponAttack("Unarmed", 2),
   ]}),
-  new Char({name:"Kyle", hits:50, next:'Ogre', charType:'pc', ac:1, reflex:2, packages:{}, notes:[], attacks:[
+  new Char({name:"Kyle", hits:50, next:'Ogre', charType:'pc', ac:1, reflex:2, packages:{}, notes:[], race:'Bear', profession:'Mercenary', attacks:[
     new WeaponAttack("Broad sword", 2, {special:'silver', desc:'The silver sword of Al-Garith', additionalDamage:'2d8', additionalDesc:'If Kyle has combat advantage, he can do a sneak attack, doing additional damage.'}),
     new WeaponAttack("Unarmed", 2),
   ]}),

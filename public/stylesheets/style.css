@@ -195,6 +195,9 @@ li {
 }
 
 
+
+
+
 td.title {
   font-weight:bold;
 }
@@ -205,6 +208,17 @@ td.secret {
 td.comment {
   color:white;
 }
+
+td.sent{
+  text-align:left;
+  background-color:#88f;
+}
+
+td.received{
+  text-align:left;
+  background-color:#f88;
+}
+
 
 .alert {
   background-color:yellow;

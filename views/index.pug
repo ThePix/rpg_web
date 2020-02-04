@@ -18,11 +18,14 @@ block content
         form(method="post" action="/packages/" + char.name)
           input(type="submit" name="submit_param" value=char.name class="link-button")
 
-  p Click here to see your character status page.
+  p Click here to see your character status page or as a PDF for printing.
   ul
     each char in chars
       li
-        a(href='/chars?name=' + char.name) #{char.display}
+        a(href='/chars?name=' + char.name) #{char.display} 
+        |(
+        a(href='/chars.pdf?name=' + char.name) pdf
+        |)
         
   p If this is screen for everyone to watch, please click on this link:
   p
