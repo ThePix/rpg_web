@@ -1,6 +1,23 @@
 
 
 
+Messaging
+A message needs:
+Sender
+Turn
+Recipient(s)
+Body
+Count
+Read flag
+
+
+
+
+
+Messages
+To/from GM
+Display for GM
+
 Persistence
 Need to be able to save characters
 

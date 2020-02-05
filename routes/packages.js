@@ -168,7 +168,7 @@ router.post('/', function(req, res, next) {
     char['weapon' + n] = req.body['weapon' + n]
   }
   
-  if (req.body.submit_param === "create") {
+  if (req.body.submit_param === "Create") {
     const chars = req.app.get('chars')
     for( var i = 0; i < chars.length; i++){ 
        if (chars[i].name === char.name) {

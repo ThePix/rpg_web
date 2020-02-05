@@ -1,20 +1,16 @@
 'use strict';
 
 const [Message] = require('./models/message.js')
+const [Char] = require('./models/char.js')
  
 
 
 
-  const chr1 = {name:'Tester 1'}
-  const chr2 = {name:'Tester 2'}
-  Message.send(chr1, chr2, 'This is a test')
-  Message.send(chr2, chr1, 'This is a reply')
-//  t.is(Message.messagesFor(chr2)[0].body, 'This is a reply');
-//  t.is(Message.messagesFor(chr1)[0].body, 'This is a test');
-
-
+  const test = new Char({name: "Tester", protectedFromFire:2})
+  Message.send(test, {name:'Lara'}, 'Welcome to the game')
 
 console.log(Message.data)
-console.log(Message.messagesFor(chr1))
-console.log(Message.messagesFor(chr1).length)
 
+console.log(test.toHash())
+
+console.log(Message.messagesFor({name:'Lara'}))

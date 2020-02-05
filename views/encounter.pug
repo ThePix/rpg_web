@@ -88,3 +88,21 @@ block content
                   td(class="left" width="50%")
                     if status.length > 0
                       |(#{chr.statusReport()})
+
+
+    tr
+      td(colspan=2)
+        form
+          input(type='hidden' id='maxMessages' value=maxMessages)
+          input(type='hidden' id='refresh' value=refresh)
+          input(type='hidden' id='sender' value=char.name)
+          textarea(id='content' style='width:90%; height:40px;')
+          br
+          | Message to: 
+          select(id='recipient')
+            option All
+            each chr in chars
+              option #{chr.name}
+          |   
+          input(type='button' class='small' value='Send' onclick=('sendMessage()'))
+      

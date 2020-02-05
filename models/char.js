@@ -180,6 +180,16 @@ class Char {
     return s + ']\n\n'
   }
     
+  toHash() {
+    const h = {}
+    for (let field of Char.fields()) {
+      if (field.display && this[field.name]) {
+        h[field.name] = this[field.name].toString()
+      }
+    }
+    return h
+  }
+    
   fieldsInclude(s) {
     const res = Char.fields().find(el => el.name.toLowerCase() === s.toLowerCase())
     return (res !== undefined)

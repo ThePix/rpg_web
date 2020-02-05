@@ -3,20 +3,29 @@
 const express = require('express');
 const router = express.Router();
 const PDFDocument = require('pdfkit');
+const [Message] = require('../models/message.js')
 
 
 // Gets the character page that the players see
 const charsGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const refresh = req.app.get('refresh');
+  const maxMessages = req.app.get('maxMessages');
   if (req.query.name) {
     const char = chars.find(el => el.name === req.query.name)
     if (char) {
       char.penalty = char.getAttackModifier()
-      res.render('char', { char: char, fields:req.app.get('fields'), timestamp:req.timestamp, refresh:refresh });
+      //console.log(chars)
+      //console.log(list)
+      //console.log(list)
+      //console.log(list)
+      const list = chars.filter(el => el.charType === 'pc' && el.name !== char.name).map(el => el.name)
+      console.log('list')
+      console.log(list)
+      res.render('char', { char: char, fields:req.app.get('fields'), timestamp:req.timestamp, refresh:refresh, maxMessages:maxMessages, list:list });
     }
     else {
-      res.render('nochar', { name: req.query.name, timestamp:req.timestamp, refresh:refresh });
+      res.render('nochar', { name: req.query.name, timestamp:req.timestamp });
     }
   }
   else {
@@ -35,6 +44,26 @@ const charsGetFun = function(req, res, next) {
     res.render('chars', { chars:list, timestamp:req.timestamp, refresh:refresh });
   }
 }
+
+
+
+const charsGetJsonFun = function(req, res, next) {
+  console.log("in charsGetJsonFun")
+  const maxMessages = req.app.get('maxMessages');
+  const chars = req.app.get('chars');
+  const char = chars.find(el => el.name === req.query.name)
+  console.log("char=" + char.name)
+  if (char) {
+    char.penalty = char.getAttackModifier()
+    res.json({ char: char.toHash(), messages:char.getMessages().reverse().slice(0, maxMessages) });
+  }
+  else {
+    console.log("Failed to find character in charsGetJsonFun: " + req.query.name)
+  }
+}
+
+
+
 
 
 
@@ -155,4 +184,12 @@ const charsPostFun = function(req, res, next) {
 }
 
 
-module.exports = [charsGetFun, charsGetPdfFun, charsPostFun];
+
+const charsPostJsonFun = function(req, res, next) {
+  Message.send(req.body.sender, req.body.recipient, req.body.content)
+  res.json({ result:'okay' });
+}
+
+
+
+module.exports = [charsGetFun, charsGetJsonFun, charsGetPdfFun, charsPostFun, charsPostJsonFun];

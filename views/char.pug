@@ -15,13 +15,7 @@ block content
               tr
                 td 
                   i #{field.display}
-                td 
-                  if field.type === 'element'
-                    =char.elements[field.name].toString('')
-                  else if field.type === 'bool'
-                    =char[field.name] ? 'Yes' : 'No'
-                  else
-                    =char[field.name]
+                td(id=field.name)
               
       td(class="unseen")
         p  
@@ -30,15 +24,30 @@ block content
 
         table(class='big')
           tr
-            th Messages
-          each msg in char.getMessages().reverse().slice(0, 20)
-            tr 
-              td(class=msg.type) #[b #{msg.title}:] #{msg.content}
+            th Messages (most recent at top)
+          each n in Array.from(Array(20).keys())
+            tr
+              td
+            tr
+              td(id='msg' + n class='msg')
               
     tr
-      td(colspan=3)
+      td(colspan=3 class="unseen")
 
     tr
       td(colspan=3)
         form
-          textarea
+          input(type='hidden' id='maxMessages' value=maxMessages)
+          input(type='hidden' id='refresh' value=refresh)
+          input(type='hidden' id='sender' value=char.name)
+          textarea(id='content' style='width:90%; height:40px;')
+          br
+          | Message to: 
+          select(id='recipient')
+            option GM
+            each name in list
+              option #{name}
+          |   
+          input(type='button' class='small' value='Send' onclick=('sendMessage()'))
+          
+  script(src="/javascripts/char.js")

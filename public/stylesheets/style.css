@@ -149,7 +149,7 @@ select {
   border-radius: 5px;
 }
 
-button {
+input[type=button], input[type=submit] {
   font-size: 1.5em;
   padding: 3px;
   padding-left: 12px;
@@ -157,12 +157,12 @@ button {
   border-radius: 5px;
 }
 
-button.small {
+/*button.small {
   font-size: 1em;
   padding: 3px;
   padding-left: 12px;
   padding-right: 12px;
-}
+}*/
 
 .link-button {
   background: none;
@@ -209,14 +209,9 @@ td.comment {
   color:white;
 }
 
-td.sent{
+td.msg{
   text-align:left;
-  background-color:#88f;
-}
-
-td.received{
-  text-align:left;
-  background-color:#f88;
+  margin-top:12px;
 }
 
 

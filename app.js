@@ -1,7 +1,9 @@
 "use strict";
 
-const PORT = 8091
-const REFRESH = 10
+const port = 8091
+const refresh = 5
+const maxMessages = 20
+
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -57,7 +59,9 @@ const [Char] = require('./models/char.js')
 const [chars, stocks] = require('./data.js')
 
 
-app.set('refresh', REFRESH)
+
+app.set('maxMessages', maxMessages)
+app.set('refresh', refresh)
 app.set('chars', chars)
 app.set('stocks', stocks)
 app.set('fields', Char.fields())
@@ -67,10 +71,12 @@ const [indexGetFun, logGetFun] = require('./routes/index');
 app.get('/', indexGetFun);
 app.get('/log', logGetFun);
 
-const [charsGetFun, charsGetPdfFun, charsPostFun] = require('./routes/chars');
+const [charsGetFun, charsGetJsonFun, charsGetPdfFun, charsPostFun, charsPostJsonFun] = require('./routes/chars');
 app.get('/chars', charsGetFun);
+app.get('/chars.json', charsGetJsonFun);
 app.get('/chars.pdf', charsGetPdfFun);
 app.post('/chars', charsPostFun);
+app.post('/message', charsPostJsonFun);
 
 const [charGetFun, charPostFun] = require('./routes/char');
 app.get('/char', charGetFun);
@@ -116,11 +122,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(PORT)
+app.listen(port)
 const ip = require("ip");
 Log.add("secret", "Loaded " + chars.length + " characters")
-Log.add('secret', 'Refresh is ' + REFRESH + ' seconds')
-Log.add("title", "Go to " + ip.address() + ":" + PORT + " to access the web site")
+Log.add('secret', 'Refresh is ' + refresh + ' seconds')
+Log.add("title", "Go to " + ip.address() + ":" + port + " to access the web site")
 
 module.exports = app;
 

@@ -25,9 +25,9 @@ block content
           p
           input(type="text" name="comment")
           p
-          button(type="submit" name="submit_param" value="submit_value" class="link-button") Update
+          input(type="submit" name="submit_param" value="submit_value" class="link-button") Update
           |  | 
-          button(type="button" onclick="window.location.href = '/encounter'" class="link-button") Forget it
+          input(type="button" onclick="window.location.href = '/encounter'" class="link-button") Forget it
         td(width="10%" style="background-color:white;")
         td(width="60%" style="background-color:white;vertical-align:top")
           if char.alerts
@@ -39,7 +39,7 @@ block content
               p
               form(method="post" action="clear-alerts")
                 input(type="hidden" name="name" value=char.name)
-                button(type="submit" name="submit_param" value="submit_value" class="link-button") Clear
+                input(type="submit" name="submit_param" value="submit_value" class="link-button") Clear
           else
             h4 No alerts active
             

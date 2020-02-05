@@ -4,8 +4,6 @@ html
     title Pixies and Predators
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src="/javascripts/jquery-3.4.1.min.js")
-    if refresh
-      meta(http-equiv="refresh", content=refresh)
   body
     h1
       a(href='/') Pixies and Predators
@@ -13,5 +11,3 @@ html
       block content
     if timestamp
       footer Downloaded at #{timestamp}, copyright The Pixie 2019-20
-    if refresh
-      footer This page will update every #{refresh} seconds
