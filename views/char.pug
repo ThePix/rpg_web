@@ -25,7 +25,7 @@ block content
         table(class='big')
           tr
             th Messages (most recent at top)
-          each n in Array.from(Array(20).keys())
+          each n in Array.from(Array(maxMessages).keys())
             tr
               td
             tr
@@ -40,7 +40,7 @@ block content
           input(type='hidden' id='maxMessages' value=maxMessages)
           input(type='hidden' id='refresh' value=refresh)
           input(type='hidden' id='sender' value=char.name)
-          textarea(id='content' style='width:90%; height:40px;')
+          textarea(id='content')
           br
           | Message to: 
           select(id='recipient')
@@ -49,5 +49,5 @@ block content
               option #{name}
           |   
           input(type='button' class='small' value='Send' onclick=('sendMessage()'))
-          
+
   script(src="/javascripts/char.js")

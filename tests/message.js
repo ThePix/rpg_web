@@ -21,7 +21,7 @@ test('send', t => {
 test('send with bad chars', t => {
   const chr1 = {name:'Tester 1'}
   const chr2 = {name:'Tester 2'}
-  Message.send(chr1, chr2, 'This% is!! "a" test=.')
+  Message.send(chr1, chr2, 'This% is== "a" test=.')
   Message.send(chr2, chr1, 'This [is] a) (repl+y,')
   t.is(Message.data.length, 2);
   t.is(Message.data[0].body, 'This is a test.');

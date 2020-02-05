@@ -164,13 +164,21 @@ input[type=button], input[type=submit] {
   padding-right: 12px;
 }*/
 
-.link-button {
+textarea {
+  font-size: 1.5em;
+  border-radius: 5px;
+  width:90%; 
+  height:80px;
+}
+
+
+input[type=submit].link-button {
   background: none;
   border: none;
   color: #00B7FF;
   text-decoration: underline;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 12pt;
   padding:0;
 }
 .link-button:focus {

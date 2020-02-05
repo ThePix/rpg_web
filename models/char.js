@@ -305,21 +305,13 @@ class Char {
   }
   
   getMessages() {
-    const ary = []
-    for (let msg of Message.data) {
-      if (msg.sender === this.name) {
-        ary.push({type:'sent', title:'To ' + msg.recipient, content:msg.body})
-      }
-      else if (msg.recipient === this.name) {
-        ary.push({type:'received', title:'From ' + msg.sender, content:msg.body})
-      }
-    }
-    return ary
+    return Message.getMessages(this.name)
   }
   
   alert(s) {
     if (this.alerts === undefined) this.alerts = []
     this.alerts.push(s)
+    Message.send('!!!', 'GM', s)
   }
   
   cancelAlerts() {

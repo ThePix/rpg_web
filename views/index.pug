@@ -8,25 +8,32 @@ block content
   hr
   h3 For Players
   
-  p Create a new character or edit an existing one (best done on a bigger screen).
-  ul
-    li
-      form(method="post" action="/packages")
-        input(type="submit" name="submit_param" value="New" class="link-button")
+  p
+    | You can create a new character by clicking on the link below
+    |  (best done on a bigger screen). Once you have a character set up, you can view it on your mobile or tablet
+    |  during play. You can also edit it (if you go up a level, for example), or see a PDF version that can be printed.
+  
+  form(method="post" action="/packages")
+    input(type="submit" name="submit_param" value="Create new" class="link-button")
+    
+  br
+  
+  table
     each char in chars
-      li
-        form(method="post" action="/packages/" + char.name)
-          input(type="submit" name="submit_param" value=char.name class="link-button")
-
-  p Click here to see your character status page or as a PDF for printing.
-  ul
-    each char in chars
-      li
-        a(href='/chars?name=' + char.name) #{char.display} 
-        |(
-        a(href='/chars.pdf?name=' + char.name) pdf
-        |)
+      tr
+        td
+          b
+            =char.display
+        td
+          a(href='/chars?name=' + char.name) View
+        td
+          form(method="post" action="/packages/" + char.name)
+            input(type="submit" name="submit_param" value='Edit' class="link-button")
+        td
+          a(href='/chars/pdf?name=' + char.name) PDF
         
+  
+  
   p If this is screen for everyone to watch, please click on this link:
   p
     a(href='/chars') Character summary

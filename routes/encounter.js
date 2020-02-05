@@ -1,6 +1,7 @@
 'use strict';
 
-const SAVEFILE = 'data/save.txt'
+const SAVEFILE = 'save'
+const PATH = 'data'
 
 const fs = require('fs');
 const express = require('express');
@@ -14,7 +15,9 @@ const [Log] = require('../models/log.js')
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.current)
-  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+  const refresh = req.app.get('refresh');
+  const maxMessages = req.app.get('maxMessages');
+  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp, refresh:refresh, maxMessages:maxMessages });
 });
 
 router.get('/inits', function(req, res, next) {
@@ -34,25 +37,36 @@ router.get('/next', function(req, res, next) {
   const chars = req.app.get('chars');
   let char = chars.find(el => el.name === req.query.char)
   char = char.nextChar(chars)
-  fs.writeFile(SAVEFILE, Char.saveData(chars), function (err) {
+  fs.writeFile(PATH + '/' + SAVEFILE + '.chr', Char.saveData(chars), function (err) {
     if (err) throw err;
-    console.log('Saved!');
-    Log.add("comment", "Game state saved")
+    console.log('Characters saved!');
+    Log.add("comment", "Characters saved")
+  });
+  fs.writeFile(PATH + '/' + SAVEFILE + '.msg', Message.saveData(), function (err) {
+    if (err) throw err;
+    console.log('Messages saved!');
+    Log.add("comment", "Messages saved")
   });
   Log.add("title", "Next!")
   res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
 });
 
 router.get('/load', function(req, res, next) {
-  fs.readFile(SAVEFILE, function(err, s) {
+  Log.recover()
+  fs.readFile(PATH + '/' + SAVEFILE + '.chr', function(err, s) {
     if (err) throw err;
     Log.add("comment", "About to load last saved game...")
     const chars = req.app.get('chars');
     Char.loadData(chars, String(s))
     const char = chars.find(el => el.current)
-    Log.recover()
     Log.add("comment", "...Load last saved game")
     res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+  });  
+  fs.readFile(PATH + '/' + SAVEFILE + '.msg', function(err, s) {
+    if (err) throw err;
+    Log.add("comment", "About to load last saved messages...")
+    Message.loadData(String(s))
+    Log.add("comment", "...Load last saved messages")
   });  
 });
 

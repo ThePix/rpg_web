@@ -71,12 +71,6 @@ const [indexGetFun, logGetFun] = require('./routes/index');
 app.get('/', indexGetFun);
 app.get('/log', logGetFun);
 
-const [charsGetFun, charsGetJsonFun, charsGetPdfFun, charsPostFun, charsPostJsonFun] = require('./routes/chars');
-app.get('/chars', charsGetFun);
-app.get('/chars.json', charsGetJsonFun);
-app.get('/chars.pdf', charsGetPdfFun);
-app.post('/chars', charsPostFun);
-app.post('/message', charsPostJsonFun);
 
 const [charGetFun, charPostFun] = require('./routes/char');
 app.get('/char', charGetFun);
@@ -86,9 +80,14 @@ const [attackGetFun, attackPostFun] = require('./routes/attack');
 app.get('/attack', attackGetFun);
 app.post('/attack', attackPostFun);
 
-// 
+// Apply damage during attack resolution
 const [damagePostFun] = require('./routes/damage');
 app.post('/damage', damagePostFun);
+
+
+// Pages for the players to access characters (and send messages)
+const charsRouter = require('./routes/chars');
+app.use('/chars', charsRouter);
 
 // Pages for the GM to control the encounter
 const encounterRouter = require('./routes/encounter');

@@ -1,25 +1,11 @@
 
 
-
-Messaging
-A message needs:
-Sender
-Turn
-Recipient(s)
-Body
-Count
-Read flag
-
-
-
-
-
-Messages
-To/from GM
-Display for GM
-
 Persistence
-Need to be able to save characters
+Need to be able to save characters, log, messages
+Saves after each round, but needs testing
+
+
+
 
 Link attacks and weapons
 
@@ -27,11 +13,16 @@ Weird effects and spells
 
 Elements
 
+
+
+
 Monster catalogue
 
 Encounter builder
 
 Adding a group of characters (how is init handled?)
+
+
 
 
 

@@ -51,14 +51,16 @@ const charsGetJsonFun = function(req, res, next) {
   console.log("in charsGetJsonFun")
   const maxMessages = req.app.get('maxMessages');
   const chars = req.app.get('chars');
+  console.log("here")
   const char = chars.find(el => el.name === req.query.name)
-  console.log("char=" + char.name)
+  console.log("here")
+  console.log("char=" + (char ? char.name : '--'))
   if (char) {
     char.penalty = char.getAttackModifier()
     res.json({ char: char.toHash(), messages:char.getMessages().reverse().slice(0, maxMessages) });
   }
   else {
-    console.log("Failed to find character in charsGetJsonFun: " + req.query.name)
+    res.json({ messages:Message.getMessages(req.query.name).reverse().slice(0, maxMessages) });
   }
 }
 
@@ -186,10 +188,25 @@ const charsPostFun = function(req, res, next) {
 
 
 const charsPostJsonFun = function(req, res, next) {
-  Message.send(req.body.sender, req.body.recipient, req.body.content)
+  /*if (req.body.recipient === 'All') {
+    for (let c of req.app.get('chars')) {
+      if (c.charType === 'pc') Message.send(req.body.sender, c.name, req.body.content)
+    }
+  }
+  else {*/
+    Message.send(req.body.sender, req.body.recipient, req.body.content)
+  //}
   res.json({ result:'okay' });
 }
 
 
+router.get('/', charsGetFun);
+router.get('/json', charsGetJsonFun);
+router.get('/pdf', charsGetPdfFun);
+router.post('/', charsPostFun);
+router.post('/message', charsPostJsonFun);
 
-module.exports = [charsGetFun, charsGetJsonFun, charsGetPdfFun, charsPostFun, charsPostJsonFun];
+
+
+
+module.exports = router;

@@ -17,7 +17,7 @@ const sendMessage = function() {
   
   const xhr = new XMLHttpRequest();
   const url = "url";
-  xhr.open("POST", '/message', true);
+  xhr.open("POST", '/chars/message', true);
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onreadystatechange = function () { 
     if (xhr.readyState == 4 && xhr.status == 200) {
@@ -34,6 +34,12 @@ const sendMessage = function() {
 }
 
 
+const msgColours = {
+  sent: '#ccf',
+  received: '#afa',
+  alert: '#ff8',
+}
+
 const updatePage = function() {
   const httpRequest = new XMLHttpRequest();
   if (!httpRequest) {
@@ -44,18 +50,22 @@ const updatePage = function() {
     if (this.readyState == 4 && this.status == 200) {
       const data = JSON.parse(this.responseText);
       console.log(data);
-      for (let key in data.char) {
-        $('#' + key).html(data.char[key])
+      if (data.char) {
+        for (let key in data.char) {
+          $('#' + key).html(data.char[key])
+        }
       }
+      console.log("here" + data.messages.length);
       for (let i = 0; i < maxMessages; i++) {
         if (data.messages[i]) {
+      console.log('#msg' + i);
           $('#msg' + i).html('<b>' + data.messages[i].title + ':</b> ' + data.messages[i].content)
-          $('#msg' + i).css('background-color', data.messages[i].type === 'sent' ? '#ccf' : '#afa')
+          $('#msg' + i).css('background-color', msgColours[data.messages[i].type])
         }
       }
     }
   };
-  httpRequest.open('GET', 'chars.json?name=' + chr);
+  httpRequest.open('GET', 'chars/json?name=' + chr);
   httpRequest.send();
 
 }
