@@ -8,7 +8,17 @@ Saves after each round, but needs testing
 
 
 Link attacks and weapons
-When a character is 
+When a character is created:
+Package.setAttacks(packages, c, weapons)
+
+If a bonus adds an attack, it needs an attack function that will return an Attack object
+this.attack(char, grade)
+
+
+Also need to add basic attacks for each weapon
+
+
+
 
 Weird effects and spells
 

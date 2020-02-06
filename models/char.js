@@ -51,19 +51,15 @@ class Char {
   
   static create(name, packages, data, weaponNames) {
     const c = new Char({name:name, shield:0, armour:0, maxHits:20, attack:0, weapons:1, packages:data })
-    console.log(c.maxHits)
     Package.setBonuses(packages, c)
     c.hits = c.maxHits
 
-    console.log(c.maxHits)
     const weapons = []
     for (let i = 0; i < weaponNames.length && i < this.weapons; i++) {
       const w = WEAPONS.find(el => el.name === weaponNames[i])
       console.log(w.name)
       weapons.push(w)
     }
-    console.log(c.maxHits)
-    console.log(weapons)
     this.attacks = []
     Package.setAttacks(packages, c, weapons)
     return c
@@ -99,6 +95,7 @@ class Char {
       { name:'pp', type:'int', display:false},
       { name:'weapons', type:'int', display:false},
       { name:'attack', type:'int', display:false},
+      { name:'level', type:'int', display:false},
       { name:'penalty', type:'int', display:'Penalty'},
       
       { name:'ice', type:'element', display:'Ice'},

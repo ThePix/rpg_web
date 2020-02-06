@@ -79,7 +79,7 @@ router.post('/', function(req, res, next) {
   
   for (let i = 1; i <= 4; i++) {
     if (req.body['weapon' + i] !== 'None') {
-      weaponNames(req.body['weapon' + i])
+      weaponNames[req.body['weapon' + i]]
     }
   }
   
@@ -90,8 +90,8 @@ router.post('/', function(req, res, next) {
   char.sex = req.body.sex || ''
   char.race = req.body.race || ''
   char.profession = req.body.profession || ''
-  char.level = parseInt(req.body.level || '4')
   char.points = points
+  char.level = parseInt(req.body.level || 4)
   char.maxPoints = char.level * 2 + 2
   char.exists = req.body.exists
   

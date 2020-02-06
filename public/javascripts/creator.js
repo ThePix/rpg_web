@@ -19,6 +19,7 @@ function packageCountUpdate(event) {
     const inp = $('#' + s)[0]
     let n = parseInt(inp.value)
     if (n > level) n = inp.value = level
+    if (n < 0) n = inp.value = 0
     if (inp.dataset.group && n > 0) {
       disabledGroups.push(inp.dataset.group)
       $('#' + s).prop('disabled', false);
