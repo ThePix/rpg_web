@@ -8,6 +8,7 @@ Saves after each round, but needs testing
 
 
 Link attacks and weapons
+When a character is 
 
 Weird effects and spells
 

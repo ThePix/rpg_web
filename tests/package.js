@@ -129,7 +129,7 @@ const getTester = function(level) {
     new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
     new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
   ]})
-  const tester = Char.create("Tester", [test], {Package:level})
+  const tester = Char.create("Tester", [test], {Package:level}, [])
 
   return tester  
 }

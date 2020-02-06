@@ -9,14 +9,19 @@ class Package {
     if (!Array.isArray(this.bonuses)) throw new Error('No bonus array set for package ' + name)
   }
   
-  setBonuses(char, level) {
-    if (level === undefined) level = char.packages[this.name] || 0
+  setBonuses(char) {
     if (char.notes === undefined) char.notes = []
 
     for (let bonus of this.bonuses) {
-      bonus.apply(char, level)
+      bonus.apply(char)
     }
-    if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * level)
+    if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * char.level)
+  }
+
+  setAttacks(char, weapons) {
+    for (let bonus of this.bonuses) {
+      bonus.applyAttacks(char, weapons)
+    }
   }
 
   getBonuses(level) {
@@ -62,6 +67,12 @@ class Package {
   static setBonuses(packages, char) {
     for (let p of packages) {
       p.setBonuses(char)
+    }
+  }
+  
+  static setAttacks(packages, c, weapons) {
+    for (let p of packages) {
+      p.setAttacks(c, weapons)
     }
   }
 }
@@ -113,8 +124,31 @@ class Bonus {
     }
   }
 
-  apply(char, level) {
-    const grade = this._grade(level)
+  apply(char) {
+    const grade = this._grade(char.level)
+    if (grade === 0) return
+    const name = this.altName ? this.altName : this.name
+    if (char[name] === undefined) char[name] = 0
+    
+    char[name] += grade
+    
+    if (this.script) this.script(char)
+    
+    if (this.notes) {
+      if (typeof this.notes === "string") {
+        char.notes.push(this.notes)
+      }
+      else if (typeof this.notes === "function") {
+        char.notes.push(this.notes(grade))
+      }
+      else if (Array.isArray(this.notes)) {
+        char.notes.push(this.notes[grade - 1])
+      }
+    }
+  }
+  
+  applyAttacks(char, weapons, level) {
+    const grade = this._grade(char.level)
     if (grade === 0) return
     const name = this.altName ? this.altName : this.name
     if (char[name] === undefined) char[name] = 0

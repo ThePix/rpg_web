@@ -67,16 +67,24 @@ router.post('/:page', function(req, res, next) {
 router.post('/', function(req, res, next) {
   console.log("here")
   const data = {}
+  const weaponNames = []
   let points = 0
+  
   for (let key in req.body) {
     if (!key.startsWith('package_')) continue
     const name = key.replace('package_', '')
     data[name] = parseInt(req.body[key])
     points += data[name]
-    //const p = packages.find(el => el.name === name)
-    //p.setBonuses(char, data.packages[name])
   }
-  const char = Char.create(req.body.name || '', packages, data)
+  
+  for (let i = 1; i <= 4; i++) {
+    if (req.body['weapon' + i] !== 'None') {
+      weaponNames(req.body['weapon' + i])
+    }
+  }
+  
+  
+  const char = Char.create(req.body.name || '', packages, data, weaponNames)
 
   char.charType = req.body.charType || 'pc'
   char.sex = req.body.sex || ''
@@ -87,9 +95,6 @@ router.post('/', function(req, res, next) {
   char.maxPoints = char.level * 2 + 2
   char.exists = req.body.exists
   
-  for (let n of [1, 2, 3, 4]) {
-    char['weapon' + n] = req.body['weapon' + n]
-  }
   
   if (req.body.submit_param === "Create") {
     const chars = req.app.get('chars')

@@ -2,9 +2,10 @@
 
 //const mongo = require('mongodb'); 
 
-const [AttackConsts] = require('../models/attack.js')
+const [AttackConsts, Attack, WeaponAttack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('../models/message.js')
+const [Package, packages, Bonus] = require('../models/package.js')
 
 const MongoClient = require('mongodb').MongoClient
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
@@ -48,10 +49,23 @@ class Char {
   
   
   
-  static create(name, packages, data) {
+  static create(name, packages, data, weaponNames) {
     const c = new Char({name:name, shield:0, armour:0, maxHits:20, attack:0, weapons:1, packages:data })
+    console.log(c.maxHits)
     Package.setBonuses(packages, c)
     c.hits = c.maxHits
+
+    console.log(c.maxHits)
+    const weapons = []
+    for (let i = 0; i < weaponNames.length && i < this.weapons; i++) {
+      const w = WEAPONS.find(el => el.name === weaponNames[i])
+      console.log(w.name)
+      weapons.push(w)
+    }
+    console.log(c.maxHits)
+    console.log(weapons)
+    this.attacks = []
+    Package.setAttacks(packages, c, weapons)
     return c
   }
   
@@ -578,6 +592,4 @@ class NetherElement extends ElementalEffect {
 }
 
 module.exports = [Char]
-
-const [Package, packages, Bonus] = require('../models/package.js')
 
