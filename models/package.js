@@ -20,6 +20,12 @@ class Package {
   }
 
   setAttacks(char, weapons) {
+    console.log(weapons)
+    // Basic attacks
+    for (let attack of weapons) {
+      
+    }
+    // Special attacks
     for (let bonus of this.bonuses) {
       bonus.applyAttacks(char, weapons, char.packages[this.name])
     }

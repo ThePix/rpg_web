@@ -16,13 +16,15 @@ const [AttackConsts, Attack, WeaponAttack] = require('./models/attack.js')
     new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
     new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
     new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
+    new Bonus('weapons', {progression:3}),
   ]})
   const test2 = new Package('Package2', { bonuses:[
-    new Bonus('talking', {progression:'primary', notes:"Good at talking"}),
+    new Bonus('attack', {progression:'primary', notes:"Good at fighting"}),
     new Bonus('shield', {progression:2}),
   ]})
-  const tester = Char.create("Tester", [test1, test2], {Package1:10, Package2:4}, [])
+  const tester = Char.create("Tester", [test1, test2], {Package1:10, Package2:4}, ["Warhammer"])
 
 
 console.log(tester.nature)  // 3
 console.log(tester.maxHits) // 40
+console.log(tester.attacks)

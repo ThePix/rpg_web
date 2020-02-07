@@ -55,12 +55,17 @@ class Char {
     c.hits = c.maxHits
 
     const weapons = []
-    for (let i = 0; i < weaponNames.length && i < this.weapons; i++) {
+    c.attacks = []
+    c.warnings = []
+    if (weaponNames.length < c.weapons) c.warnings.push("You can choose an additional weapon.")
+    console.log(c.weapons)
+    console.log(c.attack)
+    for (let i = 0; i < weaponNames.length && i < c.weapons; i++) {
       const w = WEAPONS.find(el => el.name === weaponNames[i])
       console.log(w.name)
       weapons.push(w)
+      c.attacks.push(new WeaponAttack(w.name, c.attack)) // !!! Other skills might affect this
     }
-    this.attacks = []
     Package.setAttacks(packages, c, weapons)
     return c
   }
