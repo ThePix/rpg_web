@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h2 Weapons
+  
+  table(class='big')
+    tr
+      th Name
+      th Attack<br/>type
+      th Damage<br/>type
+      th Damage<br/>dice
+      th Notes
+      th Comments
+    each w in weapons
+      tr
+        td(class="weapon")
+          b
+            =w.name
+        td(class="weapon")
+          =w.getNotes('attack type')[0].desc
+        td(class="weapon")
+          =w.getNotes('damage type')[0].desc
+        td(class="weapon")
+          =w.damage
+        td(class="weapon") !{w.getNotes('note').map(el => el.desc).join('<br/>')}
+        td(class="weapon")
+          =w.desc

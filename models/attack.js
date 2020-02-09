@@ -19,29 +19,134 @@
 'use strict';
 
 
+
+
 const attNames = {
-  defensive:'D',  // A character using a defensive weapon can choose to take a penalty, up to 4, to the attack roll, and add that amount to her reflex until the start of her next turn.
-  slow:'S',       // A character wielding this weapon is at -4 to initiative. If a character did not take the penalty when initiative was determined, she cannot attack with this weapon this round.
-  fast:'F',       //  A character wielding this weapon at the start of combat (and no other weapon without an F) is at +4 to initiative.
-  skilled:'X',    //  This weapon is difficult to wield, and attacks are made with a -4 penalty. This can be reduced by buying levels in the "Warrior" package with the right specialisation.
-  reach2:'R2',    //  Reach 2; can attack a foe up to two squares away. 'R3' indicates a reach of three.
-  reach3:'R3',
-  load1:'L1',     //  Takes a standard action to load (so generally will take a round to load, a round to fire).
-  load2:'L2',     //  'L2' indicates it takes two standard actions to reload. Good luck using that more than once an encounter.
-  loadm:'M',      //  Takes a minor action to load
-  twohands:'2',   //  Two-handed weapon
-  shield:'Y',     //  Shield bonuses are halved (round down) against this weapon
-  hook:'H',       //  On a successful hit, can optionally attempt to hook a foe, drawing him one square closer if more than a square away, or off his mount if mounted (foe gets a save vs reflex)
   
-  melee:'m',
-  ranged:'r',
-  firearm:'f',
-  artillery:'a',
-  bash:'b',
-  cleave:'c',
-  pierce:'p',
-  slash:'s',
-  whip:'w',
+  // Attack type
+  unarmed:{
+    code:/^u/,
+    attType:'attack type',
+    desc:'Unarmed',
+  },
+  melee:{
+    code:/^m/,
+    attType:'attack type',
+    desc:'One-handed melee',
+  },
+  melee2:{
+    code:/^M/,
+    attType:'attack type',
+    desc:'Two-handed melee',
+  },
+  bow:{
+    code:/^b/,
+    attType:'attack type',
+    desc:'A bow (two hands)',
+  },
+  thrown:{
+    code:/^t/,
+    attType:'attack type',
+    desc:'Thrown projectile',
+  },
+  firearm:{
+    code:/^f/,
+    attType:'attack type',
+    desc:'Firearm (one handed)',
+  },
+  firearm2:{
+    code:/^F/,
+    attType:'attack type',
+    desc:'Firearm (two handed)',
+  },
+  artillery:{
+    code:/^a/,
+    attType:'attack type',
+    desc:'Artillery',
+  },
+  
+  // Damage type
+  bash:{
+    code:/^\wb/,
+    attType:'damage type',
+    desc:'Bash',
+  },
+  cleave:{
+    code:/^\wc/,
+    attType:'damage type',
+    desc:'Cleave',
+  },
+  pierce:{
+    code:/^\wp/,
+    attType:'damage type',
+    desc:'Pierce',
+  },
+  slash:{
+    code:/^\ws/,
+    attType:'damage type',
+    desc:'Slash',
+  },
+  
+  defensive:{
+    code:/\w\wD/,
+    attType:'note',
+    desc:' A character using a defensive weapon can choose to take a penalty, up to 4, to the attack roll, and add that amount to her reflex until the start of her next turn.',
+  },
+  slow:{
+    code:/\w\wS/,
+    attType:'note',
+    desc:' A character wielding this weapon is at -4 to initiative. If a character did not take the penalty when initiative was determined, she cannot attack with this weapon this round.',
+  },
+  fast:{
+    code:/\w\wF/,
+    attType:'note',
+    desc:'A character wielding this weapon at the start of combat (and no other weapon without an F) is at +4 to initiative.',
+  },
+  skilled:{
+    code:/\w\wX/,
+    attType:'note',
+    desc:'This weapon is difficult to wield, and attacks are made with a -4 penalty. This can be reduced by buying levels in the "Warrior" package with the right specialisation.',
+  },
+  reach2:{
+    code:/\w\wR2/,
+    attType:'note',
+    desc:'Reach 2; can attack a foe up to two squares away.',
+  },
+  reach3:{
+    code:/\w\wR3/,
+    attType:'note',
+    desc:'Reach 3; can attack a foe up to three squares away.',
+  },
+  load1:{
+    code:/\w\wL1/,
+    attType:'note',
+    desc:'Takes a standard action to load (so generally will take a round to load, a round to fire).',
+  },
+  load2:{
+    code:/\w\wL2/,
+    attType:'note',
+    desc:'Takes two standard actions to reload. Good luck using that more than once an encounter.',
+  },
+  loadm:{
+    code:/\w\wM/,
+    attType:'note',
+    desc:'Takes a minor action to load',
+  },
+  shield:{
+    code:/\w\wY/,
+    attType:'note',
+    desc:'Shield bonuses are halved (round down) against this weapon',
+  },
+  hook:{
+    code:/\w\wH/,
+    attType:'note',
+    desc:'On a successful hit, can optionally attempt to hook a foe, drawing him one square closer if more than a square away, or off his mount if mounted (foe gets a save vs reflex)',
+  },
+  throwable:{
+    code:/T/,
+    attType:'note',
+    desc:'This melee weapon can also be thrown',
+  },
 }
 
 
@@ -53,7 +158,18 @@ class Weapon {
     }
   }
   
-  is(att) { return this.atts.includes(attNames[att]) }
+  is(att) { return this.atts.match(attNames[att].code) }
+  
+  getNotes(attType) {
+    const ary = []
+    for (let h in attNames) {
+      if (attNames[h].attType === attType && this.atts.match(attNames[h].code)) {
+        attNames[h].name = h
+        ary.push(attNames[h])
+      }
+    }
+    return ary
+  }
 }  
 
 
@@ -93,40 +209,36 @@ const AttackConsts = {
 }
 
 const WEAPONS = [
-  new Weapon("Unarmed", {damage:"d4", atts:"mbX", desc:"Useful when you have lost your weapons! Skill in unarmed will increase damage."}),
-  new Weapon("Dagger", {damage:"d6", atts:"msF", desc:"Can be concealed"}),
+  new Weapon("Unarmed", {damage:"d4", atts:"ubX", desc:"Useful when you have lost your weapons! Skill in unarmed will increase damage."}),
+  new Weapon("Dagger", {damage:"d6", atts:"msFT", desc:"Can be concealed"}),
   new Weapon("Short sword", {damage:"2d6", atts:"msF", desc:"Use if you want to go first; bonus to initiative"}),
   new Weapon("Broad sword", {damage:"3d6", atts:"ms", desc:"Also scimitar, long sword, etc. Good for unarmed foes"}),
   new Weapon("2H sword", {damage:"3d8", atts:"ms2X", desc:"Requires skill, but does good damage, especially to unarmed foes"}),
-  new Weapon("Wood axe", {damage:"d8", atts:"mcS", desc:"Cheap and readily available!"}),
+  new Weapon("Wood axe", {damage:"d8", atts:"mcST", desc:"Cheap and readily available!"}),
   new Weapon("Battle axe", {damage:"d10", atts:"mcS", desc:"Good against armoured foes, but slow"}),
   new Weapon("Great axe", {damage:"2d10", atts:"mc2SX", desc:"Requires skill, but does good damage, especially to unarmed foes"}),
   new Weapon("Club", {damage:"2d4", atts:"mb", desc:"Includes improvised weapons"}),
   new Weapon("Mace", {damage:"d10", atts:"mb", desc:"Good against armed foes"}),
   new Weapon("Morning star", {damage:"2d8", atts:"mb", desc:"All round weapon"}),
-  new Weapon("Flail", {damage:"d12", atts:"mb2XY", desc:"Requires skill, especially good against armoured foes with shields"}),
-  new Weapon("Quarterstaff", {damage:"2d4", atts:"mbD", desc:"Good for defense"}),
+  new Weapon("Flail", {damage:"d12", atts:"MbXY", desc:"Requires skill, especially good against armoured foes with shields"}),
+  new Weapon("Quarterstaff", {damage:"2d4", atts:"MbD", desc:"Good for defense"}),
   new Weapon("Warhammer", {damage:"2d10", atts:"mbS", desc:"Slow but good damage"}),
-  new Weapon("2H hammer", {damage:"2d12", atts:"mb2SX", desc:"Lots of damage, but slow and requires skill"}),
-  new Weapon("Spear", {damage:"2d8", atts:"mpR2XS", desc:"Extra reach, can be used as a thrown weapon too (also javelin or trident)"}),
-  new Weapon("Polearm", {damage:"3d8", atts:"mpR2XS", desc:"Extra reach"}),
-  new Weapon("Halberd", {damage:"3d6", atts:"mpR2XSH", desc:"Extra reach, and can be used to hook a foe"}),
-  new Weapon("Whip", {damage:"4d4", atts:"mwR2XS", desc:"Requires skill, but good against unarmed and extra reach"}),
-  new Weapon("Bull whip", {damage:"4d4", atts:"mwR3XS]", desc:"As whip, but even more reach"}),
-  new Weapon("Thrown rock", {damage:"d4", atts:"rb", desc:"Or anything of a decent size and weight to throw"}),
-  new Weapon("Thrown dagger", {damage:"d6", atts:"rpF", desc:"Can be thrown fast"}),
-  new Weapon("Thrown spear", {damage:"3d6", atts:"rp", desc:"Good damage, but limited to one or two a combat"}),
-  new Weapon("Sling", {damage:"2d4", atts:"rbM", desc:"Cheap ammo"}),
-  new Weapon("Short bow", {damage:"2d6", atts:"rpFX", desc:"Fast reload"}),
-  new Weapon("Long bow", {damage:"3d6", atts:"rpFMX", desc:"Takes a minor action to reload, but decent damage against unarmoured"}),
-  new Weapon("Light crossbow", {damage:"d12", atts:"rpMX", desc:"Takes a minor action to reload, but decent against armoured foes"}),
-  new Weapon("Heavy crossbow", {damage:"d20", atts:"rpL1X", desc:"Takes a full standard action to reload, but good against armoured foes"}),
-  new Weapon("Arquebus", {damage:"2d20", atts:"fpL2", desc:"Very noisy. Takes two full standard actions to reload, and expensive to use, but look at all the damage!"}),
+  new Weapon("2H hammer", {damage:"2d12", atts:"MbSX", desc:"Lots of damage, but slow and requires skill"}),
+  new Weapon("Spear", {damage:"2d8", atts:"MpR2XST", desc:"Extra reach, can be used as a thrown weapon too (also javelin or trident)"}),
+  new Weapon("Polearm", {damage:"3d8", atts:"MpR2XS", desc:"Extra reach"}),
+  new Weapon("Halberd", {damage:"3d6", atts:"MpR2XSH", desc:"Extra reach, and can be used to hook a foe"}),
+  new Weapon("Whip", {damage:"4d4", atts:"msR2XS", desc:"Requires skill, but good against unarmed and extra reach"}),
+  new Weapon("Bull whip", {damage:"4d4", atts:"msR3XS]", desc:"As whip, but even more reach"}),
+  new Weapon("Thrown rock", {damage:"d4", atts:"tb", desc:"Or anything of a decent size and weight to throw"}),
+  new Weapon("Sling", {damage:"2d4", atts:"tbM", desc:"Cheap ammo"}),
+  new Weapon("Short bow", {damage:"2d6", atts:"bpFX", desc:"Fast reload"}),
+  new Weapon("Long bow", {damage:"3d6", atts:"bpFMX", desc:"Takes a minor action to reload, but decent damage against unarmoured"}),
+  new Weapon("Light crossbow", {damage:"d12", atts:"bpMX", desc:"Takes a minor action to reload, but decent against armoured foes"}),
+  new Weapon("Heavy crossbow", {damage:"d20", atts:"bpL1X", desc:"Takes a full standard action to reload, but good against armoured foes"}),
+  new Weapon("Flintlock", {damage:"2d12", atts:"fpL2", desc:"Very noisy. Takes two full standard actions to reload, and expensive to use."}),
+  new Weapon("Arquebus", {damage:"2d20", atts:"FpL2", desc:"Very noisy. Takes two full standard actions to reload, and expensive to use, but look at all the damage!"}),
 ]
 
-
-console.log(WEAPONS[0].is('defensive'))
-console.log(WEAPONS[12].is('defensive'))
 
 
 class Attack {

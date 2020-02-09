@@ -79,7 +79,7 @@ router.post('/', function(req, res, next) {
   
   for (let i = 1; i <= 4; i++) {
     if (req.body['weapon' + i] !== 'None') {
-      weaponNames[req.body['weapon' + i]]
+      weaponNames.push(req.body['weapon' + i])
     }
   }
   
@@ -112,8 +112,15 @@ router.post('/', function(req, res, next) {
     const chars2 = req.app.get('chars');
   }
   else {
+    console.log(char)
     res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name });
   }
+});
+
+
+router.get('/weapons', function(req, res, next) {
+  const p = packages.find(el => el.name === req.params.page)
+  res.render('weapons', { weapons:WEAPONS });
 });
 
 

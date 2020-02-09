@@ -38,7 +38,9 @@ Adding a group of characters (how is init handled?)
 
 
 
-
+attack/log/message
+package uses log
+char uses all above
 
 
 

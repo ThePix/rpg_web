@@ -1,8 +1,9 @@
 'use strict';
 
 import test from 'ava';
-const [Package, packages, Bonus] = require('../models/package.js')
 const [Char] = require('../models/char.js')
+const [Package, packages, Bonus, BonusAttack, BonusSpell] = require('../models/package.js')
+const [AttackConsts, Attack, WeaponAttack] = require('../models/attack.js')
  
 
 
@@ -123,6 +124,27 @@ test('appliesSecondary2', t => {
   //console.log(r)
 
 
+
+
+test('getBonusPerLevel1', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new Bonus('nature', {progression:'secondary2'}),
+    new Bonus('shield', {progression:[3, 7, 11]}),
+    new Bonus('armour', {progression:2}),
+  ]})
+
+  const ary = test.getBonuses(1)
+  
+  t.is(test.getBonuses(1).length, 0)
+  t.is(test.getBonuses(2).length, 2)
+  t.is(test.getBonuses(3).length, 1)
+  t.is(test.getBonuses(4).length, 0)
+  t.is(test.getBonuses(5).length, 1)
+});
+
+
+
+
 const getTester = function(level) {
   const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
     new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
@@ -163,7 +185,7 @@ test('getBonuses10', t => {
 });
 
 test('getBonuses20', t => {
-  const tester = getTester(20)  
+  const tester = getTester(20)
   t.is(tester.maxHits, 30)
   t.is(tester.shield, 3)
   t.is(tester.nature, 7)
@@ -176,19 +198,67 @@ test('getBonuses20', t => {
 
 
 
+test('adding attacks', t => {
 
-test('getBonusPerLevel1', t => {
-  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2'}),
-    new Bonus('shield', {progression:[3, 7, 11]}),
-    new Bonus('armour', {progression:2}),
+  const test1 = new Package('Package1', { hitsPerLevel:0.5, bonuses:[
+    new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
+    new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
+    new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
+    new Bonus('weapons', {progression:3}),
+    new Bonus('attack', {progression:'primary', notes:"Good at fighting"}),
   ]})
+  const test2 = new Package('Package2', { bonuses:[
+    new Bonus('shield', {progression:2}),
+    new BonusAttack('Sneak', {progression:3, weaponCheck:function(weapon) { 
+      console.log(weapon.name + "..." + weapon.is('fast'));
+      return weapon.is('fast');
+    }}),
+  ]})
+  const test3 = new Package('Package3', { bonuses:[
+    new BonusSpell('Ice blast', {progression:3}),
+    new Bonus('weapons', {progression:3}),
+  ]})
+  const tester = Char.create("Tester", [test1, test2, test3], {Package1:10, Package2:4, Package3:6}, ["Dagger", "Warhammer", "Flail"])
 
-  const ary = test.getBonuses(1)
-  
-  t.is(test.getBonuses(1).length, 0)
-  t.is(test.getBonuses(2).length, 2)
-  t.is(test.getBonuses(3).length, 1)
-  t.is(test.getBonuses(4).length, 0)
-  t.is(test.getBonuses(5).length, 1)
-});
+  t.is(tester.weapons, 3)
+  t.is(tester.attacks.length, 5)
+  t.is(tester.warnings.length, 0)
+  t.is(tester.attacks[0].name, 'Dagger')
+  t.is(tester.attacks[2].name, 'Flail')
+  t.is(tester.attacks[3].name, 'Sneak (Dagger)')
+  t.is(tester.attacks[4].name, 'Ice blast')
+
+})
+
+
+test('adding attacks restricted', t => {
+
+  const test1 = new Package('Package1', { hitsPerLevel:0.5, bonuses:[
+    new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
+    new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
+    new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
+    new Bonus('weapons', {progression:3}),
+    new Bonus('attack', {progression:'primary', notes:"Good at fighting"}),
+  ]})
+  const test2 = new Package('Package2', { bonuses:[
+    new Bonus('shield', {progression:2}),
+    new BonusAttack('Sneak', {progression:3, weaponCheck:function(weapon) { 
+      console.log(weapon.name + "..." + weapon.is('fast'));
+      return weapon.is('fast');
+    }}),
+  ]})
+  const test3 = new Package('Package3', { bonuses:[
+    new BonusSpell('Ice blast', {progression:3}),
+  ]})
+  const tester = Char.create("Tester", [test1, test2, test3], {Package1:10, Package2:4, Package3:6}, ["Warhammer", "Flail", "Dagger"])
+
+  t.is(tester.weapons, 2)
+  t.is(tester.attacks.length, 3)
+  t.is(tester.warnings.length, 1)
+  t.is(tester.warnings[0], "No weapons suitable for Sneak")
+  t.is(tester.attacks[0].name, 'Warhammer')
+  t.is(tester.attacks[2].name, 'Ice blast')
+
+})
+
+

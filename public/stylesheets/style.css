@@ -222,6 +222,11 @@ td.msg{
   margin-top:12px;
 }
 
+td.weapon {
+  text-align:left;
+  vertical-align:top;
+  border-top:#aaa solid thin;
+}
 
 .alert {
   background-color:yellow;

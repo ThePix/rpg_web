@@ -1,5 +1,6 @@
 'use strict';
 
+const [AttackConsts, Attack, WeaponAttack] = require('../models/attack.js')
 
 
 class Package {
@@ -20,7 +21,7 @@ class Package {
   }
 
   setAttacks(char, weapons) {
-    console.log(weapons)
+    //console.log(weapons)
     // Basic attacks
     for (let attack of weapons) {
       
@@ -132,6 +133,7 @@ class Bonus {
   }
 
   apply(char, level) {
+    if (this.attack) return
     const grade = this._grade(level)
     if (grade === 0) return
     const name = this.altName ? this.altName : this.name
@@ -155,10 +157,6 @@ class Bonus {
   }
   
   applyAttacks(char, weapons, level) {
-    const grade = this._grade(level)
-    if (grade === 0) return
-    
-    if (this.attack) char.attacks.push(this.attack(char, grade))
   }
   
   _grade(level) {
@@ -236,6 +234,79 @@ class Bonus {
 
 
 
+// A BonusAttack is any attack that uses a weapon
+class BonusAttack extends Bonus {
+  constructor(name, data) {
+    super(name, data)
+  }
+
+  apply(char, level) {
+  }
+  
+  applyAttacks(char, weapons, level) {
+    const grade = this._grade(level)
+    if (grade === 0) return
+    let flag = false
+    console.log(weapons.map(el => el.name).join(','))
+    for (let weapon of weapons) {
+      console.log("About to check " + weapon.name)
+      if (this.weaponCheck && !this.weaponCheck(weapon)) continue;
+      const data = Object.assign({}, this.data, weapon)
+      data.bonus = Math.min(level, char.attack) // !!! probably needs to tail off at higher level
+      if (this.dataModifier) this.dataModifier(data, char)
+      char.attacks.push(new Attack(this.name + " (" + weapon.name + ")", data))
+      flag = true
+    }
+    if (!flag) char.warnings.push("No weapons suitable for " + this.name)
+  }
+}
+
+
+// A BonusSpell is any attack that does not use a weapon (or unarmed skill)
+class BonusSpell extends Bonus {
+  constructor(name, data) {
+    super(name, data)
+  }
+
+  apply(char, level) {
+  }
+  
+  applyAttacks(char, weapons, level) {
+    const grade = this._grade(level)
+    if (grade === 0) return
+    const data = Object.assign({}, this.data)
+    data.bonus = level // !!! probably needs to tail off at higher level
+    if (this.dataModifier) this.dataModifier(data, char)
+    
+    char.attacks.push(new Attack(this.name, data))
+  }
+}
+
+
+/*
+progression: How this bonus changes as you gain levels
+notes: Array of comments
+type: spell (must be cast)/ability (must be used)/attribute (default; bonus to the skill, etc.))
+
+
+E - Expertise. Gives a permanent bonus to a skill or resistance.
+C - Change. A permanent change to the character.
+S - Spell.
+F - Flourish. A special trick that the character can perform (if you consider it a non-magical spell, you will not be far wrong!).
+R - Ritual. A ritual is a spell that takes a significant time to complete (at least ten minutes and possibly days). Normal spell rules do not apply.
+A - Ability. Like a flourish, but takes a while to perform.
+X - Special rules apply.
+r - An on-going spell/flourish that will last one round, until the end of your next turn .
+o - An on-going spell/flourish that will last a number of rounds.
+e - Spell/flourish can only be used once per encounter.
+m - Spell/flourish can be performed as a minor action.
+f - Spell/flourish can be performed as a free action.
+a - Spell/flourish can be performed as an addition to another action.
+p - Spell/flourish can be performed as an opportunity attack.
+l - An instant spell/flourish, but the effect is lasting, until cured (just as a weapon attack is instant, but the damage is still there until cured).
+x - Special rules apply.
+
+*/
 
 
 const packages = [
@@ -283,30 +354,7 @@ Whip (penalty is -4 at 0, reducing by 1 each level, down to 0)
 
 Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
 
-/*
-progression: How this bonus changes as you gain levels
-notes: Array of comments
-type: spell (must be cast)/ability (must be used)/attribute (default; bonus to the skill, etc.))
 
-
-E - Expertise. Gives a permanent bonus to a skill or resistance.
-C - Change. A permanent change to the character.
-S - Spell.
-F - Flourish. A special trick that the character can perform (if you consider it a non-magical spell, you will not be far wrong!).
-R - Ritual. A ritual is a spell that takes a significant time to complete (at least ten minutes and possibly days). Normal spell rules do not apply.
-A - Ability. Like a flourish, but takes a while to perform.
-X - Special rules apply.
-r - An on-going spell/flourish that will last one round, until the end of your next turn .
-o - An on-going spell/flourish that will last a number of rounds.
-e - Spell/flourish can only be used once per encounter.
-m - Spell/flourish can be performed as a minor action.
-f - Spell/flourish can be performed as a free action.
-a - Spell/flourish can be performed as an addition to another action.
-p - Spell/flourish can be performed as an opportunity attack.
-l - An instant spell/flourish, but the effect is lasting, until cured (just as a weapon attack is instant, but the damage is still there until cured).
-x - Special rules apply.
-
-*/
   new Package('Defender', {
     notes:[
       'A character can only be subject to one mark at a time. A mark lasts until the marker marks another or the marked is marked by another or either party is dead or unconscious. Marking a foe is a free action.'
@@ -1160,7 +1208,7 @@ Flaming blade*/
 
 
 
-module.exports = [Package, packages, Bonus]
+module.exports = [Package, packages, Bonus, BonusAttack, BonusSpell]
 
 
 

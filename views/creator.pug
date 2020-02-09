@@ -60,20 +60,25 @@ block content
               - const weaponTip = 'You can select up to four weapons, but your character will only have skill in them if the appropriate packages are also selected'
               tr
                 th(colspan=4) Weapons
+                
+              tr
+                td(colspan=4)
+                  a(href='/packages/weapons' target="_blank") Click here for a list of weapons (opens in a new tab)
+
               tr
                 td Weapon 1
                 td
                   select(name="weapon1" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(char.weapon1 === weapon.name || (char.weapon1 === undefined && weapon.name === 'Dagger')))
+                      option(selected=((char.attacks[0] && char.attacks[0].name === weapon.name) || (char.weapon1 === undefined && weapon.name === 'Dagger')))
                         =weapon.name
                 td Weapon 2
                 td
                   select(name="weapon2" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(char.weapon2 === weapon.name))
+                      option(selected=(char.attacks[1] && char.attacks[1].name === weapon.name))
                         =weapon.name
               tr
                 td Weapon 3
@@ -81,14 +86,14 @@ block content
                   select(name="weapon3" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(char.weapon3 === weapon.name))
+                      option(selected=(char.attacks[2] && char.attacks[2].name === weapon.name))
                         =weapon.name
                 td Weapon 4
                 td
                   select(name="weapon4" title=weaponTip)
                     option None
                     each weapon in weapons
-                      option(selected=(char.weapon4 === weapon.name))
+                      option(selected=(char.attacks[3] && char.attacks[3].name === weapon.name))
                         =weapon.name
 
             tbody
@@ -124,6 +129,7 @@ block content
             tr
               td #{att}
               td #{char[att.toLowerCase()]}
+
         p 
           b
             i Skills, spells, etc.
@@ -131,12 +137,28 @@ block content
           each value, name in char
             if name.match(/^[A-Z]/)
               li #{name} (+#{value})
+
         p 
           b
             i Notes
         ul
           each s in char.notes
             li #{s}
+
+        p 
+          b
+            i Warnings
+        ul
+          each s in char.warnings
+            li #{s}
+
+        p 
+          b
+            i Attacks
+        ul
+          each att in char.attacks
+            li #{att.name}: #{att.bonus}
+
 
 
   script(src="/javascripts/creator.js")

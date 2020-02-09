@@ -9,7 +9,7 @@ const [Log] = require('../models/log.js')
 const charGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.query.char)
-  console.log(char)
+  //console.log(char)
   res.render('edit', { char:char, fields: req.app.get('fields'), timestamp:req.timestamp });
 }
 
