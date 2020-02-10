@@ -3,7 +3,7 @@
 import test from 'ava';
 const [Char] = require('../models/char.js')
 const [Package, packages, Bonus, BonusAttack, BonusSpell] = require('../models/package.js')
-const [AttackConsts, Attack, WeaponAttack] = require('../models/attack.js')
+const [AttackConsts, Attack] = require('../models/attack.js')
  
 
 

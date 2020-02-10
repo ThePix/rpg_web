@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const [Package, packages, Bonus] = require('../models/package.js')
-const [AttackConsts, Attack, WeaponAttack, WEAPONS] = require('../models/attack.js')
+const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Char] = require('../models/char.js')
 
 const maxLevel = 20

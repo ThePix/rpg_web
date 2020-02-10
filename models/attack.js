@@ -28,41 +28,49 @@ const attNames = {
     code:/^u/,
     attType:'attack type',
     desc:'Unarmed',
+    icon:'unarmed',
   },
   melee:{
     code:/^m/,
     attType:'attack type',
     desc:'One-handed melee',
+    icon:'melee',
   },
   melee2:{
     code:/^M/,
     attType:'attack type',
     desc:'Two-handed melee',
+    icon:'melee',
   },
   bow:{
     code:/^b/,
     attType:'attack type',
     desc:'A bow (two hands)',
+    icon:'bow',
   },
   thrown:{
     code:/^t/,
     attType:'attack type',
     desc:'Thrown projectile',
+    icon:'bow',
   },
   firearm:{
     code:/^f/,
     attType:'attack type',
     desc:'Firearm (one handed)',
+    icon:'firearm',
   },
   firearm2:{
     code:/^F/,
     attType:'attack type',
     desc:'Firearm (two handed)',
+    icon:'firearm',
   },
   artillery:{
     code:/^a/,
     attType:'attack type',
     desc:'Artillery',
+    icon:'artillery',
   },
   
   // Damage type
@@ -143,7 +151,7 @@ const attNames = {
     desc:'On a successful hit, can optionally attempt to hook a foe, drawing him one square closer if more than a square away, or off his mount if mounted (foe gets a save vs reflex)',
   },
   throwable:{
-    code:/T/,
+    code:/\w\wT/,
     attType:'note',
     desc:'This melee weapon can also be thrown',
   },
@@ -158,8 +166,14 @@ class Weapon {
     }
   }
   
-  is(att) { return this.atts.match(attNames[att].code) }
+  is(att) { return this.atts.match(attNames[att].code) !== null }
   
+  attackType() { return this.getNotes('attack type')[0].name }
+  
+  damageType() { return this.getNotes('damage type')[0].name }
+
+  group() { return 'weaponAdept_' + this.attackType() + '_' + this.damageType() }
+
   getNotes(attType) {
     const ary = []
     for (let h in attNames) {
@@ -169,6 +183,12 @@ class Weapon {
       }
     }
     return ary
+  }
+  
+  static find(name) {
+    const weapon = WEAPONS.find(el => el.name === name)
+    if (weapon === undefined) throw new Error("AttackException", "Unknown weapon: " + name)
+    return weapon    
   }
 }  
 
@@ -263,7 +283,7 @@ class Attack {
   secondaryResolve(attacker, target, roll, bonus) {
     return this.defaultResolve(attacker, target, roll, bonus, false)
   }
-  
+
 
   defaultResolve(attacker, target, roll, bonus, allowCriticals) {
     if (allowCriticals && roll === 1) return AttackConsts.CRITICAL_MISS
@@ -341,33 +361,26 @@ class Attack {
     if (this.special && this.additionalDamage) return "Special damage (" + this.special + ")"
     return false
   }
-}
-
-
-class WeaponAttack extends Attack {
-  constructor(name, skill, data) {
-    super(name, data)
-    this.weapon = WEAPONS.find(el => el.name === name)
-    if (this.weapon === undefined) throw new Error("AttackException", "Unknown weapon: " + name)
-    this.primaryDamage = this.weapon.damage
-
-    if (typeof this.primaryDamage === 'string') {
-      this.damageArray = this._damageToArray(this.primaryDamage)
-    }
-    if (data && data.altName) this.name = data.altName;
-    this.bonus = skill
-    this.desc += this.weapon.desc
-    const chr = this.weapon.atts.charAt(0)
-    if (chr === "f") this.icon = "gun"
-    if (chr === "r") this.icon = "bow"
-    if (this.weapon.name === 'Unarmed') this.icon = "unarmed"
-  }
   
+  static createFromWeapon(weapon, chr, data) {
+    const attack = new Attack(weapon.name, data)
+    attack.weapon = weapon
+    attack.primaryDamage = attack.weapon.damage
+    if (typeof attack.primaryDamage === 'string') {
+      attack.damageArray = attack._damageToArray(attack.primaryDamage)
+    }
+    if (data && data.altName) attack.name = data.altName;
+    attack.bonus = chr.attack
+    attack.desc += attack.weapon.desc
+    attack.icon = attack.weapon.getNotes('attack type')[0].icon
+    return attack
+  }
 }
 
 
 
-module.exports = [AttackConsts, Attack, WeaponAttack, WEAPONS]
+
+module.exports = [AttackConsts, Attack, WEAPONS, Weapon]
 
 
 

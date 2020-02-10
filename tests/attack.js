@@ -2,7 +2,7 @@
 
 import test from 'ava';
 const [Char] = require('../models/char.js')
-const [AttackConsts, Attack, WeaponAttack] = require('../models/attack.js')
+const [AttackConsts, Attack, WEAPONS, Weapon] = require('../models/attack.js')
  
 
 
@@ -33,26 +33,42 @@ test('weapon 4', t => {
 
 
 test('weaponattack basic', t => {
-  const test = new WeaponAttack("Warhammer", 4)
+  const test = Attack.createFromWeapon(Weapon.find("Warhammer"), {attack:4})
   t.is(test.maxDamage(), 20);
   t.is(test.diceCount(), 2);
 });
 
 test('weaponattack not recognised', t => {
-  t.throws(() => { new WeaponAttack("Nonsense", 4) });
+  t.throws(() => { Attack.createFromWeapon(Weapon.find("Nonsense"), {attack:4}) });
 });
 
 test('weaponattack additional', t => {
-  const test = new WeaponAttack("Warhammer", 4, {secondaryDamage:'3d6'})
+  const test = Attack.createFromWeapon(Weapon.find("Warhammer"), {attack:4}, {secondaryDamage:'3d6'})
   t.is(test.secondaryDamage, '3d6');
 });
 
 test('weaponattack altName', t => {
-  const test = new WeaponAttack("Warhammer", 4, {altName:"Swinging warhammer"})
+  const test = Attack.createFromWeapon(Weapon.find("Warhammer"), {attack:4}, {altName:"Swinging warhammer"})
   t.is(test.name, "Swinging warhammer");
   t.is(test.maxDamage(), 20);
   t.is(test.diceCount(), 2);
 });
+
+
+
+
+test('weapon', t => {
+  const weapon = new Weapon("Short bow", {damage:"2d6", atts:"bpFX", desc:"Fast reload"})
+
+  t.is(weapon.is('skilled'), true);
+  t.is(weapon.is('bow'), true);
+  t.is(weapon.is('melee'), false);
+  t.is(weapon.is('throwable'), false);
+  t.is(weapon.attackType(), 'bow');
+  t.is(weapon.damageType(), 'pierce');
+  t.is(weapon.group(), 'weaponAdept_bow_pierce');
+});
+
 
 
 

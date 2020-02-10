@@ -54,7 +54,7 @@ app.use(cookieParser());
 
 //app.set('log', log)
 
-const [AttackConsts, Attack, WeaponAttack] = require('./models/attack.js')
+const [AttackConsts, Attack] = require('./models/attack.js')
 const [Char] = require('./models/char.js')
 const [chars, stocks] = require('./data.js')
 

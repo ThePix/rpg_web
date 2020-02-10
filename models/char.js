@@ -2,7 +2,7 @@
 
 //const mongo = require('mongodb'); 
 
-const [AttackConsts, Attack, WeaponAttack, WEAPONS] = require('../models/attack.js')
+const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('../models/message.js')
 const [Package, packages, Bonus] = require('../models/package.js')
@@ -59,15 +59,30 @@ class Char {
     c.warnings = []
     console.log(weaponNames)
     if (weaponNames.length < c.weapons) c.warnings.push("You can choose an additional weapon.")
-    //console.log(c.weapons)
-    //console.log(c.attack)
     for (let i = 0; i < weaponNames.length && i < c.weapons; i++) {
       const w = WEAPONS.find(el => el.name === weaponNames[i])
       console.log("found: " + w.name)
       weapons.push(w)
-      c.attacks.push(new WeaponAttack(w.name, c.attack)) // !!! Other skills might affect this
+      c.attacks.push(Attack.createFromWeapon(w, c)) // !!! Other skills might affect this
     }
+    console.log(c.attacks.length)
+    console.log(c.attacks[0])
+    console.log(c.attack)
+    console.log('-----')
     Package.setAttacks(packages, c, weapons)
+    console.log(c.attacks.length)
+
+    for (let att of c.attacks) {
+      if (att.weapon.is('complex')) {
+        console.log(att.weapon.name + " is complex")
+        // need to have already set the reduction amount in the character
+        // need an identifier weaponAdept_
+        const string = 
+        console.log(chr.packages)
+      
+    }
+
+
     return c
   }
   

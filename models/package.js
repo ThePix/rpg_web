@@ -1,6 +1,6 @@
 'use strict';
 
-const [AttackConsts, Attack, WeaponAttack] = require('../models/attack.js')
+const [AttackConsts, Attack] = require('../models/attack.js')
 
 
 class Package {
