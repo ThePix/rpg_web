@@ -1,5 +1,17 @@
 extends layout
 
+mixin weaponTD(n)
+  td Weapon #{n}
+  td
+    select(name="weapon" + n title=weaponTip)
+      option None
+      each weapon in weapons
+        option(selected=((char.attacks[n - 1] && char.attacks[n - 1].name === weapon.name) || (n === 1 && char.weapon1 === undefined && weapon.name === 'Dagger')))
+          =weapon.name
+
+
+
+
 block content
   h2 Create A #{title}
   table(class="unseen")
@@ -9,7 +21,7 @@ block content
           a(onclick="$('#helpDiv').toggle()" style="cursor: pointer") Help (toggle)
         div(id='helpDiv')
           p Give your character a #[b name]. The system uses this to track the character, so once it is saved, it cannot be changeed, so choosely wisely! And please capitalise it. You can also give your character a #[b profession], #[b sex] and #[b race], but these are optional and have no tactical effect. If you want to play a race with special abilities, you need to buy those abilities.
-          p Your #[b level] should be whatever your GM says; it will probably start at 4. You will have a number of #[b points] to spent on profession packages equal to twice your level plus 2. Note that if you do change the level, you should Refresh the page so the validation gets updated.
+          p Your #[b level] should be #{settings.startLevel} if you are creating your character (but will increase over time as your character gains experience). You will have a number of #[b points] to spent on profession packages equal to #{settings.pointsPerLevel} times your level plus #{settings.bonusPoints}. Note that if you do change the level, you should Refresh the page so the validation gets updated.
           p Although you can select up to four #[b weapons], the number you can actually use (i.e., have skill in) will be show in the table on the right, and defaults to 1. You can increase that by getting at least three ranks in combat-orientated packages. Remember to get a ranged weapon if that is your thing.
           p Click on the #[b package] name to see details (in a new tab). The points you spent will be displayed as you spend them. If the box is yellow you have more to spend, if it is red you have over spent. If it is green you are good to go. You cannot have more points on one package than your level. Also, some similar packages are grouped and if you spend points on one you cannot spend points on the others;  for example you can only spend points on one warrior package.
           p The table on the right shows your character's stats, abilities and so on; all the bonuses from the packages you pick. Click the refresh button to update it. Note that the "attack" bonus applies to melee and ranged attacks, but not to spells and other special effects.
@@ -17,7 +29,7 @@ block content
     tr
       td(width="680")
         form(method="post" action="/packages")
-          input(type='hidden' id='maxPoints' value=char.maxPoints)
+          input(type='hidden' id='maxPoints' value=char.getMaxPoints())
           input(type='hidden' id='exists' value=char.exists)
           table(class='big')
             tbody
@@ -65,36 +77,10 @@ block content
                 td(colspan=4)
                   a(href='/packages/weapons' target="_blank") Click here for a list of weapons (opens in a new tab)
 
-              tr
-                td Weapon 1
-                td
-                  select(name="weapon1" title=weaponTip)
-                    option None
-                    each weapon in weapons
-                      option(selected=((char.attacks[0] && char.attacks[0].name === weapon.name) || (char.weapon1 === undefined && weapon.name === 'Dagger')))
-                        =weapon.name
-                td Weapon 2
-                td
-                  select(name="weapon2" title=weaponTip)
-                    option None
-                    each weapon in weapons
-                      option(selected=(char.attacks[1] && char.attacks[1].name === weapon.name))
-                        =weapon.name
-              tr
-                td Weapon 3
-                td
-                  select(name="weapon3" title=weaponTip)
-                    option None
-                    each weapon in weapons
-                      option(selected=(char.attacks[2] && char.attacks[2].name === weapon.name))
-                        =weapon.name
-                td Weapon 4
-                td
-                  select(name="weapon4" title=weaponTip)
-                    option None
-                    each weapon in weapons
-                      option(selected=(char.attacks[3] && char.attacks[3].name === weapon.name))
-                        =weapon.name
+              each i in [...Array(settings.maxWeaponLines).keys()]
+                tr
+                  +weaponTD(2 * i + 1)
+                  +weaponTD(2 * i + 2)
 
             tbody
               tr

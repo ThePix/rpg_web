@@ -6,6 +6,8 @@ const router = express.Router();
 const [Package, packages, Bonus] = require('../models/package.js')
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Char] = require('../models/char.js')
+const settings = require('../settings.js')
+
 
 const maxLevel = 20
 
@@ -57,15 +59,14 @@ router.post('/:page', function(req, res, next) {
   }
   char.level = parseInt(req.body.level || '4')
   char.points = points
-  char.maxPoints = char.level * 2 + 2
+  //char.maxPoints = char.level * 2 + 2
   char.exists = req.body.true
-  res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name });
+  res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name, settings:settings });
 })
 
 
 
 router.post('/', function(req, res, next) {
-  console.log("here")
   const data = {}
   const weaponNames = []
   let points = 0
@@ -91,8 +92,8 @@ router.post('/', function(req, res, next) {
   char.race = req.body.race || ''
   char.profession = req.body.profession || ''
   char.points = points
-  char.level = parseInt(req.body.level || 4)
-  char.maxPoints = char.level * 2 + 2
+  char.level = parseInt(req.body.level || settings.startLevel)
+  //char.maxPoints = char.level * 2 + 2
   char.exists = req.body.exists
   
   
@@ -112,8 +113,8 @@ router.post('/', function(req, res, next) {
     const chars2 = req.app.get('chars');
   }
   else {
-    console.log(char)
-    res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name });
+    //console.log(char)
+    res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name, settings:settings });
   }
 });
 

@@ -4,25 +4,18 @@ const express = require('express');
 const router = express.Router();
 
 const [Log] = require('../models/log.js')
-
-const LENGTH = 50
+const settings = require('../settings.js')
 
 
 /* GET home page. */
 const indexGetFun = function(req, res, next) {
-  //console.log(req.app.get('chars'))
-  const refresh = req.app.get('refresh');
   const chars = req.app.get('chars').filter(el => el.charType === 'pc');
-  res.render('index', { chars:chars, timestamp:req.timestamp, refreshRate:refresh });
+  res.render('index', { chars:chars, timestamp:req.timestamp, refreshRate:settings.refresh });
 }
 
 const logGetFun = function(req, res, next) {
-  const refresh = req.app.get('refresh');
-  res.render('log', { log:Log.getData(LENGTH), timestamp:req.timestamp, refresh:refresh, title:'Log of last ' + LENGTH + ' events' });
+  res.render('log', { log:Log.getData(settings.logLength), timestamp:req.timestamp, refresh:settings.refresh, title:'Log of last ' + settings.logLength + ' events' });
 }
-
-
-
 
 
 module.exports = [indexGetFun, logGetFun];

@@ -1,9 +1,7 @@
 "use strict";
 
-const port = 8091
-const refresh = 5
-const maxMessages = 20
-
+const pointsPerLevel = 2
+const bonusPoints = 2
 
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
@@ -12,25 +10,22 @@ String.prototype.replaceAll = function(search, replacement) {
 
 
 
-//const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
-//const webpush = require('web-push');
-
-
-//const damageRouter = require('./routes/damage');
-
-//router.post('/', require('./routes/damage'))
 
 const chalk = require('chalk');
 const [Log] = require('./models/log.js')
-//const log = new Log()
+const [AttackConsts, Attack] = require('./models/attack.js')
+const [Char] = require('./models/char.js')
+const [chars, stocks] = require('./data.js')
+const settings = require('./settings.js')
 
 const app = express();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -52,16 +47,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-//app.set('log', log)
-
-const [AttackConsts, Attack] = require('./models/attack.js')
-const [Char] = require('./models/char.js')
-const [chars, stocks] = require('./data.js')
-
-
-
-app.set('maxMessages', maxMessages)
-app.set('refresh', refresh)
 app.set('chars', chars)
 app.set('stocks', stocks)
 app.set('fields', Char.fields())
@@ -121,11 +106,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(port)
+app.listen(settings.port)
 const ip = require("ip");
 Log.add("secret", "Loaded " + chars.length + " characters")
-Log.add('secret', 'Refresh is ' + refresh + ' seconds')
-Log.add("title", "Go to " + ip.address() + ":" + port + " to access the web site")
+Log.add('secret', 'Refresh is ' + settings.refresh + ' seconds')
+Log.add("title", "Go to " + ip.address() + ":" + settings.port + " to access the web site")
 
 module.exports = app;
 

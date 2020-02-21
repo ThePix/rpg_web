@@ -4,25 +4,18 @@ const express = require('express');
 const router = express.Router();
 const PDFDocument = require('pdfkit');
 const [Message] = require('../models/message.js')
+const settings = require('../settings.js')
 
 
 // Gets the character page that the players see
 const charsGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
-  const refresh = req.app.get('refresh');
-  const maxMessages = req.app.get('maxMessages');
   if (req.query.name) {
     const char = chars.find(el => el.name === req.query.name)
     if (char) {
       char.penalty = char.getAttackModifier()
-      //console.log(chars)
-      //console.log(list)
-      //console.log(list)
-      //console.log(list)
       const list = chars.filter(el => el.charType === 'pc' && el.name !== char.name).map(el => el.name)
-      console.log('list')
-      console.log(list)
-      res.render('char', { char: char, fields:req.app.get('fields'), timestamp:req.timestamp, refresh:refresh, maxMessages:maxMessages, list:list });
+      res.render('char', { char: char, fields:req.app.get('fields'), timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages, list:list });
     }
     else {
       res.render('nochar', { name: req.query.name, timestamp:req.timestamp });
@@ -31,7 +24,7 @@ const charsGetFun = function(req, res, next) {
   else {
     const first = chars.find(el => el.current)
     if (!first) {
-      res.render('nochars', { timestamp:req.timestamp, refresh:refresh });
+      res.render('nochars', { timestamp:req.timestamp, refresh:settings.refresh });
       return
     }
     
@@ -41,26 +34,21 @@ const charsGetFun = function(req, res, next) {
       if (!c.disabled) list.push(c)
       c = chars.find(el => el.name === c.next)
     } while (c !== first)
-    res.render('chars', { chars:list, timestamp:req.timestamp, refresh:refresh });
+    res.render('chars', { chars:list, timestamp:req.timestamp, refresh:settings.refresh });
   }
 }
 
 
 
 const charsGetJsonFun = function(req, res, next) {
-  console.log("in charsGetJsonFun")
-  const maxMessages = req.app.get('maxMessages');
   const chars = req.app.get('chars');
-  console.log("here")
   const char = chars.find(el => el.name === req.query.name)
-  console.log("here")
-  console.log("char=" + (char ? char.name : '--'))
   if (char) {
     char.penalty = char.getAttackModifier()
-    res.json({ char: char.toHash(), messages:char.getMessages().reverse().slice(0, maxMessages) });
+    res.json({ char: char.toHash(), messages:char.getMessages().reverse().slice(0, settings.maxMessages) });
   }
   else {
-    res.json({ messages:Message.getMessages(req.query.name).reverse().slice(0, maxMessages) });
+    res.json({ messages:Message.getMessages(req.query.name).reverse().slice(0, settings.maxMessages) });
   }
 }
 
@@ -110,7 +98,7 @@ const charsGetPdfFun = function(req, res, next) {
   display(doc, "Race", char.race, 0, 2)
   display(doc, "Profession", char.profession, 0, 3)
   display(doc, "Level", char.level, 0, 4)
-  display(doc, "Points", char.points + '/' + char.maxPoints, 0, 5)
+  display(doc, "Points", char.points + '/' + char.getMaxPoints(), 0, 5)
   
   const atts = ["Hits", "Attack", "Weapons", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
 

@@ -6,12 +6,11 @@ const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('../models/message.js')
 const [Package, packages, Bonus] = require('../models/package.js')
+const settings = require('../settings.js')
 
 const MongoClient = require('mongodb').MongoClient
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
 const mongoUrl = 'mongodb://localhost:27017/rpg';
-
-//const {parse, stringify} = require('flatted/cjs');
 
 class Char {
   constructor(data) {
@@ -32,7 +31,8 @@ class Char {
     
     if (this.maxHits === undefined || this.maxHits == 0) this.maxHits = this.hits
     if (this.display === undefined || this.display == '') this.display = this.name
-    this.attacks = data.attacks
+    this.warnings = []
+    this.attacks = data.attacks ? data.attacks : []
     if (this.size === -1) {
       this.size = 3
     }
@@ -55,31 +55,36 @@ class Char {
     c.hits = c.maxHits
 
     const weapons = []
-    c.attacks = []
-    c.warnings = []
-    console.log(weaponNames)
+    //console.log(weaponNames)
     if (weaponNames.length < c.weapons) c.warnings.push("You can choose an additional weapon.")
     for (let i = 0; i < weaponNames.length && i < c.weapons; i++) {
+      if (weaponNames[i] === undefined) continue
+      //console.log("looking for: " + weaponNames[i])
       const w = WEAPONS.find(el => el.name === weaponNames[i])
-      console.log("found: " + w.name)
+      //console.log("found: " + w.name)
       weapons.push(w)
       c.attacks.push(Attack.createFromWeapon(w, c)) // !!! Other skills might affect this
     }
-    console.log(c.attacks.length)
-    console.log(c.attacks[0])
-    console.log(c.attack)
-    console.log('-----')
+    //console.log(c.attacks.length)
+    //console.log(c.attacks[0])
+    //console.log(c.attack)
+    //console.log('-----')
     Package.setAttacks(packages, c, weapons)
-    console.log(c.attacks.length)
+    //console.log(c.attacks.length)
 
     for (let att of c.attacks) {
-      if (att.weapon.is('complex')) {
-        console.log(att.weapon.name + " is complex")
-        // need to have already set the reduction amount in the character
-        // need an identifier weaponAdept_
-        const string = 
-        console.log(chr.packages)
-      
+      if (att.weapon) {
+        if (att.weapon.is('skilled')) {
+          //console.log(att.weapon.name + " is skilled")
+          // need to have already set the reduction amount in the character
+          // need an identifier weaponAdept_
+          //const string = 
+          //console.log(chr.packages)
+        }
+      }
+      else {
+        console.log("att has no weapon: " + att.name)
+      }
     }
 
 
@@ -231,6 +236,10 @@ class Char {
     if (this.turnStarted) return
     Log.add("secret", this.display + ": Start turn")
     this.turnStarted = true
+  }
+  
+  getMaxPoints() {
+    return this.level * settings.pointsPerLevel + settings.bonusPoints
   }
   
   endTurn() {

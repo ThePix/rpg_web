@@ -61,3 +61,4 @@ const stocks = [
 
 
 module.exports = [chars, stocks];
+

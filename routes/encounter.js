@@ -8,6 +8,7 @@ const express = require('express');
 const router = express.Router();
 const [Char] = require('./../models/char.js')
 const [Log] = require('../models/log.js')
+const settings = require('../settings.js')
 
 
 
@@ -15,9 +16,7 @@ const [Log] = require('../models/log.js')
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.current)
-  const refresh = req.app.get('refresh');
-  const maxMessages = req.app.get('maxMessages');
-  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp, refresh:refresh, maxMessages:maxMessages });
+  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages });
 });
 
 router.get('/inits', function(req, res, next) {

@@ -247,9 +247,9 @@ class BonusAttack extends Bonus {
     const grade = this._grade(level)
     if (grade === 0) return
     let flag = false
-    console.log(weapons.map(el => el.name).join(','))
+    //console.log(weapons.map(el => el.name).join(','))
     for (let weapon of weapons) {
-      console.log("About to check " + weapon.name)
+      //console.log("About to check " + weapon.name)
       if (this.weaponCheck && !this.weaponCheck(weapon)) continue;
       const data = Object.assign({}, this.data, weapon)
       data.bonus = Math.min(level, char.attack) // !!! probably needs to tail off at higher level

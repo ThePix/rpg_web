@@ -166,7 +166,13 @@ class Weapon {
     }
   }
   
-  is(att) { return this.atts.match(attNames[att].code) !== null }
+  is(att) {
+    //console.log('#########')
+    //console.log(att)
+    //console.log(attNames[att].code)
+    //console.log(this.atts.match(attNames[att].code))
+    return this.atts.match(attNames[att].code) !== null
+  }
   
   attackType() { return this.getNotes('attack type')[0].name }
   

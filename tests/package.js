@@ -210,7 +210,7 @@ test('adding attacks', t => {
   const test2 = new Package('Package2', { bonuses:[
     new Bonus('shield', {progression:2}),
     new BonusAttack('Sneak', {progression:3, weaponCheck:function(weapon) { 
-      console.log(weapon.name + "..." + weapon.is('fast'));
+      //console.log(weapon.name + "..." + weapon.is('fast'));
       return weapon.is('fast');
     }}),
   ]})
@@ -243,7 +243,7 @@ test('adding attacks restricted', t => {
   const test2 = new Package('Package2', { bonuses:[
     new Bonus('shield', {progression:2}),
     new BonusAttack('Sneak', {progression:3, weaponCheck:function(weapon) { 
-      console.log(weapon.name + "..." + weapon.is('fast'));
+      //console.log(weapon.name + "..." + weapon.is('fast'));
       return weapon.is('fast');
     }}),
   ]})
