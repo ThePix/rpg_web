@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h2 Failed to handle file access
+  p Oh dear, something seems to have gone wrong.
+    | The action I was attempting was #[i #{action}]
+    | The file I was attempting to access was #[i #{filename}]
+    | The error reported is:
+  pre err

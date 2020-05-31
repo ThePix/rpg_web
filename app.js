@@ -58,11 +58,11 @@ app.get('/log', logGetFun);
 
 
 const [charGetFun, charPostFun] = require('./routes/char');
-app.get('/char', charGetFun);
+app.get('/char/:char', charGetFun);
 app.post('/char', charPostFun);
 
 const [attackGetFun, attackPostFun] = require('./routes/attack');
-app.get('/attack', attackGetFun);
+app.get('/attack/:char/:attack', attackGetFun);
 app.post('/attack', attackPostFun);
 
 // Apply damage during attack resolution

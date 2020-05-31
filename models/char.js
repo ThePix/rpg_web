@@ -5,8 +5,9 @@
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('../models/message.js')
-const [Package, packages, Bonus] = require('../models/package.js')
+const [Package, Bonus] = require('../models/package.js')
 const settings = require('../settings.js')
+const [packages] = require('../models/package_data.js')
 
 const MongoClient = require('mongodb').MongoClient
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }

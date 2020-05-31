@@ -4,7 +4,8 @@ import test from 'ava';
 const [Char] = require('../models/char.js')
 const [AttackConsts, Attack] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
-const [Package, packages, Bonus] = require('../models/package.js')
+const [Package, Bonus] = require('../models/package.js')
+const packages = require('../models/package_data.js')
 
 
 Log.debug = true

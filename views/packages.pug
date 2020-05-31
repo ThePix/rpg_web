@@ -3,7 +3,10 @@ extends layout
 block content
   h2 List of Profession Packages Available
   table(class='big')
-    each p in packages
+    each group in packages
       tr
-        td 
-          a(href='/packages/' + p.name) #{p.name}
+        th(title=group.comment) #{group.name}
+      each p in group.packages
+        tr
+          td 
+            a(href='/packages/' + p.name) #{p.name}

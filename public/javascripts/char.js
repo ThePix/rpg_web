@@ -49,13 +49,13 @@ const updatePage = function() {
   httpRequest.onreadystatechange = function (){
     if (this.readyState == 4 && this.status == 200) {
       const data = JSON.parse(this.responseText);
-      console.log(data);
+      //console.log(data);
       if (data.char) {
         for (let key in data.char) {
           $('#' + key).html(data.char[key])
         }
       }
-      console.log("here" + data.messages.length);
+      //console.log("here" + data.messages.length);
       for (let i = 0; i < maxMessages; i++) {
         if (data.messages[i]) {
       console.log('#msg' + i);
@@ -65,7 +65,7 @@ const updatePage = function() {
       }
     }
   };
-  httpRequest.open('GET', 'chars/json?name=' + chr);
+  httpRequest.open('GET', '/chars/' + chr + '.json');
   httpRequest.send();
 
 }
@@ -74,5 +74,5 @@ const updatePage = function() {
 
 updatePage()
 
-
+console.log("About to setInterval")
 setInterval(updatePage, refresh * 1000)

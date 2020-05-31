@@ -25,12 +25,12 @@ block content
           b
             =char.display
         td
-          a(href='/chars?name=' + char.name) View
+          a(href='/chars/' + char.name) View
         td
           form(method="post" action="/packages/" + char.name)
             input(type="submit" name="submit_param" value='Edit' class="link-button")
         td
-          a(href='/chars/pdf?name=' + char.name) PDF
+          a(href='/chars/' + char.name + '.pdf') PDF
         
   
   

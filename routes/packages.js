@@ -3,11 +3,11 @@
 const express = require('express');
 const router = express.Router();
 
-const [Package, packages, Bonus] = require('../models/package.js')
+const [Package, Bonus] = require('../models/package.js')
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Char] = require('../models/char.js')
 const settings = require('../settings.js')
-
+const packages = require('../models/package_data.js')
 
 const maxLevel = 20
 
@@ -17,8 +17,17 @@ function toSentenceCase(s) {
 
 
 
+const groupedPackages = []
+for (let group of settings.packageGroups) {
+  const data = {name:group.name, comment:group.comment, display:group.display}
+  data.packages = packages.filter(el => el.category === group.name)
+  groupedPackages.push(data)
+}
+
+
+
 router.get('/', function(req, res, next) {
-  res.render('packages', { packages:packages, timestamp:req.timestamp });
+  res.render('packages', { packages:groupedPackages, timestamp:req.timestamp });
 });
 
 
@@ -61,7 +70,7 @@ router.post('/:page', function(req, res, next) {
   char.points = points
   //char.maxPoints = char.level * 2 + 2
   char.exists = req.body.true
-  res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name, settings:settings });
+  res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:groupedPackages, char:char, title:charTypes[char.charType].name, settings:settings });
 })
 
 
@@ -114,7 +123,7 @@ router.post('/', function(req, res, next) {
   }
   else {
     //console.log(char)
-    res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:packages, char:char, title:charTypes[char.charType].name, settings:settings });
+    res.render('creator', { timestamp:req.timestamp, weapons:WEAPONS, packages:groupedPackages, char:char, title:charTypes[char.charType].name, settings:settings });
   }
 });
 

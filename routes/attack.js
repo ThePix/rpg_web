@@ -8,8 +8,8 @@ const [AttackConsts] = require('../models/attack.js')
 // Does not change the game state
 const attackGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.char)
-  const attack = char.attacks.find(el => el.name === req.query.attack)
+  const char = chars.find(el => el.name === req.params.char)
+  const attack = char.attacks.find(el => el.name === req.params.attack)
   const handled = true
   res.render('attack', { 
     chars:chars.filter(el => !el.link),  // do not want extra places in attack sequence 

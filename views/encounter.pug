@@ -11,25 +11,25 @@ block content
           a(href="/encounter/inits")
             img(src="/images/button-init.png" width="32" height="32" title="Set initiative scores to determine order")
           |&nbsp;
-          a(href="/encounter/delay?char=" + current.name)
+          a(href="/encounter/delay/" + current.name)
             img(src="/images/button-delay.png" width="32" height="32" title="Delay this character's turn until after the next character")
           |&nbsp;
-          a(href="/encounter/next?char=" + current.name)
+          a(href="/encounter/next/" + current.name)
             img(src="/images/button-next.png" width="32" height="32" title="Next: Move on to the next character's turn (and save the game state).")
           |&nbsp;
           a(href="/encounter/load")
             img(src="/images/button-load.png" width="32" height="32" title="Load: Re-load the game state as it was at the start o the current turn (last time \"Next\" was clicked).")
           |&nbsp;
-          a(href="/encounter/")
+          a(href="/encounter/refresh/" + char.name)
             img(src="/images/button-refresh.png" width="32" height="32" title="Do nothing, just reload the game state (refresh)")
           |&nbsp;
-          a(href="/encounter/add-stock?char=" + char.name)
+          a(href="/encounter/add-stock/" + char.name)
             img(src="/images/button-add-stock.png" width="32" height="32" title="Add a single stock character to the encounter")
           |&nbsp;
-          a(href="/encounter/add-file?char=" + char.name)
+          a(href="/encounter/add-file/" + char.name)
             img(src="/images/button-add-file.png" width="32" height="32" title="Add a pre-defined set of characters.")
           |&nbsp;
-          a(href="/encounter/add-custom?char=" + char.name)
+          a(href="/encounter/add-custom/" + char.name)
             img(src="/images/button-add-custom.png" width="32" height="32" title="Add a new character that you can edit first.")
             
       td(style="vertical-align:top;" rowspan=3)
@@ -55,7 +55,7 @@ block content
             each attack in attacks
               tr
                 td(width="32")
-                  a(href='/attack?attack=' + attack.name + '&char=' + char.name)
+                  a(href='/attack/' + char.name + '/' + attack.name)
                     img(src="/images/button-" + attack.icon + ".png" width="32" height="32" title="Go to the attack page for this attack")
                 td
                   b #{attack.name}
@@ -72,10 +72,10 @@ block content
             if !chr.link
               tr
                 td(width="32")
-                  a(href="/encounter/focus?char=" + chr.name)
+                  a(href="/encounter/focus/" + chr.name)
                     img(src="/images/button-eye.png" width="32" height="32" title="Set the focus to this character")
                 td(width="32")
-                  a(href="/char?char=" + chr.name)
+                  a(href="/char/" + chr.name)
                     img(src="/images/button-edit.png" width="32" height="32" title="Edit the stats for this character")
                 
                 if chr.disabled

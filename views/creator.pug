@@ -19,13 +19,11 @@ block content
       td(colspan=3 class="unseen")
         p(style="text-align:left;font-size:small")
           a(onclick="$('#helpDiv').toggle()" style="cursor: pointer") Help (toggle)
-        div(id='helpDiv')
-          p Give your character a #[b name]. The system uses this to track the character, so once it is saved, it cannot be changeed, so choosely wisely! And please capitalise it. You can also give your character a #[b profession], #[b sex] and #[b race], but these are optional and have no tactical effect. If you want to play a race with special abilities, you need to buy those abilities.
-          p Your #[b level] should be #{settings.startLevel} if you are creating your character (but will increase over time as your character gains experience). You will have a number of #[b points] to spent on profession packages equal to #{settings.pointsPerLevel} times your level plus #{settings.bonusPoints}. Note that if you do change the level, you should Refresh the page so the validation gets updated.
-          p Although you can select up to four #[b weapons], the number you can actually use (i.e., have skill in) will be show in the table on the right, and defaults to 1. You can increase that by getting at least three ranks in combat-orientated packages. Remember to get a ranged weapon if that is your thing.
-          p Click on the #[b package] name to see details (in a new tab). The points you spent will be displayed as you spend them. If the box is yellow you have more to spend, if it is red you have over spent. If it is green you are good to go. You cannot have more points on one package than your level. Also, some similar packages are grouped and if you spend points on one you cannot spend points on the others;  for example you can only spend points on one warrior package.
-          p The table on the right shows your character's stats, abilities and so on; all the bonuses from the packages you pick. Click the refresh button to update it. Note that the "attack" bonus applies to melee and ranged attacks, but not to spells and other special effects.
-  
+          |  -  
+          a(href="/") Back
+        include creator_help
+
+
     tr
       td(width="680")
         form(method="post" action="/packages")
@@ -85,10 +83,11 @@ block content
             tbody
               tr
                 td(colspan=4)
-              tr
-                th(colspan=4) Packages
-              each p in packages
-                if !p.excludes || !p.excludes.includes(char.charType)
+
+              each group in packages
+                tr
+                  th(colspan=4 title=group.comment) Packages: #{group.display}
+                each p in group.packages
                   tr
                     td(colspan=3 style="text-align:left")
                       a(href='/packages/' + p.name target="_blank" title='Click here for information on this package (opens in a new tab)') #{p.name}

@@ -7,63 +7,50 @@ const [Message] = require('../models/message.js')
 const settings = require('../settings.js')
 
 
+
 // Gets the character page that the players see
-const charsGetFun = function(req, res, next) {
+// GET chars/:char
+const charGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
-  if (req.query.name) {
-    const char = chars.find(el => el.name === req.query.name)
-    if (char) {
-      char.penalty = char.getAttackModifier()
-      const list = chars.filter(el => el.charType === 'pc' && el.name !== char.name).map(el => el.name)
-      res.render('char', { char: char, fields:req.app.get('fields'), timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages, list:list });
-    }
-    else {
-      res.render('nochar', { name: req.query.name, timestamp:req.timestamp });
-    }
-  }
-  else {
-    const first = chars.find(el => el.current)
-    if (!first) {
-      res.render('nochars', { timestamp:req.timestamp, refresh:settings.refresh });
-      return
-    }
-    
-    let c = first
-    const list = [];
-    do {
-      if (!c.disabled) list.push(c)
-      c = chars.find(el => el.name === c.next)
-    } while (c !== first)
-    res.render('chars', { chars:list, timestamp:req.timestamp, refresh:settings.refresh });
-  }
-}
-
-
-
-const charsGetJsonFun = function(req, res, next) {
-  const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.name)
+  const char = chars.find(el => el.name === req.params.char)
   if (char) {
     char.penalty = char.getAttackModifier()
-    res.json({ char: char.toHash(), messages:char.getMessages().reverse().slice(0, settings.maxMessages) });
+    const list = chars.filter(el => el.charType === 'pc' && el.name !== char.name).map(el => el.name)
+    res.render('char', { char: char, fields:req.app.get('fields'), timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages, list:list });
   }
   else {
-    res.json({ messages:Message.getMessages(req.query.name).reverse().slice(0, settings.maxMessages) });
+    res.render('nochar', { name: req.params.char, timestamp:req.timestamp });
   }
 }
 
 
 
-
+// GET chars
+const allGetFun = function(req, res, next) {
+  const chars = req.app.get('chars');
+  const first = chars.find(el => el.current)
+  if (!first) {
+    res.render('nochars', { timestamp:req.timestamp, refresh:settings.refresh });
+    return
+  }
+  
+  let c = first
+  const list = [];
+  do {
+    if (!c.disabled) list.push(c)
+    c = chars.find(el => el.name === c.next)
+  } while (c !== first)
+  res.render('chars', { chars:list, timestamp:req.timestamp, refresh:settings.refresh });
+}
 
 
 
 // Page is approx 610 by 790
+// GET chars/:char.pdf
 const charsGetPdfFun = function(req, res, next) {
   const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.name)
+  const char = chars.find(el => el.name === req.params.char)
   console.log(char)
-
 
   const blue = "#006"
   const green = "#80c88d"
@@ -116,11 +103,7 @@ const charsGetPdfFun = function(req, res, next) {
       count++
     }
   }
-  
-  
-  
-  
-  
+
   count = 0
   display(doc, 'Skills, spells, abilities', '', 1, count, true)
   count++
@@ -130,18 +113,8 @@ const charsGetPdfFun = function(req, res, next) {
       count++
     }
   }
-  /*
-  count++
-  display(doc, 'Notes', '', 1, count, true)
-  count++
-  for (let s of char.notes) {
-    display(doc, s, '', 1, count, false, true)
-    count++
-  }*/
-  
   doc.end();
 }
-
 
 const display = function(doc, name, value, x, y, title, longName) {
   const offset = (x === 0 ? 40 : 305)
@@ -153,6 +126,27 @@ const display = function(doc, name, value, x, y, title, longName) {
 
 
 
+
+// GET chars/:char.json
+const charsGetJsonFun = function(req, res, next) {
+  console.log("here0")
+  const chars = req.app.get('chars');
+  const char = chars.find(el => el.name === req.params.char)
+  if (char) {
+    console.log("here1")
+    char.penalty = char.getAttackModifier()
+    res.json({ char: char.toHash(), messages:char.getMessages().reverse().slice(0, settings.maxMessages) });
+  }
+  else {
+    console.log("here2")
+    res.json({ messages:Message.getMessages(req.params.char).reverse().slice(0, settings.maxMessages) });
+  }
+}
+
+
+
+
+// POST /chars
 const charsPostFun = function(req, res, next) {
   const fields = req.app.get('fields')
   const chars = req.app.get('chars');
@@ -175,6 +169,7 @@ const charsPostFun = function(req, res, next) {
 
 
 
+// POST chars/message
 const charsPostJsonFun = function(req, res, next) {
   /*if (req.body.recipient === 'All') {
     for (let c of req.app.get('chars')) {
@@ -188,9 +183,10 @@ const charsPostJsonFun = function(req, res, next) {
 }
 
 
-router.get('/', charsGetFun);
-router.get('/json', charsGetJsonFun);
-router.get('/pdf', charsGetPdfFun);
+router.get('/', allGetFun);
+router.get('/:char.json', charsGetJsonFun);
+router.get('/:char.pdf', charsGetPdfFun);
+router.get('/:char', charGetFun);
 router.post('/', charsPostFun);
 router.post('/message', charsPostJsonFun);
 

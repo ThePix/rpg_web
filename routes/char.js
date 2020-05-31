@@ -6,9 +6,12 @@ const [Char] = require('./../models/char.js')
 const [Log] = require('../models/log.js')
 
 
+
+
+
 const charGetFun = function(req, res, next) {
   const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.char)
+  const char = chars.find(el => el.name === req.params.char)
   //console.log(char)
   res.render('edit', { char:char, fields: req.app.get('fields'), timestamp:req.timestamp });
 }
@@ -17,8 +20,7 @@ const charGetFun = function(req, res, next) {
 
 
 
-
-
+// POST /char
 const charPostFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const current = chars.find(el => el.current)
@@ -32,7 +34,7 @@ const charPostFun = function(req, res, next) {
   char.statusCheck()
   Log.add(char.display + " edited. " + req.body.comment)
   
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+  res.redirect('/encounter/focus/' + current.name)
 }
 
 

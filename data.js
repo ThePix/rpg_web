@@ -44,7 +44,6 @@ const chars = [
   ]}),
   new Char({name:"Serpent_redux", link:'Serpent', next:'Lara', packages:{}, notes:[], display:'Serpent'}, []),
 ]
-console.log("Loaded " + chars.length + " characters")
 
 
 const stocks = [

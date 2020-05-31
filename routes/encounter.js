@@ -1,13 +1,14 @@
 'use strict';
 
 const SAVEFILE = 'save'
-const PATH = 'data'
+const PATH = 'saved_data'
 
 const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const [Char] = require('./../models/char.js')
 const [Log] = require('../models/log.js')
+const [Message] = require('./../models/message.js')
 const settings = require('../settings.js')
 
 
@@ -25,29 +26,47 @@ router.get('/inits', function(req, res, next) {
   res.render('inits', { chars:chars, timestamp:req.timestamp });
 });
 
-router.get('/focus', function(req, res, next) {
+router.get('/focus/:char', function(req, res, next) {
   const chars = req.app.get('chars');
   const current = chars.find(el => el.current)
-  const char = chars.find(el => el.name === req.query.char)
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+  const char = chars.find(el => el.name === req.params.char)
+  console.log("here3")
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages });
 });
 
-router.get('/next', function(req, res, next) {
+router.get('/next/:char', function(req, res, next) {
   const chars = req.app.get('chars');
-  let char = chars.find(el => el.name === req.query.char)
+  let char = chars.find(el => el.name === req.params.char)
   char = char.nextChar(chars)
-  fs.writeFile(PATH + '/' + SAVEFILE + '.chr', Char.saveData(chars), function (err) {
-    if (err) throw err;
-    console.log('Characters saved!');
-    Log.add("comment", "Characters saved")
+  const filename = PATH + '/' + SAVEFILE + '.chr'
+  fs.writeFile(filename, Char.saveData(chars), function (err) {
+    if (err) {
+      console.log('ERROR: Characters save failed!');
+      console.log('Check the folder exists');
+      console.log('filename=' + filename);
+      console.log(err);
+      Log.add("comment", "Characters save failed")
+    }
+    else {
+      console.log('Characters saved!');
+      Log.add("comment", "Characters saved")
+    }
   });
   fs.writeFile(PATH + '/' + SAVEFILE + '.msg', Message.saveData(), function (err) {
-    if (err) throw err;
-    console.log('Messages saved!');
-    Log.add("comment", "Messages saved")
+    if (err) {
+      console.log('ERROR: Messages save failed!');
+      console.log('Check the folder exists');
+      console.log('filename=' + filename);
+      console.log(err);
+      Log.add("comment", "Messages save failed")
+    }
+    else {
+      console.log('Messages saved!');
+      Log.add("comment", "Messages saved")
+    }
   });
   Log.add("title", "Next!")
-  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+  res.redirect('/encounter/')
 });
 
 router.get('/load', function(req, res, next) {
@@ -59,7 +78,7 @@ router.get('/load', function(req, res, next) {
     Char.loadData(chars, String(s))
     const char = chars.find(el => el.current)
     Log.add("comment", "...Load last saved game")
-    res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+    res.redirect('/encounter/')
   });  
   fs.readFile(PATH + '/' + SAVEFILE + '.msg', function(err, s) {
     if (err) throw err;
@@ -69,41 +88,41 @@ router.get('/load', function(req, res, next) {
   });  
 });
 
-router.get('/delay', function(req, res, next) {
+router.get('/delay/:char', function(req, res, next) {
   const chars = req.app.get('chars');
-  let char = chars.find(el => el.name === req.query.char)
+  let char = chars.find(el => el.name === req.params.char)
   Log.add(char.display + " delays a turn")
   char = char.delay(chars)
-  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp });
+  res.redirect('/encounter/')
 });
 
 // This is useful when debugging; probably not otherwise
-router.get('/refresh', function(req, res, next) {
+router.get('/refresh/:char', function(req, res, next) {
   const chars = req.app.get('chars');
-  let char = chars.find(el => el.name === req.query.char)
+  let char = chars.find(el => el.name === req.params.char)
   if (!char) char = chars.find(el => el.current)
-  res.render('encounter', { chars:chars, char:char , current:char, attacks:char.attacks, timestamp:req.timestamp });
+  res.redirect('/encounter/focus/' + char.name)
 });
 
 
 
-router.get('/add-file', function(req, res, next) {
+router.get('/add-file/:char', function(req, res, next) {
   const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.char)
+  const char = chars.find(el => el.name === req.params.char)
   files = ['one', 'two'];
   res.render('add', { options:files, timestamp:req.timestamp, char:char, title:"Pick one or more sets of characters to add", action:'add-file' });
 });
 
-router.get('/add-stock', function(req, res, next) {
+router.get('/add-stock/:char', function(req, res, next) {
   const chars = req.app.get('chars');
   const stocks = req.app.get('stocks').map(el => el.display);
-  const char = chars.find(el => el.name === req.query.char)
+  const char = chars.find(el => el.name === req.params.char)
   res.render('add', { options:stocks, timestamp:req.timestamp, char:char, title:"Pick one or more stock characters to add", action:'add-stock' });
 });
 
-router.get('/add-custom', function(req, res, next) {
+router.get('/add-custom/:char', function(req, res, next) {
   const chars = req.app.get('chars');
-  const char = chars.find(el => el.name === req.query.char)
+  const char = chars.find(el => el.name === req.params.char)
   const newchar = new Char({name:'char' + Math.random()})
   newchar.next = char.next
   char.next = newchar.name
@@ -128,6 +147,11 @@ router.get('/db-save', function(req, res, next) {
   Char.saveToDb(chars)
   res.redirect('/')
 });
+
+
+
+
+
 
 
 
