@@ -42,7 +42,7 @@ const packages = [
     ],
     hitsPerLevel:1,
     bonuses:[
-      new Bonus('weapons', {progression:3}),
+      new Bonus('weaponMax', {progression:3}),
       new Bonus('attack', {progression:'primary', mode:'max'}),
       new Bonus('shield', {progression:[1, 3, 7, 12]}),
     ],
@@ -55,7 +55,7 @@ const packages = [
     ],
     hitsPerLevel:1,
     bonuses:[
-      new Bonus('weapons', {progression:3}),
+      new Bonus('weaponMax', {progression:3}),
       new Bonus('attack', {progression:'primary', mode:'max'}),
       new Bonus('Ranged', {progression:[3, 9, 17]}),
     ],
@@ -89,7 +89,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     ],
     hitsPerLevel:2,
     bonuses:[
-      new Bonus('weapons', {progression:3}),
+      new Bonus('weaponMax', {progression:3}),
       new Bonus('armour', {progression:[2, 5, 14]}),
       new Bonus('stamina', {progression:'secondary2'}),
       new Bonus('Mark', {progression:[1, 4, 7, 10, 13], flags:'Fof', notes:[
@@ -112,7 +112,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     ],
     hitsPerLevel:0.5,
     bonuses:[
-      new Bonus('weapons', {progression:3}),
+      new Bonus('weaponMax', {progression:3}),
       new Bonus('reflex', {progression:[1, 8, 17]}),
       new Bonus('armour', {progression:[7]}),
       new Bonus('init', {progression:'secondary3'}),
@@ -128,7 +128,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     ],
     hitsPerLevel:0.5,
     bonuses:[
-      new Bonus('weapons', {progression:3}),
+      new Bonus('weaponMax', {progression:3}),
       new Bonus('armour', {progression:[4, 12]}),
       new Bonus('stamina', {progression:'secondary3'}),
       new Bonus('Survival', {progression:'secondary2'}),

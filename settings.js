@@ -7,8 +7,9 @@ const settings = {
   pointsPerLevel:3,
   bonusPoints:3,
   startLevel:3,
-  maxWeaponLines:2,
+  maxWeaponLines:2,  // maximum number of weapons will be two times this
   logLength:20,
+  defaultWeapon:'Dagger',
   packageGroups:[
     {name:'Combat', display:'Combat', comment:'Probably every character should get at least a few levels in one of these.'},
     {name:'Magic', display:'Spell casting', comment:'A character with any of these will be considered a spell-caster.'},

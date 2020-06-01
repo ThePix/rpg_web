@@ -15,6 +15,7 @@ block content
   
   form(method="post" action="/packages")
     input(type="submit" name="submit_param" value="Create new" class="link-button")
+    input(type='hidden' name='action' value='new')
     
   br
   
@@ -27,8 +28,10 @@ block content
         td
           a(href='/chars/' + char.name) View
         td
-          form(method="post" action="/packages/" + char.name)
-            input(type="submit" name="submit_param" value='Edit' class="link-button")
+          form(method="post" action="/packages/")
+            input(type="submit" name="submit_param" value='Edit existing' class="link-button")
+            input(type='hidden' name='name' value=char.name)
+            input(type='hidden' name='action' value='edit')
         td
           a(href='/chars/' + char.name + '.pdf') PDF
         

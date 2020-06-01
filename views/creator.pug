@@ -6,7 +6,7 @@ mixin weaponTD(n)
     select(name="weapon" + n title=weaponTip)
       option None
       each weapon in weapons
-        option(selected=((char.attacks[n - 1] && char.attacks[n - 1].name === weapon.name) || (n === 1 && char.weapon1 === undefined && weapon.name === 'Dagger')))
+        option(selected=(char.weapons[n - 1] && char.weapons[n - 1].name === weapon.name))
           =weapon.name
 
 
@@ -45,7 +45,7 @@ block content
               tr
                 td Name
                 td
-                  input(type='text' name='name' value=char.name required=true title='Your character must have a unique name' disabled=char.exists)
+                  input(type='text' name='name' value=char.name required=true title='Your character must have a unique name' readonly=(char.name && char.name.length > 0))
                 td Sex
                 td
                   input(type='text' name='sex' value=char.sex title='Probably male or female (no effect on skills, stats, etc.)')

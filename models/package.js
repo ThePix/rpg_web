@@ -18,17 +18,19 @@ class Package {
       bonus.apply(char, char.packages[this.name])
     }
     if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * char.packages[this.name])
+    char.points += char.packages[this.name]
+
   }
 
-  setAttacks(char, weapons) {
+  setAttacks(char) {
     //console.log(weapons)
     // Basic attacks
-    for (let attack of weapons) {
+    for (let attack of char.weapons) {
       
     }
     // Special attacks
     for (let bonus of this.bonuses) {
-      bonus.applyAttacks(char, weapons, char.packages[this.name])
+      bonus.applyAttacks(char, char.packages[this.name])
     }
   }
 
@@ -73,17 +75,19 @@ class Package {
   }
   
   static setBonuses(packages, char) {
+    char.points = 0
     for (let p of packages) {
       p.setBonuses(char)
     }
   }
   
-  static setAttacks(packages, c, weapons) {
+  static setAttacks(packages, c) {
     for (let p of packages) {
-      p.setAttacks(c, weapons)
+      p.setAttacks(c)
     }
   }
 }
+
 
 
 
@@ -161,7 +165,7 @@ class Bonus {
     }
   }
   
-  applyAttacks(char, weapons, level) {
+  applyAttacks(char, level) {
   }
   
   _grade(level) {
@@ -248,12 +252,12 @@ class BonusAttack extends Bonus {
   apply(char, level) {
   }
   
-  applyAttacks(char, weapons, level) {
+  applyAttacks(char, level) {
     const grade = this._grade(level)
     if (grade === 0) return
     let flag = false
-    //console.log(weapons.map(el => el.name).join(','))
-    for (let weapon of weapons) {
+    //console.log(char.weapons.map(el => el.name).join(','))
+    for (let weapon of char.weapons) {
       //console.log("About to check " + weapon.name)
       if (this.weaponCheck && !this.weaponCheck(weapon)) continue;
       const data = Object.assign({}, this.data, weapon)
@@ -276,7 +280,7 @@ class BonusSpell extends Bonus {
   apply(char, level) {
   }
   
-  applyAttacks(char, weapons, level) {
+  applyAttacks(char, level) {
     const grade = this._grade(level)
     if (grade === 0) return
     const data = Object.assign({}, this.data)

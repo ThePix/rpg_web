@@ -205,7 +205,7 @@ test('adding attacks', t => {
     new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
     new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
     new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
-    new Bonus('weapons', {progression:3}),
+    new Bonus('weaponMax', {progression:3}),
     new Bonus('attack', {progression:'primary', notes:"Good at fighting"}),
   ]})
   const test2 = new Package('Package2', { bonuses:[
@@ -217,11 +217,11 @@ test('adding attacks', t => {
   ]})
   const test3 = new Package('Package3', { bonuses:[
     new BonusSpell('Ice blast', {progression:3}),
-    new Bonus('weapons', {progression:3}),
+    new Bonus('weaponMax', {progression:3}),
   ]})
   const tester = Char.create("Tester", [test1, test2, test3], {Package1:10, Package2:4, Package3:6}, ["Dagger", "Warhammer", "Flail"])
 
-  t.is(tester.weapons, 3)
+  t.is(tester.weaponMax, 3)
   t.is(tester.attacks.length, 5)
   t.is(tester.warnings.length, 0)
   t.is(tester.attacks[0].name, 'Dagger')
@@ -238,7 +238,7 @@ test('adding attacks restricted', t => {
     new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
     new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
     new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
-    new Bonus('weapons', {progression:3}),
+    new Bonus('weaponMax', {progression:3}),
     new Bonus('attack', {progression:'primary', notes:"Good at fighting"}),
   ]})
   const test2 = new Package('Package2', { bonuses:[
@@ -253,10 +253,11 @@ test('adding attacks restricted', t => {
   ]})
   const tester = Char.create("Tester", [test1, test2, test3], {Package1:10, Package2:4, Package3:6}, ["Warhammer", "Flail", "Dagger"])
 
-  t.is(tester.weapons, 2)
+  t.is(tester.weaponMax, 2)
   t.is(tester.attacks.length, 3)
-  t.is(tester.warnings.length, 1)
-  t.is(tester.warnings[0], "No weapons suitable for Sneak")
+  t.is(tester.warnings.length, 2)
+  t.is(tester.warnings[0], "Additional weapon discarded")
+  t.is(tester.warnings[1], "No weapons suitable for Sneak")
   t.is(tester.attacks[0].name, 'Warhammer')
   t.is(tester.attacks[2].name, 'Ice blast')
 

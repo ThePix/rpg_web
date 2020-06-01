@@ -49,31 +49,47 @@ class Char {
   }
   
   
-  
+
   static create(name, packages, data, weaponNames) {
-    const c = new Char({name:name, shield:0, armour:0, maxHits:20, attack:0, weapons:1, packages:data })
-    Package.setBonuses(packages, c)
-    c.hits = c.maxHits
+    const c = new Char({name:name, shield:0, armour:0, maxHits:20, attack:0, weaponMax:1 })
+    c.update(packages, data, weaponNames)
+    return c
+  }
+  
+  update(packages, data, weaponNames) {
+    if (data !== undefined) this.packages = data
+    
+    if (this.packages === undefined) console.log("No packages!!!!")
+    
+    Package.setBonuses(packages, this)
+    this.hits = this.maxHits
 
-    const weapons = []
-    //console.log(weaponNames)
-    if (weaponNames.length < c.weapons) c.warnings.push("You can choose an additional weapon.")
-    for (let i = 0; i < weaponNames.length && i < c.weapons; i++) {
-      if (weaponNames[i] === undefined) continue
-      //console.log("looking for: " + weaponNames[i])
-      const w = WEAPONS.find(el => el.name === weaponNames[i])
-      //console.log("found: " + w.name)
-      weapons.push(w)
-      c.attacks.push(Attack.createFromWeapon(w, c)) // !!! Other skills might affect this
+    if (this.weaponMax === 0) this.weaponMax = 1
+    if (weaponNames !== undefined) {
+      console.log("looking for weaponNames")
+      this.weapons = []
+      console.log(weaponNames)
+      if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
+      if (weaponNames.length > this.weaponMax) {
+        weaponNames.length = this.weaponMax
+        this.warnings.push("Additional weapon discarded")
+      }
+      for (let s of weaponNames) {
+        console.log("looking for: " + s)
+        const w = WEAPONS.find(el => el.name === s)
+        console.log("found: " + w.name)
+        this.weapons.push(w)
+        this.attacks.push(Attack.createFromWeapon(w, this)) // !!! Other skills might affect this
+      }
     }
-    //console.log(c.attacks.length)
-    //console.log(c.attacks[0])
-    //console.log(c.attack)
+    //console.log(this.attacks.length)
+    //console.log(this.attacks[0])
+    //console.log(this.attack)
     //console.log('-----')
-    Package.setAttacks(packages, c, weapons)
-    //console.log(c.attacks.length)
+    Package.setAttacks(packages, this, this.weapons)
+    //console.log(this.attacks.length)
 
-    for (let att of c.attacks) {
+    for (let att of this.attacks) {
       if (att.weapon) {
         if (att.weapon.is('skilled')) {
           //console.log(att.weapon.name + " is skilled")
@@ -87,9 +103,6 @@ class Char {
         console.log("att has no weapon: " + att.name)
       }
     }
-
-
-    return c
   }
   
   
@@ -120,7 +133,7 @@ class Char {
       { name:'maxHits', type:'int', display:"Max. hits"},
       { name:'hits', type:'int', display:"Hits", default:20},
       { name:'pp', type:'int', display:false},
-      { name:'weapons', type:'int', display:false},
+      { name:'weaponMax', type:'int', display:false},
       { name:'attack', type:'int', display:false},
       { name:'level', type:'int', display:false},
       { name:'penalty', type:'int', display:'Penalty'},
@@ -157,6 +170,7 @@ class Char {
       { name:'elements', type:'function' },
       { name:'packages', type:'function' },
       { name:'notes', type:'function' },
+      { name:'weapons', type:'function' },
     ]
   }
   
