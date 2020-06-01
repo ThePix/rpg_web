@@ -1,3 +1,18 @@
+Character creation testing
+
+From index.html, create a new character
+Set name (Piggy Suu), sex (f), weapon (flail), two packages (1)
+Refresh, check data preserved
+Set sex (female), weapon (battle axe), two packages (2)
+Create, check character is listed, data preserved
+
+From index.html, edit existing character
+Set sex (f2), weapon (club), two packages (3)
+Refresh, check data preserved
+Set sex (female), weapon (battle axe), two packages (2)
+Create, check character is listed, data preserved
+
+
 
 
 Persistence
@@ -14,6 +29,7 @@ Package.setAttacks(packages, c, weapons)
 If a bonus adds an attack, it needs an attack function that will return an Attack object
 this.attack(char, grade)
 
+These need to be on both character sheets
 
 Also need to add basic attacks for each weapon
 
@@ -133,3 +149,15 @@ Huge ice elemental spawns smaller ones
 
 
 A dragon
+
+
+Waymaster package
+Summoner
+Light-mage
+
+Cyborg + to armour, resist poison and disease, require no food/water/air, penalty to sneak
+
+Fae, + to sneak, + to bow, + to dodge, penalty to hits
+Ghoul, dark vision, smell, claws, immune to disease
+Skaven
+Serpentman

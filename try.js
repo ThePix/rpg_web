@@ -2,7 +2,7 @@
 
 const [Message] = require('./models/message.js')
 const [Char] = require('./models/char.js')
-const [Package, Bonus, BonusAttack, BonusSpell] = require('./models/package.js')
+const [Package, Bonus, Penalty, BonusAttack, BonusSpell] = require('./models/package.js')
 const [AttackConsts, Attack, WEAPONS, Weapon] = require('./models/attack.js')
 const packages = require('./models/package_data.js')
 

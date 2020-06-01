@@ -146,6 +146,9 @@ class Bonus {
     if (this.mode === 'max') {
       if (char[name] < grade) char[name] = grade 
     }
+    else if (this.mode === 'penalty') {
+      char[name] -= grade 
+    }
     else {
       char[name] += grade
     }
@@ -243,6 +246,16 @@ class Bonus {
 
 
 
+class Penalty extends Bonus {
+  constructor(name, data) {
+    super(name, data)
+    this.mode = 'penalty'
+  }
+
+}
+
+
+
 // A BonusAttack is any attack that uses a weapon
 class BonusAttack extends Bonus {
   constructor(name, data) {
@@ -295,7 +308,7 @@ class BonusSpell extends Bonus {
 
 
 
-module.exports = [Package, Bonus, BonusAttack, BonusSpell]
+module.exports = [Package, Bonus, Penalty, BonusAttack, BonusSpell]
 
 
 

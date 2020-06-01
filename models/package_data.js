@@ -1,6 +1,6 @@
 'use strict';
 
-const [Package, Bonus, BonusAttack, BonusSpell] = require('../models/package.js')
+const [Package, Bonus, Penalty, BonusAttack, BonusSpell] = require('../models/package.js')
 
 
 
@@ -959,6 +959,28 @@ Flaming blade*/
 
 
 
+  new Package('Part-man-part-machine', {
+    category:'Body',
+    notes:[
+      "You should devise a reason for why your character is a cyborg!",
+    ],
+    bonuses:[
+      new Bonus('armour', {progression:[3, 7], flags:"C", notes:[
+        "Character has a lot of metal metal in her body! This does mean she sinks (-5 to swimming).",
+      ]}),
+      new Bonus('stamina', {progression:[2, 5, 11], flags:"C", notes:[
+        "Character has iron-like stamina.",
+      ]}),
+      new Bonus('Claws I', {progression:3, flags:"C", notes:[
+        "Character has spikes on her hands (or whatever) and can use them as an unarmed attack.",
+      ]}),
+      new Penalty('Sneak', {progression:'secondary', flags:"C", notes:[
+        "Character clunks around too much to sneak!",
+      ]}),
+    ]
+  }),
+
+
 
   new Package('Beast', {
     category:'Body',
@@ -979,6 +1001,65 @@ Flaming blade*/
   }),
 
 
+
+  new Package('Aquatic', {
+    category:'Body',
+    notes:[
+      "You should devise a reason for why your character is aquatic!",
+    ],
+    bonuses:[
+      new Bonus('Swim', {progression:'primary', flags:"E", notes:[
+        "Character has a natural skill at swimming.",
+      ]}),
+      new Bonus('Water vision', {progression:2, flags:"C", notes:[
+        "Character has eyes that are adapted to see in murky water without a problem. They do bulge a bit though.",
+      ]}),
+      new Penalty('Appearance', {progression:'secondary', flags:"C", notes:[
+        "Character looks increasingly like a fish.",
+      ]}),
+      new Bonus('Water breather', {progression:3, flags:"C", notes:[
+        "Character has gills, and can breath underwater (as well as on land with lungs). The gills are visible, if the character's neck is inspected.",
+      ]}),
+      new Bonus('Superior water vision', {progression:5, flags:"C", notes:[
+        "Character has eyes that are adapted to see in the darkest, murkiest water without a problem. The bulging is noticeable.",
+      ]}),
+      new Bonus('Claws I', {progression:4, flags:"C", notes:[
+        "Character has claws and can use them as an unarmed attack.",
+      ]}),
+      new Bonus('armour', {progression:[3, 7], flags:"C", notes:[
+        "Character has a tough hide that resembles fish scales.",
+      ]}),
+    ]
+  }),
+
+/*
+progression: How this bonus changes as you gain levels
+notes: Array of comments
+type: spell (must be cast)/ability (must be used)/attribute (default; bonus to the skill, etc.))
+mode: set to max if the player only gets the highest value across packages, rather than the total
+
+
+E - Expertise. Gives a permanent bonus to a skill or resistance.
+C - Change. A permanent change to the character.
+S - Spell.
+F - Flourish. A special trick that the character can perform (if you consider it a non-magical spell, you will not be far wrong!).
+R - Ritual. A ritual is a spell that takes a significant time to complete (at least ten minutes and possibly days). Normal spell rules do not apply.
+A - Ability. Like a flourish, but takes a while to perform.
+X - Special rules apply.
+r - An on-going spell/flourish that will last one round, until the end of your next turn .
+o - An on-going spell/flourish that will last a number of rounds.
+e - Spell/flourish can only be used once per encounter.
+m - Spell/flourish can be performed as a minor action.
+f - Spell/flourish can be performed as a free action.
+a - Spell/flourish can be performed as an addition to another action.
+p - Spell/flourish can be performed as an opportunity attack.
+l - An instant spell/flourish, but the effect is lasting, until cured (just as a weapon attack is instant, but the damage is still there until cured).
+x - Special rules apply.
+
+
+
+
+*/
 
 
   new Package('Non-corporeal Undead', {

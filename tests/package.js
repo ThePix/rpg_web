@@ -2,7 +2,7 @@
 
 import test from 'ava';
 const [Char] = require('../models/char.js')
-const [Package, Bonus, BonusAttack, BonusSpell] = require('../models/package.js')
+const [Package, Bonus, Penalty, BonusAttack, BonusSpell] = require('../models/package.js')
 const [AttackConsts, Attack] = require('../models/attack.js')
 const packages = require('../models/package_data.js')
  
@@ -151,6 +151,8 @@ const getTester = function(level) {
     new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
     new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
     new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
+    new Penalty('poison', {progression:2}),
+    new Penalty('sneak', {progression:'primary'}),
   ]})
   const tester = Char.create("Tester", [test], {Package:level}, [])
 
@@ -163,6 +165,8 @@ test('getBonuses1', t => {
   t.is(tester.shield, 0)
   t.is(tester.nature, undefined)
   t.is(tester.armour, 0)
+  t.is(tester.poison, undefined)
+  t.is(tester.sneak, -1)
 });
 
 test('getBonuses2', t => {
@@ -171,6 +175,8 @@ test('getBonuses2', t => {
   t.is(tester.shield, 0)
   t.is(tester.nature, 1)
   t.is(tester.armour, 1)
+  t.is(tester.poison, -1)
+  t.is(tester.sneak, -2)
 });
 
 test('getBonuses10', t => {
@@ -179,6 +185,8 @@ test('getBonuses10', t => {
   t.is(tester.shield, 2)
   t.is(tester.nature, 3)
   t.is(tester.armour, 1)
+  t.is(tester.poison, -1)
+  t.is(tester.sneak, -7)
 
   t.is(tester.notes[0], "Good at nature skill")
   t.is(tester.notes[1], "Medium shield")
