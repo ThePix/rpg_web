@@ -6,8 +6,8 @@ const router = express.Router();
 const [Package, Bonus] = require('../models/package.js')
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Char] = require('../models/char.js')
-const settings = require('../settings.js')
-const packages = require('../models/package_data.js')
+const settings = require('../data/settings.js')
+const packages = require('../data/packages.js')
 
 const maxLevel = 20
 

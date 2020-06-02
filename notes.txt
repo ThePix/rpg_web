@@ -19,6 +19,9 @@ Persistence
 Need to be able to save characters, log, messages
 Saves after each round, but needs testing
 
+On start up want to load the current characters from file
+
+
 
 
 

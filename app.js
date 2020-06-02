@@ -22,7 +22,7 @@ const [Log] = require('./models/log.js')
 const [AttackConsts, Attack] = require('./models/attack.js')
 const [Char] = require('./models/char.js')
 const [chars, stocks] = require('./data.js')
-const settings = require('./settings.js')
+const settings = require('./data/settings.js')
 
 const app = express();
 

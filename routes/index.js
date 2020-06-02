@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const [Log] = require('../models/log.js')
-const settings = require('../settings.js')
+const settings = require('../data/settings.js')
 
 
 /* GET home page. */

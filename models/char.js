@@ -6,8 +6,8 @@ const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('../models/message.js')
 const [Package, Bonus] = require('../models/package.js')
-const settings = require('../settings.js')
-const [packages] = require('../models/package_data.js')
+const settings = require('../data/settings.js')
+const [packages] = require('../data/packages.js')
 
 const MongoClient = require('mongodb').MongoClient
 const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
@@ -211,11 +211,21 @@ class Char {
   }
 
   static saveData(chars) {
-    let s = ''
+    console.log(chars.map(el => el.forJSON()))
+    
+    return JSON.stringify(chars.map(el => el.forJSON()))
+    /*let s = ''
     for (let char of chars) {
       s += char._getSaveData()
     }
-    return s
+    return s*/
+  }
+  
+  forJSON() {
+    const result = Object.assign(this)
+    if (result.next) result.next = result.next.name
+    if (result.link) result.link = result.link.name
+    return result
   }
 
   _getSaveData() {

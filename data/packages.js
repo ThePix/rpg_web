@@ -289,6 +289,59 @@ Flaming blade*/
 
 
 
+  new Package('Conjuror (summoner)', {
+    category:'Magic',
+    notes:[
+      "The conjuror is adept at spells that summon forth items and creatures.",
+    ],
+    bonuses:[
+      new Bonus('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new Bonus('Control I', {progression:2, flags:"C", notes:[
+        "Gain the ability to control a single creature the caster has summoned,",
+      ]}),
+      new Bonus('Control II', {progression:5, flags:"C", notes:[
+        "Gain the ability to control two creatures the caster has summoned simultaneously",
+      ]}),
+      new Bonus('Control III', {progression:8, flags:"C", notes:[
+        "Gain the ability to control three creatures the caster has summoned simultaneously",
+      ]}),
+      new Bonus('Control IV', {progression:12, flags:"C", notes:[
+        "Gain the ability to control four creatures the caster has summoned simultaneously",
+      ]}),
+      new Bonus('Control V', {progression:17, flags:"C", notes:[
+        "Gain the ability to control five creatures the caster has summoned simultaneously",
+      ]}),
+      new Bonus('Repel undead', {progression:11, flags:""}),
+      new Bonus('Summon spirit', {progression:1, flags:"S", notes:[
+        "Spirit cannot fight (it is insubstantial), but can be used to scout.",
+      ]}),
+      new Bonus('Summon targeted spirit', {progression:4, flags:"S", notes:[
+        "As Summon spirit, but caster can call the spirit of a dead person, if he knows the decease's true name and is either within 10 squares of the place of death or holding an item the deceased considered important or is holding a bone of the deceased.",
+      ]}),
+      new Bonus('Summon beast', {progression:7, flags:"S", notes:[
+        "Caster can call a beast to aid him. The caster can be as general or as specific as he wants; the nearest one that fits will be called (but not a beast already aware of the caster). The beast will travel non-magically at a slow run, so it could be some time before it appears.",
+      ]}),
+      new Bonus('Summon minor elemental', {progression:3, flags:"S", notes:[
+        "",
+      ]}),
+      new Bonus('Summon lesser elemental', {progression:6, flags:"S", notes:[
+        "",
+      ]}),
+      new Bonus('Summon greater elemental', {progression:10, flags:"S", notes:[
+        "",
+      ]}),
+      new Bonus('Summon major elemental', {progression:15, flags:"S", notes:[
+        "",
+      ]}),
+      new Bonus('Summon lord elemental', {progression:20, flags:"S", notes:[
+        "",
+      ]}),
+    ]
+  }),
+
+
+
+
   new Package('Druid (nature mage)', {
     category:'Magic',
     notes:[

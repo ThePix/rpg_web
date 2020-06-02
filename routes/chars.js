@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const PDFDocument = require('pdfkit');
 const [Message] = require('../models/message.js')
-const settings = require('../settings.js')
+const settings = require('../data/settings.js')
 
 
 
@@ -129,16 +129,13 @@ const display = function(doc, name, value, x, y, title, longName) {
 
 // GET chars/:char.json
 const charsGetJsonFun = function(req, res, next) {
-  console.log("here0")
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.params.char)
   if (char) {
-    console.log("here1")
     char.penalty = char.getAttackModifier()
     res.json({ char: char.toHash(), messages:char.getMessages().reverse().slice(0, settings.maxMessages) });
   }
   else {
-    console.log("here2")
     res.json({ messages:Message.getMessages(req.params.char).reverse().slice(0, settings.maxMessages) });
   }
 }

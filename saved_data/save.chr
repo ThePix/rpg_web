@@ -7,7 +7,7 @@ character~Lara[
   maxHits~45
   hits~45
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -40,7 +40,7 @@ character~Goblin1[
   maxHits~35
   hits~35
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -73,7 +73,7 @@ character~Kyle[
   maxHits~50
   hits~50
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -106,7 +106,7 @@ character~Ogre[
   maxHits~100
   hits~100
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -139,7 +139,7 @@ character~Serpent[
   maxHits~20
   hits~20
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -172,7 +172,7 @@ character~Jon[
   maxHits~100
   hits~100
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -205,7 +205,7 @@ character~Goblin2[
   maxHits~35
   hits~35
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -238,7 +238,7 @@ character~Ghost[
   maxHits~35
   hits~35
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0
@@ -271,7 +271,7 @@ character~Serpent_redux[
   maxHits~20
   hits~20
   pp~0
-  weapons~0
+  weaponMax~0
   attack~0
   level~0
   penalty~0

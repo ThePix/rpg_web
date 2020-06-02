@@ -9,7 +9,7 @@ const router = express.Router();
 const [Char] = require('./../models/char.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('./../models/message.js')
-const settings = require('../settings.js')
+const settings = require('../data/settings.js')
 
 
 
@@ -48,7 +48,6 @@ router.get('/next/:char', function(req, res, next) {
       Log.add("comment", "Characters save failed")
     }
     else {
-      console.log('Characters saved!');
       Log.add("comment", "Characters saved")
     }
   });
@@ -61,7 +60,6 @@ router.get('/next/:char', function(req, res, next) {
       Log.add("comment", "Messages save failed")
     }
     else {
-      console.log('Messages saved!');
       Log.add("comment", "Messages saved")
     }
   });

@@ -10,6 +10,7 @@ const settings = {
   maxWeaponLines:2,  // maximum number of weapons will be two times this
   logLength:20,
   defaultWeapon:'Dagger',
+  charFilename:'chars',
   packageGroups:[
     {name:'Combat', display:'Combat', comment:'Probably every character should get at least a few levels in one of these.'},
     {name:'Magic', display:'Spell casting', comment:'A character with any of these will be considered a spell-caster.'},
