@@ -1,7 +1,6 @@
 'use strict';
 
-const LOGFILE = 'data/log.txt'
-
+const settings = require('../data/settings.js')
 const chalk = require('chalk');
 const fs = require('fs');
 
@@ -37,8 +36,8 @@ class Log {
     return this.data.slice(this.data.length - n, this.data.length).reverse()
   }
   
-  static recover() {
-    fs.readFile(LOGFILE, function(err, s) {
+  /*static recover() {
+    fs.readFile('log.txt', function(err, s) {
       if (err) throw err;
       const ary = String(s).split('\n')
       this.data = ary.map(function(el) {
@@ -46,7 +45,7 @@ class Log {
         return {type:vals[0], text:vals[1], timestamp:vals[2]}
       })
     });  
-  }
+  }*/
 } 
 
 

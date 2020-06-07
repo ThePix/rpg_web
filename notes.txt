@@ -15,6 +15,24 @@ Create, check character is listed, data preserved
 
 
 
+The saved character has .packages, a dictionary of package names and numbers
+The char.update method uses that to construct the full character
+
+
+
+Package has
+BonusStat: gives a + to a skill or whatever
+PenaltyStat: gives a - to a skill or whatever
+BonusSpell: cast to give a + or - (may need a target)
+BonusWeaponAttack: an additional type of attack, requiring a weapon
+BonusSpellAttack:
+BonusSkill:
+PenaltySkill
+BonusOther: 
+
+A package can be flagged to give an extra weapon at a certain level
+
+
 Persistence
 Need to be able to save characters, log, messages
 Saves after each round, but needs testing
@@ -164,3 +182,51 @@ Fae, + to sneak, + to bow, + to dodge, penalty to hits
 Ghoul, dark vision, smell, claws, immune to disease
 Skaven
 Serpentman
+
+narrow1.jpg
+
+
+970x200
+
+78
+81
+88
+104
+125
+127
+136*
+180
+195
+200
+211
+
+
+
+In short: White is Collectivism, Black is Individualism, Green is Natural Order, Blue is Perfection, and Red is Emotion. White smites Black and Red, Black smites White and Green, Green smites Blue and Black, Blue smites Red and Green, and Red smites Blue and White. No one is completely Good or Evil, though there is a bit of a Law/Chaos split without being strict.
+
+
+
+Let's focus on the "lust" bit; not to an entirely squicky extent, but let's say what makes Karaan a competitor for Erythnul is that while Erythnul is the god of slaughter, Karaan is the god of slaughter-as-an-expression-of-nature. More importantly, of the people who regard that as all the justification they need to take what they want, when they want it, while inflicting maximum pain on anyone in the path of getting it. He's, to put it bluntly, the God of Toxic Masculinity, with a distinct ecofascist vibe - the people he regards as "destroying the world" form a distinct Venn diagram with "people who I blame for not being a more major god."
+
+
+And she is doing everything to ensure that remains the case, for the most exquisite pain is shame. Shame leads to self-destruction, and the beautiful poetry of a life lived in expectation and anticipation of its own end. Shame leads to burying of identity in violence and hate, and becoming tools of oppression against others. Shame seeks liberty from itself, and with it, subordination to all those who claim to offer an out - like the clergy of Scahrossar. Shame is the self-weakening pain, and the weak will be eaten, or they will become strong - by eating the weak.
+
+
+In fact, the Xammux is their title - and "their" is the proper pronoun, for each separate part of the Xammux would have been a different god, if they were not already exactly like the Xammux, just with a different scientific concentration - if they act as one, think as one, are they truly different gods? Not just inhuman logic, but deliberate transgression against ethics for the sake of knowledge and personal acclaim, or more likely out of contempt for the sheep that surround their followers. More than that, it is not the end goal; the Xammux wish nothing than to remove the inconstant, untestable and vague soft sciences (and they enjoy emphasizing the soft bit with a note of disgust, one of the few feelings they ever show) from their perfect, rational models of the universe. The key to becoming part of the Xammux is to ascend, and in so doing see that the soft sciences underpin the Great Wheel in the form of belief and art - and to respond by cutting the parts that would become a god of this awful, irrational planar multiverse away, and so take up the mission to perform the Great Work of Xammux; cosmic lobotomy to remove the cancerous tumor of the soft from everything, everywhere.
+
+Yeathan is more than a god of the sea though - he's a god of drowning, specifically. All kinds of drowning. Water works, but he'd much prefer the kind of drowning that lives people alive; obsession, hate, overwhelming force, wealth...the drowned, then, may drown others, until everything is lost in a tide of desire. And he's very good at ruling those tides.
+
+
+
+
+Honestly, the origin story of the Vasharans sounds like propaganda to me. I mean, if you wanted people to be hated, you’d accuse them of every possible evil, of breaking every possible taboo?
+What if the Vasharans aren’t actually evil? What if they just don’t worship the gods? Obviously, they wouldn’t be atheists; in most D&D settings, that would be “flat-earth” levels of stupidity. Instead, they’re alatrists; they acknowledge the existence of gods, but don’t worship them. That would certainly scare the pudding out of gods that depend on worship. Even the good gods would be able to justify anything to deal with such a terrifying heresy.
+Yes, anything. Let’s look at Forgotten Realms. It’s canon there that if you don’t pick a patron deity, then when you die, your soul ends up in the Wall of the Faithless, where it slowly and agonizingly dissolves into nothingness, unless of course it gets stolen by a demon or something. Even the good gods are fine with this.
+
+What if the Vasharans are aware of having been pure spirits before the gods shoved them into these-- meat suits-- for reasons known only to them? Now here they are, stuck in these reeking, sweating bodies, subject to drives they never needed to bother with before (hunger, mating instincts)... and they hate it, and they hate what was done to them.
+
+Now they seek to destroy the gods or at least get them to pay attention to their demands to be released from this. Death isn't enough, since they are still not restored to their original station. Their amoral disdain for other sapient beings is a contempt for those spirits that are meek/weak/stupid enough to put up with (or worse, enjoy) this meat-suit existence.
+
+Or maybe these guys are True Humans, and the rest of humans in D&D have been mixed with something else to make them less evil.
+
+

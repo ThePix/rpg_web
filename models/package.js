@@ -1,6 +1,7 @@
 'use strict';
 
 const [AttackConsts, Attack] = require('../models/attack.js')
+//const [packages] = require('../data/packages.js')
 
 
 class Package {
@@ -10,28 +11,23 @@ class Package {
     if (!Array.isArray(this.bonuses)) throw new Error('No bonus array set for package ' + name)
   }
   
-  setBonuses(char) {
+  apply(char) {
+    const rank = char.packages[this.name]
+    if (rank === undefined || rank === 0) return
     if (char.notes === undefined) char.notes = []
-    if (!char.packages[this.name]) return
     
     for (let bonus of this.bonuses) {
-      bonus.apply(char, char.packages[this.name])
+      bonus.apply(char, rank)
     }
-    if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * char.packages[this.name])
-    char.points += char.packages[this.name]
-
+    if (this.hitsPerLevel) char.maxHits += Math.floor(this.hitsPerLevel * rank)
+    char.points += rank
   }
 
-  setAttacks(char) {
-    //console.log(weapons)
-    // Basic attacks
-    for (let attack of char.weapons) {
-      
-    }
-    // Special attacks
-    for (let bonus of this.bonuses) {
-      bonus.applyAttacks(char, char.packages[this.name])
-    }
+  applyWeaponMax(char) {
+    if (this.extraWeapon === undefined) return
+    if (char.packages[this.name] === undefined) return
+    if (this.extraWeapon > char.packages[this.name]) return
+    char.weaponMax++
   }
 
   getBonuses(level) {
@@ -74,18 +70,7 @@ class Package {
     return s + "\n\n"
   }
   
-  static setBonuses(packages, char) {
-    char.points = 0
-    for (let p of packages) {
-      p.setBonuses(char)
-    }
-  }
-  
-  static setAttacks(packages, c) {
-    for (let p of packages) {
-      p.setAttacks(c)
-    }
-  }
+
 }
 
 
@@ -136,8 +121,8 @@ class Bonus {
     }
   }
 
+
   apply(char, level) {
-    if (this.attack) return
     const grade = this._grade(level)
     if (grade === 0) return
     const name = this.altName ? this.altName : this.name
@@ -168,10 +153,9 @@ class Bonus {
     }
   }
   
-  applyAttacks(char, level) {
-  }
-  
   _grade(level) {
+    if (level === undefined) return 0
+    
     if (Array.isArray(this.progression)) {
       return this._gradeByArray(level)
     }
@@ -246,26 +230,94 @@ class Bonus {
 
 
 
-class Penalty extends Bonus {
-  constructor(name, data) {
-    super(name, data)
-    this.mode = 'penalty'
-  }
-
-}
 
 
-
-// A BonusAttack is any attack that uses a weapon
-class BonusAttack extends Bonus {
+// A BonusStat boosts a basic stat
+class BonusStat extends Bonus {
   constructor(name, data) {
     super(name, data)
   }
 
   apply(char, level) {
+    const grade = this._grade(level)
+    if (grade === 0) return
+    const name = this.altName ? this.altName : this.name
+    if (char[name] === undefined) char[name] = 0
+    
+    if (this.mode === 'max') {
+      if (char[name] < grade) char[name] = grade 
+    }
+    else if (this.mode === 'penalty') {
+      char[name] -= grade 
+    }
+    else {
+      char[name] += grade
+    }
+    
+    if (this.script) this.script(char)
+    
+    if (this.notes) {
+      if (typeof this.notes === "string") {
+        char.notes.push(this.notes)
+      }
+      else if (typeof this.notes === "function") {
+        char.notes.push(this.notes(grade))
+      }
+      else if (Array.isArray(this.notes)) {
+        char.notes.push(this.notes[grade - 1])
+      }
+    }
   }
-  
-  applyAttacks(char, level) {
+}
+
+
+
+class PenaltyStat extends BonusStat {
+  constructor(name, data) {
+    super(name, data)
+    this.mode = 'penalty'
+  }
+}
+
+
+// A BonusSkill
+class BonusSkill extends Bonus {
+  constructor(name, data) {
+    super(name, data)
+  }
+
+  apply(char, level) {
+    const grade = this._grade(level)
+    if (grade === 0) return
+    if (char.skills[this.name] === undefined) throw "Unknown skill '" + this.name + "'"
+
+    if (this.mode === 'max') {
+      if (char[this.name] < grade) char[this.name] = grade 
+    }
+    else if (this.mode === 'penalty') {
+      char[this.name] -= grade 
+    }
+    else {
+      char[this.name] += grade
+    }
+  }
+}
+
+class PenaltySkill extends BonusSkill {
+  constructor(name, data) {
+    super(name, data)
+    this.mode = 'penalty'
+  }
+}
+
+
+// A BonusAttack is any attack that uses a weapon
+class BonusWeaponAttack extends Bonus {
+  constructor(name, data) {
+    super(name, data)
+  }
+
+  apply(char, level) {
     const grade = this._grade(level)
     if (grade === 0) return
     let flag = false
@@ -275,6 +327,7 @@ class BonusAttack extends Bonus {
       if (this.weaponCheck && !this.weaponCheck(weapon)) continue;
       const data = Object.assign({}, this.data, weapon)
       data.bonus = Math.min(level, char.attack) // !!! probably needs to tail off at higher level
+      data.weapon = weapon
       if (this.dataModifier) this.dataModifier(data, char)
       char.attacks.push(new Attack(this.name + " (" + weapon.name + ")", data))
       flag = true
@@ -284,23 +337,36 @@ class BonusAttack extends Bonus {
 }
 
 
-// A BonusSpell is any attack that does not use a weapon (or unarmed skill)
-class BonusSpell extends Bonus {
+// A BonusAttack is any attack that does not use a weapon (or unarmed skill)
+class BonusAttack extends Bonus {
   constructor(name, data) {
     super(name, data)
   }
 
   apply(char, level) {
-  }
-  
-  applyAttacks(char, level) {
     const grade = this._grade(level)
     if (grade === 0) return
     const data = Object.assign({}, this.data)
     data.bonus = level // !!! probably needs to tail off at higher level
-    if (this.dataModifier) this.dataModifier(data, char)
-    
+    if (this.dataModifier) this.dataModifier(data, char)    
     char.attacks.push(new Attack(this.name, data))
+  }
+}
+
+// A BonusEffect is a limited time effect like a buffing spell
+class BonusEffect extends Bonus {
+  constructor(name, data) {
+    super(name, data)
+  }
+
+  apply(char, level) {
+    const grade = this._grade(level)
+    if (grade === 0) return
+    const data = Object.assign({}, this.data)
+    data.bonus = level // !!! probably needs to tail off at higher level
+    if (this.dataModifier) this.dataModifier(data, char)    
+    // Do what???
+    //char.attacks.push(new Attack(this.name, data))
   }
 }
 
@@ -308,7 +374,7 @@ class BonusSpell extends Bonus {
 
 
 
-module.exports = [Package, Bonus, Penalty, BonusAttack, BonusSpell]
+module.exports = [Package, BonusStat, PenaltyStat, BonusSkill, PenaltySkill, BonusAttack, BonusWeaponAttack, BonusEffect]
 
 
 

@@ -84,17 +84,17 @@ router.post('/', function(req, res, next) {
     if (char === undefined) {
       // No existing data, so create
       console.log("not in database, so create new")
-      char = Char.create(req.body.name, packages, data, weaponNames)
+      char = Char.create(req.body.name, data, weaponNames)
     }
     else {
       // Existing data, so update
       console.log("in database, so update")
-      char.update(packages, data, weaponNames)
+      char.update(data, weaponNames)
       //console.log(char)
     }
   }
   else {  
-    char = Char.create('', packages, data, weaponNames)
+    char = Char.create('', data, weaponNames)
   }
   console.log('-----------')
   console.log(char)

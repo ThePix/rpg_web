@@ -2,16 +2,18 @@
 
 //const mongo = require('mongodb'); 
 
+const yaml = require('js-yaml');
+
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('../models/message.js')
 const [Package, Bonus] = require('../models/package.js')
 const settings = require('../data/settings.js')
-const [packages] = require('../data/packages.js')
+const packages = require('../data/packages.js')
 
-const MongoClient = require('mongodb').MongoClient
-const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
-const mongoUrl = 'mongodb://localhost:27017/rpg';
+//const MongoClient = require('mongodb').MongoClient
+//const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
+//const mongoUrl = 'mongodb://localhost:27017/rpg';
 
 class Char {
   constructor(data) {
@@ -46,28 +48,29 @@ class Char {
       shock:new ShockElement(this, data),
       nether:new NetherElement(this, data),
     }
+    this.skills = []
   }
   
   
 
-  static create(name, packages, data, weaponNames) {
+  static create(name, data, weaponNames) {
     const c = new Char({name:name, shield:0, armour:0, maxHits:20, attack:0, weaponMax:1 })
-    c.update(packages, data, weaponNames)
+    c.update(data, weaponNames)
     return c
   }
   
-  update(packages, data, weaponNames) {
+  update(data, weaponNames) {
     if (data !== undefined) this.packages = data
     
-    if (this.packages === undefined) console.log("No packages!!!!")
-    
-    Package.setBonuses(packages, this)
-    this.hits = this.maxHits
+    this.weaponMax === 1
+    for (let p of packages) {
+      p.applyWeaponMax(this)
+    }
 
-    if (this.weaponMax === 0) this.weaponMax = 1
     if (weaponNames !== undefined) {
       console.log("looking for weaponNames")
       this.weapons = []
+      this.weaponNames = []
       console.log(weaponNames)
       if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
       if (weaponNames.length > this.weaponMax) {
@@ -78,15 +81,29 @@ class Char {
         console.log("looking for: " + s)
         const w = WEAPONS.find(el => el.name === s)
         console.log("found: " + w.name)
-        this.weapons.push(w)
+        this.weapons.unshift(w)
+        this.weaponNames.push(s)
         this.attacks.push(Attack.createFromWeapon(w, this)) // !!! Other skills might affect this
       }
     }
+
+    this.points = 0
+    this.maxHits = 0
+    for (let skill of settings.skills) {
+      this.skills[skill] = 0
+    }
+    // other resets????
+    for (let p of packages) {
+      p.apply(this)
+    }
+    this.hits = this.maxHits
+
+
+
     //console.log(this.attacks.length)
     //console.log(this.attacks[0])
     //console.log(this.attack)
     //console.log('-----')
-    Package.setAttacks(packages, this, this.weapons)
     //console.log(this.attacks.length)
 
     for (let att of this.attacks) {
@@ -98,9 +115,6 @@ class Char {
           //const string = 
           //console.log(chr.packages)
         }
-      }
-      else {
-        console.log("att has no weapon: " + att.name)
       }
     }
   }
@@ -137,7 +151,7 @@ class Char {
       { name:'attack', type:'int', display:false},
       { name:'level', type:'int', display:false},
       { name:'penalty', type:'int', display:'Penalty'},
-      
+
       { name:'ice', type:'element', display:'Ice'},
       { name:'fire', type:'element', display:'Fire'},
       { name:'shock', type:'element', display:'Shock'},
@@ -152,6 +166,7 @@ class Char {
 
       { name:'shield', type:'int', display:"Shield"},
       { name:'armour', type:'int', display:"Armour"},
+      { name:'armourBonus', type:'int', display:"Armour Bonus"},  // inate bonus due to tough skin
       { name:'will', type:'int', display:"Will"},
       { name:'reflex', type:'int', display:"Reflex"},
       { name:'stamina', type:'int', display:"Stamina"},
@@ -169,6 +184,7 @@ class Char {
       { name:'elementalThreshold', type:'function' },
       { name:'elements', type:'function' },
       { name:'packages', type:'function' },
+      { name:'skills', type:'function' },
       { name:'notes', type:'function' },
       { name:'weapons', type:'function' },
     ]
@@ -185,61 +201,70 @@ class Char {
       'disabled',
     ]
   }
-  
-  static loadData(chars, s) {
-    const regexp = /character~(\w+)\[([\s\S]*?)\]/
-    const ary = s.split('\n\n')
-    ary.pop() // last is blank!
-    for (let el of ary) {
-      const md = el.match(regexp)
-      const char = chars.find(el => el.name === md[1])
-      if (!char) throw new Error("CharacterLoadException", "Unknown character: " + md[1])
-      const data = md[2].split('\n')
-      data.shift()
-      data.pop()
-      for (let datum of data) {
-        const regexp = /  (\w+)~(.*)$/
-        const md = datum.match(regexp)
-        const field = Char.fields().find(el => el.name === md[1])
-        if (!field) throw new Error("CharacterLoadException", "Unknown field: " + md[1])
-        if (field.type === 'bool') char[field.name] = (md[2] === 'true')
-        if (field.type === 'int') char[field.name] = parseInt(md[2])
-        if (field.type === 'string') char[field.name] = md[2]
-        if (field.type === 'element') char.elements[field.name].load(md[2])
-      }
-    }
-  }
 
-  static saveData(chars) {
-    console.log(chars.map(el => el.forJSON()))
-    
-    return JSON.stringify(chars.map(el => el.forJSON()))
-    /*let s = ''
+
+  static loadYaml(s) {
+    console.log(s)
+    const data = yaml.safeLoad(s);
+    const chars = []
+    for (let key in data) {
+      console.log('=-------------')
+      console.log(key)
+      console.log(data[key].weaponNames)
+      console.log('=-------------')
+      //const c = new Char({name:key})
+      const c = Char.create(key, data[key].packages, data, data[key].weaponNames)
+/*      const h = data[key]
+      console.log(h)
+      for (let field of Char.fields()) {
+        if (field.disableSave || field.type === 'function') continue
+        if (h[field.name] === undefined) continue
+        if (field.type === 'element') {
+          c.elements[field.name].load(h[field.name])
+        }
+        else {
+          c[field.name] = h[field.name]
+        }
+      }*/
+      chars.push(c)
+    }
+    return chars
+  }
+  
+
+
+  static toYaml(chars) {
+    let s = ''
     for (let char of chars) {
-      s += char._getSaveData()
+      s += char.toYaml()
     }
-    return s*/
+    return s
   }
   
-  forJSON() {
-    const result = Object.assign(this)
-    if (result.next) result.next = result.next.name
-    if (result.link) result.link = result.link.name
-    return result
-  }
-
-  _getSaveData() {
-    let s = 'character~' + this.name + '[\n'
+  toYaml() {
+    let s = this.name + ':\n'
     for (let field of Char.fields()) {
       if (field.disableSave || field.type === 'function') continue
       if (field.type === 'element') {
-        s += '  ' + field.name + '~' + this.elements[field.name].save() + '\n'
+        s += '  ' + field.name + ': ' + this.elements[field.name].save() + '\n'
+      }
+      else if (this[field.name] === undefined) {
+        console.log("Skipping " + field.name)
+        continue
       }
       else {
-        s += '  ' + field.name + '~' + this[field.name] + '\n'
+        s += '  ' + field.name + ': ' + this[field.name] + '\n'
       }
     }
-    return s + ']\n\n'
+    s += '  packages:\n'
+    for (let key in this.packages) {
+        s += '    ' + key + ': ' + this.packages[key] + '\n'
+    }
+    s += '  weaponNames:\n'
+    for (let w of this.weaponNames) {
+        s += '    - ' + w + '\n'
+    }
+    return s + '\n'
   }
     
   toHash() {
@@ -375,7 +400,7 @@ class Char {
   }
   
   alert(s) {
-    if (this.alerts === undefined) this.alerts = []
+    if (this.alerts === undefined || this.alerts === false) this.alerts = []
     this.alerts.push(s)
     Message.send('!!!', 'GM', s)
   }
@@ -398,8 +423,8 @@ class Char {
       let hits = damage
       let s = this.display + " is hit by " + attacker.display + " with " + attack.name
       if (result === AttackConsts.CRITICAL_HIT) s += " (a critical)"
-      if (attack.resist === "reflex" && !attack.ignoreArmour && this.armour) {
-        hits -= this.armour * attack.diceCount()
+      if (attack.resist === "reflex" && !attack.ignoreArmour) {
+        hits -= (this.armour + this.armourBonus) * attack.diceCount()
         if (hits < 1) hits = 1
         s += ", doing " + hits + " hits (" + damage + " before armour)"
       }
@@ -489,7 +514,7 @@ class Char {
   }
   
   async saveToDb() {
-    const data = {name:this.name, data:this._getSaveData()}
+    const data = {name:this.name, data:this.toYaml()}
     const query = {name:this.name}
     const client = await MongoClient.connect(mongoUrl, mongoOpts).catch(err => { console.log("\n\n" + err + "\n\n"); })
     const db = client.db("rpg");

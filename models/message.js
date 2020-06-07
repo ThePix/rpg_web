@@ -34,11 +34,11 @@ class Message {
     return ary
   }
   
-  static saveData() {
+  static getData() {
     return this.data.map(el => el.sender + '|' + el.recipient + '|' + el.type + '|' + el.body).join('\n')
   }
 
-  static loadData(s) {
+  static putData(s) {
     this.data = []
     for (let st of s.split('\n')) {
       const bits = st.split('|')

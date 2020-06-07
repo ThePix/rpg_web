@@ -1,8 +1,5 @@
 'use strict';
 
-const SAVEFILE = 'save'
-const PATH = 'saved_data'
-
 const fs = require('fs');
 const express = require('express');
 const router = express.Router();
@@ -38,8 +35,8 @@ router.get('/next/:char', function(req, res, next) {
   const chars = req.app.get('chars');
   let char = chars.find(el => el.name === req.params.char)
   char = char.nextChar(chars)
-  const filename = PATH + '/' + SAVEFILE + '.chr'
-  fs.writeFile(filename, Char.saveData(chars), function (err) {
+  const filename = settings.saveFilename + '.yaml'
+  fs.writeFile(filename, Char.toYaml(chars), function (err) {
     if (err) {
       console.log('ERROR: Characters save failed!');
       console.log('Check the folder exists');
@@ -51,7 +48,7 @@ router.get('/next/:char', function(req, res, next) {
       Log.add("comment", "Characters saved")
     }
   });
-  fs.writeFile(PATH + '/' + SAVEFILE + '.msg', Message.saveData(), function (err) {
+  fs.writeFile(settings.saveFilename + '.msg', Message.getData(), function (err) {
     if (err) {
       console.log('ERROR: Messages save failed!');
       console.log('Check the folder exists');
@@ -68,20 +65,25 @@ router.get('/next/:char', function(req, res, next) {
 });
 
 router.get('/load', function(req, res, next) {
-  Log.recover()
-  fs.readFile(PATH + '/' + SAVEFILE + '.chr', function(err, s) {
+  Log.add("comment", "Recovered state from start of turn")
+  fs.readFile(settings.saveFilename + '.yaml', function(err, s) {
     if (err) throw err;
     Log.add("comment", "About to load last saved game...")
-    const chars = req.app.get('chars');
-    Char.loadData(chars, String(s))
+    
+    //const chars = req.app.get('chars');
+    //Char.loadData(chars, String(s))
+    
+    const chars = Char.loadYaml(String(s));
+    req.app.set('chars', chars);
+
     const char = chars.find(el => el.current)
     Log.add("comment", "...Load last saved game")
     res.redirect('/encounter/')
   });  
-  fs.readFile(PATH + '/' + SAVEFILE + '.msg', function(err, s) {
+  fs.readFile(settings.saveFilename + '.msg', function(err, s) {
     if (err) throw err;
     Log.add("comment", "About to load last saved messages...")
-    Message.loadData(String(s))
+    Message.putData(String(s))
     Log.add("comment", "...Load last saved messages")
   });  
 });
