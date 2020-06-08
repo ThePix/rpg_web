@@ -117,7 +117,15 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       new BonusStat('armour', {progression:[7]}),
       new BonusStat('init', {progression:'secondary3'}),
       new BonusSkill('Subterfuge', {progression:'secondary1'}),
-      new BonusWeaponAttack('Sneak attack', {progression:[3, 9, 15, 21], flags:'Fa', notes:'Bonus 2d6 damage on a successful hit, once per turn, when you have combat advantage. Each addition rank gives an extra d6.'}),
+      new BonusWeaponAttack('Sneak attack', {
+        progression:[3, 9, 15, 21],
+        flags:'Fa',
+        notes:'Bonus 2d6 damage on a successful hit, once per turn, when you have combat advantage. Each addition rank gives an extra d6.',
+        weaponCheck:function(weapon) { 
+          //console.log(weapon.name + "..." + weapon.is('fast'));
+          return weapon.is('fast');
+        },
+      }),
     ],
   }),
 

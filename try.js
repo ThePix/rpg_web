@@ -15,9 +15,9 @@ function testing(a, b) {
 console.log('------------')
 
   const tester = Char.create("Tester", {
-    'Warrior (sword and shield)':10,
-    Defender:2, 
-    Sneak:6
+    'Warrior (sword and shield)':2,
+    'Rogue (striker)':4, 
+    Elementalist:3
   }, ["Warhammer", "Flail", "Dagger"])
 
   testing(tester.weaponMax, 2)
@@ -25,15 +25,15 @@ console.log('------------')
   testing(tester.attacks.length, 3)
   testing(tester.warnings.length, 2)
   testing(tester.warnings[0], "Additional weapon discarded")
-  testing(tester.warnings[1], "No weapons suitable for Sneak")
+  testing(tester.warnings[1], "No weapons suitable for Sneak attack")
   testing(tester.attacks[0].name, 'Warhammer')
-  testing(tester.attacks[2].name, 'Ice blast')
+  testing(tester.attacks[2].name, 'Firedart')
   
-  
+  /*
   const yaml = tester.toYaml()
   console.log(tester.toYaml())
   const ary = Char.loadYaml(yaml)
-  console.log(ary)
+  console.log(ary)*/
 
 
 /*

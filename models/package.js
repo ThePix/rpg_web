@@ -15,7 +15,6 @@ class Package {
     const rank = char.packages[this.name]
     if (rank === undefined || rank === 0) return
     if (char.notes === undefined) char.notes = []
-    
     for (let bonus of this.bonuses) {
       bonus.apply(char, rank)
     }
@@ -321,9 +320,7 @@ class BonusWeaponAttack extends Bonus {
     const grade = this._grade(level)
     if (grade === 0) return
     let flag = false
-    //console.log(char.weapons.map(el => el.name).join(','))
     for (let weapon of char.weapons) {
-      //console.log("About to check " + weapon.name)
       if (this.weaponCheck && !this.weaponCheck(weapon)) continue;
       const data = Object.assign({}, this.data, weapon)
       data.bonus = Math.min(level, char.attack) // !!! probably needs to tail off at higher level

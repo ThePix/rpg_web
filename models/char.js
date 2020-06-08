@@ -54,7 +54,7 @@ class Char {
   
 
   static create(name, data, weaponNames) {
-    const c = new Char({name:name, shield:0, armour:0, maxHits:20, attack:0, weaponMax:1 })
+    const c = new Char({name:name})
     c.update(data, weaponNames)
     return c
   }
@@ -62,25 +62,22 @@ class Char {
   update(data, weaponNames) {
     if (data !== undefined) this.packages = data
     
-    this.weaponMax === 1
+    this.weaponMax = 1
     for (let p of packages) {
       p.applyWeaponMax(this)
     }
+    
 
     if (weaponNames !== undefined) {
-      console.log("looking for weaponNames")
       this.weapons = []
       this.weaponNames = []
-      console.log(weaponNames)
       if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
       if (weaponNames.length > this.weaponMax) {
         weaponNames.length = this.weaponMax
         this.warnings.push("Additional weapon discarded")
       }
       for (let s of weaponNames) {
-        console.log("looking for: " + s)
         const w = WEAPONS.find(el => el.name === s)
-        console.log("found: " + w.name)
         this.weapons.unshift(w)
         this.weaponNames.push(s)
         this.attacks.push(Attack.createFromWeapon(w, this)) // !!! Other skills might affect this
@@ -143,35 +140,35 @@ class Char {
       { name:'race', type:'string', display:false},
       { name:'sex', type:'string', display:false},
 
-      { name:'turnCount', type:'int', display:false},
-      { name:'maxHits', type:'int', display:"Max. hits"},
-      { name:'hits', type:'int', display:"Hits", default:20},
-      { name:'pp', type:'int', display:false},
-      { name:'weaponMax', type:'int', display:false},
+      { name:'turnCount', type:'int', display:false, derived:true},
+      { name:'maxHits', type:'int', display:"Max. hits", disableSave:true},
+      { name:'hits', type:'int', display:"Hits", default:20, derived:true},
+      { name:'pp', type:'int', display:false, derived:true},
+      { name:'weaponMax', type:'int', display:false, disableSave:true},
       { name:'attack', type:'int', display:false},
       { name:'level', type:'int', display:false},
-      { name:'penalty', type:'int', display:'Penalty'},
+      { name:'penalty', type:'int', display:'Penalty', derived:true},
 
-      { name:'ice', type:'element', display:'Ice'},
-      { name:'fire', type:'element', display:'Fire'},
-      { name:'shock', type:'element', display:'Shock'},
-      { name:'nether', type:'element', display:'Nether'},
+      { name:'ice', type:'element', display:'Ice', derived:true},
+      { name:'fire', type:'element', display:'Fire', derived:true},
+      { name:'shock', type:'element', display:'Shock', derived:true},
+      { name:'nether', type:'element', display:'Nether', derived:true},
 
-      { name:'current', type:'bool', display:false},
-      { name:'stunned', type:'bool', display:"Stunned"},
-      { name:'blooded', type:'bool', display:"Blooded"},
-      { name:'dead', type:'bool', display:"Dead"},
-      { name:'disabled', type:'bool', display:"Disabled"},
+      { name:'current', type:'bool', display:false, derived:true},
+      { name:'stunned', type:'bool', display:"Stunned", derived:true},
+      { name:'blooded', type:'bool', display:"Blooded", derived:true},
+      { name:'dead', type:'bool', display:"Dead", derived:true},
+      { name:'disabled', type:'bool', display:"Disabled", derived:true},
       { name:'alerts', type:'bool', display:false},  // debugging only
 
-      { name:'shield', type:'int', display:"Shield"},
-      { name:'armour', type:'int', display:"Armour"},
-      { name:'armourBonus', type:'int', display:"Armour Bonus"},  // inate bonus due to tough skin
-      { name:'will', type:'int', display:"Will"},
-      { name:'reflex', type:'int', display:"Reflex"},
-      { name:'stamina', type:'int', display:"Stamina"},
-      { name:'none', type:'int', display:"None"},
-      { name:'init', type:'int', display:false, default:0},
+      { name:'shield', type:'int', display:"Shield", derived:true},
+      { name:'armour', type:'int', display:"Armour", derived:true},
+      { name:'armourBonus', type:'int', display:"Armour Bonus", derived:true},  // inate bonus due to tough skin
+      { name:'will', type:'int', display:"Will", derived:true},
+      { name:'reflex', type:'int', display:"Reflex", derived:true},
+      { name:'stamina', type:'int', display:"Stamina", derived:true},
+      { name:'none', type:'int', display:"None", disableSave:true},
+      { name:'init', type:'int', display:false, default:0, derived:true},
       { name:'size', type:'int', display:false, default:-1},
       
       { name:'applyDamage', type:'function' },
@@ -186,7 +183,7 @@ class Char {
       { name:'packages', type:'function' },
       { name:'skills', type:'function' },
       { name:'notes', type:'function' },
-      { name:'weapons', type:'function' },
+      { name:'weaponNames', type:'function' },
     ]
   }
   
@@ -203,7 +200,10 @@ class Char {
   }
 
 
-  static loadYaml(s) {
+  // restoreState should be true if this is part way through an encounter and
+  // you want saved values to override the derived values; otherwise, these values will
+  // be ignored as they could hasve changed in a rules update
+  static loadYaml(s, restoreState) {
     console.log(s)
     const data = yaml.safeLoad(s);
     const chars = []
@@ -213,19 +213,18 @@ class Char {
       console.log(data[key].weaponNames)
       console.log('=-------------')
       //const c = new Char({name:key})
-      const c = Char.create(key, data[key].packages, data, data[key].weaponNames)
-/*      const h = data[key]
-      console.log(h)
+      const c = Char.create(key, data[key].packages, data[key].weaponNames)
       for (let field of Char.fields()) {
         if (field.disableSave || field.type === 'function') continue
-        if (h[field.name] === undefined) continue
+        if (data[field.name] === undefined) continue
+        if (field.derived && !restoreState) continue
         if (field.type === 'element') {
-          c.elements[field.name].load(h[field.name])
+          c.elements[field.name].load(data[field.name])
         }
         else {
-          c[field.name] = h[field.name]
+          c[field.name] = data[field.name]
         }
-      }*/
+      }
       chars.push(c)
     }
     return chars
