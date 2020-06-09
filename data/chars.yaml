@@ -99,7 +99,7 @@
     - Short bow
 -
   name: Serpent
-  charType: elite
+  charType: boss
   race: Serpent
   sex: Female
   level: 3

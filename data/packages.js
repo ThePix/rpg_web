@@ -1116,6 +1116,17 @@ x - Special rules apply.
     ]
   }),
 
+  new Package('Boss', {
+    excludes:['pc', 'npc', 'std', 'minion', 'elite'],
+    notes:[
+    ],
+    bonuses:[
+      new BonusEffect('Extra Action', {progression:1, flags:"", notes:[
+        "NEEDS WORK!!! Appears twice in action order.",
+      ]}),
+    ]
+  }),
+
 ]
 
 

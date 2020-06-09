@@ -26,13 +26,13 @@ for (let group of settings.packageGroups) {
 
 
 const charTypes = {
-  pc:{name:'Player Character'},
-  npc:{name:'Non-Player Character'},
-  min:{name:'Minion'},
-  std:{name:'Standard Monster'},
-  elite:{name:'Elite Monster (counts as 2 standard)'},
-  boss:{name:'Boss Monster (counts as four standard)'},
-  solo:{name:'Solo Monster'},
+  pc:{name:'Player Character', pts:1},
+  npc:{name:'Non-Player Character', pts:1},
+  min:{name:'Minion', pts:0.2},
+  std:{name:'Standard Monster', pts:1},
+  elite:{name:'Elite Monster (counts as 2 standard)', pts:2},
+  boss:{name:'Boss Monster (counts as four standard)', pts:4},
+  solo:{name:'Solo Monster', pts:8},
 }
 
 

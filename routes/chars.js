@@ -50,7 +50,7 @@ const allGetFun = function(req, res, next) {
 const charsGetPdfFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.params.char)
-  console.log(char)
+  //console.log(char)
 
   const blue = "#006"
   const green = "#80c88d"
