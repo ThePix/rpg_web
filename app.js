@@ -1,15 +1,12 @@
 "use strict";
 
-const pointsPerLevel = 2
-const bonusPoints = 2
-
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
 
 
-
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -21,7 +18,7 @@ const chalk = require('chalk');
 const [Log] = require('./models/log.js')
 const [AttackConsts, Attack] = require('./models/attack.js')
 const [Char] = require('./models/char.js')
-const [chars, stocks] = require('./data.js')
+//const [chars, stocks] = require('./data.js')
 const settings = require('./data/settings.js')
 
 const app = express();
@@ -47,8 +44,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.set('chars', chars)
-app.set('stocks', stocks)
+fs.readFile('data/chars.yaml', function(err, s) {
+  if (err) throw err;
+  Log.add("secret", "About to load characters")
+  const chars = Char.loadYaml(String(s));
+  app.set('chars', chars);
+  Log.add("secret", "Loaded " + chars.length + " characters")
+});  
+app.set('stocks', [])  // TODO!!!
 app.set('fields', Char.fields())
 
 
@@ -108,7 +111,6 @@ app.use(function(err, req, res, next) {
 
 app.listen(settings.port)
 const ip = require("ip");
-Log.add("secret", "Loaded " + chars.length + " characters")
 Log.add('secret', 'Refresh is ' + settings.refresh + ' seconds')
 Log.add("title", "Go to " + ip.address() + ":" + settings.port + " to access the web site")
 

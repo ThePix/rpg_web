@@ -29,11 +29,11 @@ console.log('------------')
   testing(tester.attacks[0].name, 'Warhammer')
   testing(tester.attacks[2].name, 'Firedart')
   
-  /*
+  
   const yaml = tester.toYaml()
   console.log(tester.toYaml())
   const ary = Char.loadYaml(yaml)
-  console.log(ary)*/
+  console.log(ary)
 
 
 /*

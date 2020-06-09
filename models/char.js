@@ -68,7 +68,7 @@ class Char {
     }
     
 
-    if (weaponNames !== undefined) {
+    if (weaponNames) {
       this.weapons = []
       this.weaponNames = []
       if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
@@ -204,16 +204,15 @@ class Char {
   // you want saved values to override the derived values; otherwise, these values will
   // be ignored as they could hasve changed in a rules update
   static loadYaml(s, restoreState) {
-    console.log(s)
+    //console.log(s)
     const data = yaml.safeLoad(s);
     const chars = []
-    for (let key in data) {
-      console.log('=-------------')
-      console.log(key)
-      console.log(data[key].weaponNames)
-      console.log('=-------------')
-      //const c = new Char({name:key})
-      const c = Char.create(key, data[key].packages, data[key].weaponNames)
+    for (let h of data) {
+      const ps = []
+      for (let p of h.packages) {
+        ps[p.name] = p.rank
+      }
+      const c = Char.create(h.name, ps, h.weaponNames)
       for (let field of Char.fields()) {
         if (field.disableSave || field.type === 'function') continue
         if (data[field.name] === undefined) continue
@@ -233,7 +232,7 @@ class Char {
 
 
   static toYaml(chars) {
-    let s = ''
+    let s = '---\n'
     for (let char of chars) {
       s += char.toYaml()
     }
@@ -241,14 +240,13 @@ class Char {
   }
   
   toYaml() {
-    let s = this.name + ':\n'
+    let s = '-\n  name: ' + this.name + '\n'
     for (let field of Char.fields()) {
       if (field.disableSave || field.type === 'function') continue
       if (field.type === 'element') {
         s += '  ' + field.name + ': ' + this.elements[field.name].save() + '\n'
       }
       else if (this[field.name] === undefined) {
-        console.log("Skipping " + field.name)
         continue
       }
       else {
@@ -257,7 +255,7 @@ class Char {
     }
     s += '  packages:\n'
     for (let key in this.packages) {
-        s += '    ' + key + ': ' + this.packages[key] + '\n'
+        s += '    -\n      name: ' + key + '\n      rank: ' + this.packages[key] + '\n'
     }
     s += '  weaponNames:\n'
     for (let w of this.weaponNames) {
@@ -425,7 +423,8 @@ class Char {
       if (attack.resist === "reflex" && !attack.ignoreArmour) {
         hits -= (this.armour + this.armourBonus) * attack.diceCount()
         if (hits < 1) hits = 1
-        s += ", doing " + hits + " hits (" + damage + " before armour)"
+        s += ", doing " + hits + " hits"
+        if (damage !== hits) s += " (" + damage + " before armour)"
       }
       else {
         s += ", doing " + hits + " hits"
@@ -512,7 +511,7 @@ class Char {
     return this[resist]
   }
   
-  async saveToDb() {
+/*  async saveToDb() {
     const data = {name:this.name, data:this.toYaml()}
     const query = {name:this.name}
     const client = await MongoClient.connect(mongoUrl, mongoOpts).catch(err => { console.log("\n\n" + err + "\n\n"); })
@@ -547,7 +546,7 @@ class Char {
     }
     client.close();
     console.log("Done");
-  }  
+  }  */
 }
 
 

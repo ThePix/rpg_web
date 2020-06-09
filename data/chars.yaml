@@ -1,0 +1,121 @@
+---
+-
+  name: Lara
+  race: Rabbit
+  sex: Female
+  charType: pc
+  level: 3
+  packages:
+    -
+      name: Druid (nature mage)
+      rank: 3
+    -
+      name: Elementalist
+      rank: 3
+  weaponNames:
+    - Dagger
+-
+  name: Kyle
+  charType: pc
+  race: Bear
+  sex: Male
+  level: 3
+  packages:
+    -
+      name: Warrior (2H)
+      rank: 3
+    -
+      name: Barbarian (striker)
+      rank: 3
+  weaponNames:
+    - Warhammer
+    - Flail
+-
+  name: Jon
+  charType: pc
+  race: Bear
+  sex: Male
+  level: 3
+  packages:
+    -
+      name: Warrior (sword and shield)
+      rank: 3
+    -
+      name: Defender
+      rank: 3
+  weaponNames:
+    - Short sword
+    - Long bow
+-
+  name: Goblin1
+  charType: std
+  race: Goblin
+  sex: Male
+  level: 3
+  packages:
+    -
+      name: Warrior (sword and shield)
+      rank: 3
+    -
+      name: Defender
+      rank: 3
+  weaponNames:
+    - Broad sword
+    - Short bow
+-
+  name: Goblin2
+  charType: std
+  race: Goblin
+  sex: Female
+  level: 3
+  packages:
+    -
+      name: Warrior (sword and shield)
+      rank: 3
+    -
+      name: Defender
+      rank: 3
+  weaponNames:
+    - Broad sword
+    - Short bow
+-
+  name: Ogre
+  charType: elite
+  race: Ogre
+  sex: Male
+  level: 3
+  packages:
+    -
+      name: Warrior (2H)
+      rank: 3
+    -
+      name: Defender
+      rank: 3
+    -
+      name: Ogre
+      rank: 3
+  weaponNames:
+    - Broad sword
+    - Short bow
+-
+  name: Serpent
+  charType: elite
+  race: Serpent
+  sex: Female
+  level: 3
+  packages:
+    -
+      name: Serpent
+      rank: 3
+  weaponNames:
+-
+  name: Ghost
+  charType: std
+  race: Ghost
+  sex: Female
+  level: 3
+  packages:
+    -
+      name: Non-corporeal Undead
+      rank: 3
+  weaponNames:

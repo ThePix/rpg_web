@@ -191,39 +191,61 @@ test('resolveDamage with additional', t => {
 
 
 
+test('adding attacks restricted', t => {
+  const tester = Char.create("Tester", {
+    'Warrior (sword and shield)':2,
+    'Rogue (striker)':4, 
+    Elementalist:3
+  }, ["Warhammer", "Flail", "Dagger"])
 
-test('save and load', t => {
-  const test0 = new Char({name: "Tester1", vulnerableToFire:1})
-  const test1 = new Char({name: "Tester2", hits:40})
-  const test2 = new Char({name: "Tester3", shield:2})
+  t.is(tester.weaponMax, 2)
+  t.is(tester.attacks.length, 3)
+  t.is(tester.warnings.length, 2)
+  t.is(tester.warnings[0], "Additional weapon discarded")
+  t.is(tester.warnings[1], "No weapons suitable for Sneak attack")
+  t.is(tester.attacks[0].name, 'Warhammer')
+  t.is(tester.attacks[2].name, 'Firedart')
 
-  const s = Char.toYaml([test0, test1, test2])
-  const chars = Char.loadYaml(s)
-  
-  t.is(chars[0].elements.fire.vulnProt, 11)
-  t.is(chars[1].hits, 40)
-  t.is(chars[2].shield, 2)
-  
 })
 
 
 
-test('Char.create', t => {
-  const test1 = new Package('Package1', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2', notes:"Good at nature skill"}),
-    new Bonus('shield', {progression:[3, 7, 11], notes:["Small shield", "Medium shield", "Large shield"]}),
-    new Bonus('armour', {progression:2, notes:function(grade) { return "Armour " + grade }}),
-  ]})
-  const test2 = new Package('Package2', { bonuses:[
-    new Bonus('talking', {progression:'primary', notes:"Good at talking"}),
-    new Bonus('shield', {progression:2}),
-  ]})
-  const tester = Char.create("Tester", [test1, test2], {Package1:10, Package2:4}, [])
+
+
+test('adding attacks okay', t => {
+  const tester = Char.create("Tester", {
+    'Warrior (sword and shield)':2,
+    'Rogue (striker)':4, 
+    Elementalist:3
+  }, ["Warhammer", "Dagger"])
+
+  t.is(tester.weaponMax, 2)
+  t.is(tester.attacks.length, 4)
+  t.is(tester.warnings.length, 0)
+  t.is(tester.attacks[0].name, 'Warhammer')
+  t.is(tester.attacks[2].name, 'Sneak attack (Dagger)')
+  t.is(tester.attacks[3].name, 'Firedart')
+
+})
+
   
-  t.is(tester.hits, 25)
-  t.is(tester.armour, 1)
-  //t.is(tester.shield, 3)
-  t.is(tester.nature, 3)
-  t.is(tester.talking, 4)
+
+test('save and load', t => {
+  const tester = Char.create("Tester", {
+    'Warrior (sword and shield)':2,
+    'Rogue (striker)':4, 
+    Elementalist:3
+  }, ["Warhammer", "Dagger"])
+
+
+  const yaml = tester.toYaml()
+  const tester2 = Char.loadYaml(yaml)[0]
+  
+  t.is(tester2.weaponMax, 2)
+  t.is(tester2.attacks.length, 4)
+  t.is(tester2.warnings.length, 0)
+  t.is(tester2.attacks[0].name, 'Warhammer')
+  t.is(tester2.attacks[2].name, 'Sneak attack (Dagger)')
+  t.is(tester2.attacks[3].name, 'Firedart')
   
 })

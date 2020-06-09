@@ -61,6 +61,19 @@ const packages = [
     ],
   }),
 
+  new Package('Warrior (2H)', {
+    category:'Combat',
+    notes:[
+      'Bonus to combat attacks (if multiple warrior packages are picked, only the maximum applies), and to hits; gives a bonus weapon at level 3. Gives additional bonuses for 2H weapons.'
+    ],
+    hitsPerLevel:1,
+    extraWeapon:3,
+    bonuses:[
+      new BonusStat('attack', {progression:'primary', mode:'max'}),
+      new BonusStat('Ranged', {progression:[3, 9, 17]}),
+    ],
+  }),
+
 
 /*
 
@@ -145,49 +158,6 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     ],
   }),
  
-
-/*
-  new Package('Elementalist', {
-    notes:[
-      'The elementalist taps into the raw elements of fire, frost and storm. These are relatively powerful, but you need to attune first, and can only access spells from one element at a time. Could be suitable for a mage-fighter hybrid.'
-    ],
-    hitsPerLevel:0,
-    bonuses:[
-      new Bonus('Casting', {progression:'primary', notes:['Casting spells from this list']}),
-      new Bonus('Arcana', {progression:'secondary2'}),
-      new Bonus('Attune', {progression:1, flags:'Fo', notes:['you become attuned to either fire, ice or storm, last about 15 minutes or until you attune again; allows you to cast either fire OR ice OR storm spells, on-going spells terminate when you re-cast Attune']}),
-      new Bonus('Light', {progression:1, flags:'So', notes:['']}),
-      new Bonus('Firedart', {progression:1, flags:'S', notes:['']}),
-      new Bonus('Ice shard', {progression:1, flags:'S', notes:['']}),
-    ],
-  }),
-*/
-
-/*
-
-Attune (you become attuned to either fire, ice or storm, last about 15 minutes or until you attune again; allows you to cast either fire OR ice OR storm spells, on-going spells terminate when you re-cast Attune)
-Light
-Firedart
-Ice shard (slowed)
-Ice armour (+1 armour)
-Resist fire/ice/storm
-Shock dagger (+3 storm damage, whilst held and attuned)
-Fireblast (burning damage)
-Wall of fire/ice
-Lightning blast (affect a 3x3 square adjacent to you, target can do no magic for a turn)
-Shock sword (+5 storm damage, whilst held and attuned)
-Flaming-cloak (3 fire damage to anyone within a square whilst attuned)
-Ice storm (5x5 square, slowed)
-Fireball
-Superior ice armour (+2 armour)
-Protection from fire/ice
-Shock great sword (+7 storm damage, whilst held and attuned)
-Pillar of fire/frost (actually a static elemental; blocks 1 square, damages all adjacent)
-Summon elemental
-Flaming blade*/
-
-
-
 
 
 
@@ -358,7 +328,7 @@ Flaming blade*/
     bonuses:[
       new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
       new BonusSkill('Nature', {progression:"secondary", flags:"undefined"}),
-      new BonusSkill('Religion OR animal handling', {progression:"secondary", flags:"undefined"}),
+      new BonusSkill('Animal handling', {progression:"secondary", flags:"undefined"}),
       new BonusEffect('Light', {progression:1, flags:""}),
       new BonusEffect('Beast tongue', {progression:2, flags:""}),
       new BonusEffect('Blend', {progression:3, flags:""}),
@@ -1121,21 +1091,30 @@ x - Special rules apply.
       new BonusEffect('Ghost 1', {progression:1, flags:"C", notes:[
         "Character has wings, either like a demon or angel, but non-functional.",
       ]}),
-      new BonusEffect('Ghost II', {progression:3, flags:"C", notes:[
-        "Character has wings, either like a demon or angel, cannot fly, can extends leaps by 10 foot vertically and 3 squares horizontally.",
-      ]}),
-      new BonusEffect('Ghost III', {progression:5, flags:"C", notes:[
-        "Character has wings, either like a demon or angel, cannot fly, can extends leaps by 15 foot vertically and 5 squares horizontally, reducing damage from falls by 20 hits.",
-      ]}),
-      new BonusEffect('Ghost IV', {progression:8, flags:"C", notes:[
-        "Character has wings, either like a demon or angel; can fly at movement speed.",
-      ]}),
-      new BonusEffect('Ghost IV', {progression:10, flags:"C", notes:[
-        "Character has wings, either like a demon or angel; can fly at movement speed + 3.",
+    ]
+  }),
+
+  new Package('Serpent', {
+    excludes:['pc'],
+    notes:[
+    ],
+    bonuses:[
+      new BonusEffect('Serpent 1', {progression:1, flags:"C", notes:[
+        "Character has wings, either like a demon or angel, but non-functional.",
       ]}),
     ]
   }),
 
+  new Package('Ogre', {
+    excludes:['pc'],
+    notes:[
+    ],
+    bonuses:[
+      new BonusWeaponAttack('Storm of rage', {progression:1, flags:"", notes:[
+        "NEEDS WORK!!! Target all foes within 1 square upon bloodied.",
+      ]}),
+    ]
+  }),
 
 ]
 

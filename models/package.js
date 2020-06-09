@@ -291,13 +291,13 @@ class BonusSkill extends Bonus {
     if (char.skills[this.name] === undefined) throw "Unknown skill '" + this.name + "'"
 
     if (this.mode === 'max') {
-      if (char[this.name] < grade) char[this.name] = grade 
+      if (char.skills[this.name] < grade) char[this.name] = grade 
     }
     else if (this.mode === 'penalty') {
-      char[this.name] -= grade 
+      char.skills[this.name] -= grade 
     }
     else {
-      char[this.name] += grade
+      char.skills[this.name] += grade
     }
   }
 }
