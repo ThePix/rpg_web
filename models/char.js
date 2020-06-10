@@ -137,7 +137,7 @@ class Char {
       { name:'display', type:'string', display:false, disableSave:true},
       { name:'link', type:'string', display:false, disableSave:true},
       { name:'next', type:'string', display:false},
-      { name:'charType', type:'string', display:false, disableSave:true},
+      { name:'charType', type:'string', display:false},
       { name:'profession', type:'string', display:false},
       { name:'race', type:'string', display:false},
       { name:'sex', type:'string', display:false},
@@ -207,7 +207,6 @@ class Char {
   // you want saved values to override the derived values; otherwise, these values will
   // be ignored as they could hasve changed in a rules update
   static loadYaml(s, restoreState) {
-    //console.log(s)
     const data = yaml.safeLoad(s);
     const chars = []
     for (let h of data) {
@@ -218,13 +217,13 @@ class Char {
       const c = Char.create(h.name, ps, h.weaponNames)
       for (let field of Char.fields()) {
         if (field.disableSave || field.type === 'function') continue
-        if (data[field.name] === undefined) continue
+        if (h[field.name] === undefined) continue
         if (field.derived && !restoreState) continue
         if (field.type === 'element') {
-          c.elements[field.name].load(data[field.name])
+          c.elements[field.name].load(h[field.name])
         }
         else {
-          c[field.name] = data[field.name]
+          c[field.name] = h[field.name]
         }
       }
       chars.push(c)

@@ -359,3 +359,72 @@ msg|9:06:11 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|9:06:11 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|9:06:11 AM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
 msg|9:06:11 AM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+secret|8:05:53 PM|Refresh is 5 seconds
+title|8:05:53 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:05:53 PM|About to load characters
+secret|8:05:53 PM|Loaded 8 characters
+msg|8:07:13 PM|Turn sequence set
+msg|8:07:26 PM|Turn sequence set
+secret|8:09:46 PM|Refresh is 5 seconds
+title|8:09:46 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:09:46 PM|About to load characters
+secret|8:09:46 PM|Loaded 8 characters
+secret|8:14:16 PM|Refresh is 5 seconds
+title|8:14:16 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:14:16 PM|About to load characters
+secret|8:14:16 PM|Loaded 8 characters
+secret|8:15:48 PM|Refresh is 5 seconds
+title|8:15:48 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:15:48 PM|About to load characters
+secret|8:15:48 PM|Loaded 8 characters
+secret|8:18:42 PM|Refresh is 5 seconds
+title|8:18:42 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:18:42 PM|About to load characters
+secret|8:18:42 PM|Loaded 8 characters
+secret|8:19:15 PM|Refresh is 5 seconds
+title|8:19:15 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:19:15 PM|About to load characters
+secret|8:19:15 PM|Loaded 8 characters
+secret|8:19:41 PM|Refresh is 5 seconds
+title|8:19:41 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:19:41 PM|About to load characters
+secret|8:19:41 PM|Loaded 8 characters
+secret|8:21:52 PM|Refresh is 5 seconds
+title|8:21:52 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:21:52 PM|About to load characters
+secret|8:21:52 PM|Loaded 8 characters
+secret|8:33:33 PM|Refresh is 5 seconds
+title|8:33:33 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:33:33 PM|About to load characters
+secret|8:33:34 PM|Loaded 8 characters
+secret|8:34:30 PM|Refresh is 5 seconds
+title|8:34:30 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:34:30 PM|About to load characters
+secret|8:34:30 PM|Loaded 8 characters
+secret|8:34:57 PM|Refresh is 5 seconds
+title|8:34:57 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:34:57 PM|About to load characters
+secret|8:34:57 PM|Loaded 8 characters
+secret|8:35:45 PM|Refresh is 5 seconds
+title|8:35:45 PM|Go to 192.168.1.132:8091 to access the web site
+secret|8:35:45 PM|About to load characters
+secret|8:35:45 PM|Loaded 8 characters
+msg|8:37:36 PM|Attacker misses Target by a mile.
+msg|8:37:36 PM|Attacker just misses Target.
+msg|8:37:36 PM|Target's shield stops Attacker's attack.
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|8:37:36 PM|Attacker just misses Target.
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|8:37:36 PM|Target is on fire.
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|8:37:36 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|8:37:36 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|8:37:36 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|8:37:36 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|8:37:36 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|8:37:36 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|8:37:36 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
