@@ -2,14 +2,13 @@
 
 import test from 'ava';
 const [Char] = require('../models/char.js')
-const [Package, Bonus, Penalty, BonusAttack, BonusSpell] = require('../models/package.js')
+const [Package, BonusStat, PenaltyStat, BonusSkill, PenaltySkill, BonusAttack, BonusWeaponAttack, BonusEffect] = require('../models/package.js')
 const [AttackConsts, Attack] = require('../models/attack.js')
-const packages = require('../data/packages.js')
  
 
 
 test('_gradeByArray', t => {
-  const test = new Bonus('Shield', {progression:[1, 3, 7, 12]})
+  const test = new BonusStat('Shield', {progression:[1, 3, 7, 12]})
   t.is(test._grade(0), 0)
   t.is(test._grade(1), 1)
   t.is(test._grade(2), 1)
@@ -19,7 +18,7 @@ test('_gradeByArray', t => {
 });
 
 test('appliesByArray', t => {
-  const test = new Bonus('Shield', {progression:[1, 3, 7, 12]})
+  const test = new BonusStat('Shield', {progression:[1, 3, 7, 12]})
   t.is(test.applies(0), 0)
   t.is(test.applies(1), 1)
   t.is(test.applies(2), 0)
@@ -29,7 +28,7 @@ test('appliesByArray', t => {
 
 
 test('_gradePrimary', t => {
-  const test = new Bonus('Shield', {progression:'primary'})
+  const test = new BonusStat('Shield', {progression:'primary'})
   t.is(test._grade(0), 0)
   t.is(test._grade(1), 1)
   t.is(test._grade(5), 5)
@@ -54,7 +53,7 @@ test('_gradePrimary', t => {
 });
 
 test('appliesPrimary', t => {
-  const test = new Bonus('Shield', {progression:'primary'})
+  const test = new BonusStat('Shield', {progression:'primary'})
   t.is(test.applies(0), 0)
   t.is(test.applies(1), 1)
   t.is(test.applies(5), 2)
@@ -80,7 +79,7 @@ test('appliesPrimary', t => {
 
 
 test('_gradeSecondary', t => {
-  const test = new Bonus('Shield', {progression:'secondary'})
+  const test = new BonusStat('Shield', {progression:'secondary'})
   
   t.is(test._grade(0), 0)
   t.is(test._grade(1), 1)
@@ -90,7 +89,7 @@ test('_gradeSecondary', t => {
 });
 
 test('appliesSecondary', t => {
-  const test = new Bonus('Shield', {progression:'secondary'})
+  const test = new BonusStat('Shield', {progression:'secondary'})
   
   t.is(test.applies(0), 0)
   t.is(test.applies(1), 1)
@@ -100,7 +99,7 @@ test('appliesSecondary', t => {
 });
 
 test('_gradeSecondary2', t => {
-  const test = new Bonus('Shield', {progression:'secondary2'})
+  const test = new BonusStat('Shield', {progression:'secondary2'})
 
   t.is(test._grade(0), 0)
   t.is(test._grade(1), 0)
@@ -110,7 +109,7 @@ test('_gradeSecondary2', t => {
 });
 
 test('appliesSecondary2', t => {
-  const test = new Bonus('Shield', {progression:'secondary2'})
+  const test = new BonusStat('Shield', {progression:'secondary2'})
 
   t.is(test.applies(0), 0)
   t.is(test.applies(1), 0)
@@ -127,11 +126,11 @@ test('appliesSecondary2', t => {
 
 
 
-test('getBonusPerLevel1', t => {
+test('getBonusPerLevel', t => {
   const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new Bonus('nature', {progression:'secondary2'}),
-    new Bonus('shield', {progression:[3, 7, 11]}),
-    new Bonus('armour', {progression:2}),
+    new BonusStat('nature', {progression:'secondary2'}),
+    new BonusStat('shield', {progression:[3, 7, 11]}),
+    new BonusStat('armour', {progression:2}),
   ]})
 
   const ary = test.getBonuses(1)
@@ -141,6 +140,116 @@ test('getBonusPerLevel1', t => {
   t.is(test.getBonuses(3).length, 1)
   t.is(test.getBonuses(4).length, 0)
   t.is(test.getBonuses(5).length, 1)
+});
+
+
+
+
+
+test('BonusStat', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new BonusStat('will', {progression:2}),
+    new BonusStat('reflex', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {})
+  char.packages.Package = 4
+  test.apply(char)
+  t.is(char.will, 1)
+  t.is(char.reflex, 0)
+});
+
+test('PenaltyStat', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new PenaltyStat('will', {progression:2}),
+    new PenaltyStat('reflex', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {})
+  char.packages.Package = 4
+  test.apply(char)
+  t.is(char.will, -1)
+  t.is(char.reflex, 0)
+});
+
+test('BonusSkill', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new BonusSkill('Arcana', {progression:2}),
+    new BonusSkill('Pick lock', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {})
+  char.packages.Package = 4
+  test.apply(char)
+  t.is(char.skills.Arcana, 1)
+  t.is(char.skills['Pick lock'], 0)
+});
+
+test('PenaltySkill', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new PenaltySkill('Arcana', {progression:2}),
+    new PenaltySkill('Pick lock', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {})
+  char.packages.Package = 4
+  test.apply(char)
+  t.is(char.skills.Arcana, -1)
+  t.is(char.skills['Pick lock'], 0)
+});
+
+test('BonusAttack', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new BonusAttack('Icedart', {progression:2}),
+    new BonusAttack('Ice storm', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {})
+  char.packages.Package = 4
+  t.is(char.attacks.length, 0)
+  test.apply(char)
+  t.is(char.attacks.length, 1)
+  t.is(char.attacks[0].name, 'Icedart')
+});
+
+test('BonusWeaponAttack', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new BonusWeaponAttack('Backstab', {progression:2}),
+    new BonusWeaponAttack('Greater backstab', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {weaponMax:2})
+  char.packages.Package = 4
+  char.weaponMax = 2
+  char.updateWeapons(['Dagger', 'Flail'])
+
+  t.is(char.attacks.length, 2)
+  test.apply(char)
+  t.is(char.attacks.length, 4)
+  t.is(char.attacks[2].name, 'Backstab (Dagger)')
+  t.is(char.attacks[3].name, 'Backstab (Flail)')
+});
+
+test('BonusWeaponAttack with restriction', t => {
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new BonusWeaponAttack('Backstab', {
+        progression:[3, 9, 15, 21],
+        weaponCheck:function(weapon) { 
+          return weapon.is('fast');
+        },
+      }),
+    new BonusWeaponAttack('Greater backstab', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {weaponMax:2})
+  char.packages.Package = 4
+  char.weaponMax = 2
+  char.updateWeapons(['Dagger', 'Flail'])
+
+  t.is(char.attacks.length, 2)
+  test.apply(char)
+  t.is(char.attacks.length, 3)
+  t.is(char.attacks[2].name, 'Backstab (Dagger)')
 });
 
 

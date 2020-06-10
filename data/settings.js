@@ -12,6 +12,7 @@ const settings = {
   defaultWeapon:'Dagger',
   charFilename:'chars',
   saveFilename:'saved_data/save',
+  logFilename:'saved_data/log',
   packageGroups:[
     {name:'Combat', display:'Combat', comment:'Probably every character should get at least a few levels in one of these.'},
     {name:'Magic', display:'Spell casting', comment:'A character with any of these will be considered a spell-caster.'},

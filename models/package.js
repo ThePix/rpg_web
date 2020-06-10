@@ -11,8 +11,10 @@ class Package {
     if (!Array.isArray(this.bonuses)) throw new Error('No bonus array set for package ' + name)
   }
   
+  // Tested with various bonus types
   apply(char) {
     const rank = char.packages[this.name]
+    //console.log(this.name + '-' + rank)
     if (rank === undefined || rank === 0) return
     if (char.notes === undefined) char.notes = []
     for (let bonus of this.bonuses) {
@@ -22,6 +24,7 @@ class Package {
     char.points += rank
   }
 
+  // Tested in test/char.js
   applyWeaponMax(char) {
     if (this.extraWeapon === undefined) return
     if (char.packages[this.name] === undefined) return
@@ -69,7 +72,6 @@ class Package {
     return s + "\n\n"
   }
   
-
 }
 
 
@@ -169,6 +171,7 @@ class Bonus {
     }
   }
 
+  // Tested
   _gradeByArray(level) {
     for (let i = 0; i < this.progression.length; i++) {
       if (level < this.progression[i]) return i
@@ -191,6 +194,7 @@ class Bonus {
     }
   }
   
+  // Tested
   _appliesPrimary(level) {
     if (level < 1) return 0
     if (level === 1) return 1
@@ -214,6 +218,7 @@ class Bonus {
     return Math.floor((level + 3 - this.secondaryOffset) / 3)
   }
 
+  // Tested
   _appliesSecondary(level) {
     if (this.secondaryOffset === undefined) {
       if (this.progression.match(/^secondary\d$/)) {
@@ -232,6 +237,7 @@ class Bonus {
 
 
 // A BonusStat boosts a basic stat
+// Tested
 class BonusStat extends Bonus {
   constructor(name, data) {
     super(name, data)
@@ -270,7 +276,7 @@ class BonusStat extends Bonus {
 }
 
 
-
+// Tested
 class PenaltyStat extends BonusStat {
   constructor(name, data) {
     super(name, data)
@@ -280,6 +286,7 @@ class PenaltyStat extends BonusStat {
 
 
 // A BonusSkill
+// Tested
 class BonusSkill extends Bonus {
   constructor(name, data) {
     super(name, data)
@@ -302,6 +309,7 @@ class BonusSkill extends Bonus {
   }
 }
 
+// Tested
 class PenaltySkill extends BonusSkill {
   constructor(name, data) {
     super(name, data)
@@ -311,6 +319,7 @@ class PenaltySkill extends BonusSkill {
 
 
 // A BonusAttack is any attack that uses a weapon
+// Tested, including with weaponCheck
 class BonusWeaponAttack extends Bonus {
   constructor(name, data) {
     super(name, data)
@@ -334,7 +343,8 @@ class BonusWeaponAttack extends Bonus {
 }
 
 
-// A BonusAttack is any attack that does not use a weapon (or unarmed skill)
+// A BonusAttack is any attack (or instant effect) that does not use a weapon (or unarmed skill)
+// Tested
 class BonusAttack extends Bonus {
   constructor(name, data) {
     super(name, data)
@@ -351,6 +361,7 @@ class BonusAttack extends Bonus {
 }
 
 // A BonusEffect is a limited time effect like a buffing spell
+// Still need to flesh this out...!!!
 class BonusEffect extends Bonus {
   constructor(name, data) {
     super(name, data)

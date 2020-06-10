@@ -59,6 +59,23 @@ class Char {
     return c
   }
   
+  
+  updateWeapons(weaponNames) {
+    this.weapons = []
+    this.weaponNames = []
+    if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
+    if (weaponNames.length > this.weaponMax) {
+      weaponNames.length = this.weaponMax
+      this.warnings.push("Additional weapon discarded")
+    }
+    for (let s of weaponNames) {
+      const w = WEAPONS.find(el => el.name === s)
+      this.weapons.push(w)
+      this.weaponNames.push(s)
+      this.attacks.push(Attack.createFromWeapon(w, this)) // !!! Other skills might affect this
+    }
+  }
+  
   update(data, weaponNames) {
     if (data !== undefined) this.packages = data
     
@@ -67,22 +84,7 @@ class Char {
       p.applyWeaponMax(this)
     }
     
-
-    if (weaponNames) {
-      this.weapons = []
-      this.weaponNames = []
-      if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
-      if (weaponNames.length > this.weaponMax) {
-        weaponNames.length = this.weaponMax
-        this.warnings.push("Additional weapon discarded")
-      }
-      for (let s of weaponNames) {
-        const w = WEAPONS.find(el => el.name === s)
-        this.weapons.unshift(w)
-        this.weaponNames.push(s)
-        this.attacks.push(Attack.createFromWeapon(w, this)) // !!! Other skills might affect this
-      }
-    }
+    if (weaponNames) this.updateWeapons(weaponNames)
 
     this.points = 0
     this.maxHits = 0
@@ -146,6 +148,7 @@ class Char {
       { name:'pp', type:'int', display:false, derived:true},
       { name:'weaponMax', type:'int', display:false, disableSave:true},
       { name:'attack', type:'int', display:false},
+      { name:'spellCasting', type:'int', display:false},
       { name:'level', type:'int', display:false},
       { name:'penalty', type:'int', display:'Penalty', derived:true},
 

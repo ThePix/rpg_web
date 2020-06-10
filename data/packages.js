@@ -70,7 +70,7 @@ const packages = [
     extraWeapon:3,
     bonuses:[
       new BonusStat('attack', {progression:'primary', mode:'max'}),
-      new BonusStat('Ranged', {progression:[3, 9, 17]}),
+      new BonusStat('2H', {progression:[3, 9, 17]}),
     ],
   }),
 
@@ -169,7 +169,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The elementalist taps into the raw elements of fire, frost and storm. These are relatively powerful, but you need to attune first, and can only access spells from one element at a time. Could be suitable for a mage-fighter hybrid.",
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusSkill('Arcana', {progression:"secondary", flags:"undefined"}),
       new BonusStat('Initiative', {progression:[1,7,13,19], flags:"undefined"}),
       new BonusEffect('Attune', {progression:1, flags:"", notes:[
@@ -227,7 +227,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform certain rituals.",
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusSkill('History', {progression:"secondary", flags:"undefined"}),
       new BonusSkill('Religion', {progression:"secondary", flags:"undefined"}),
       new BonusEffect('Familiar', {progression:1, flags:"", notes:[
@@ -273,7 +273,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The conjuror is adept at spells that summon forth items and creatures.",
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusAttack('Control I', {progression:2, flags:"C", notes:[
         "Gain the ability to control a single creature the caster has summoned,",
       ]}),
@@ -326,7 +326,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform certain rituals.",
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusSkill('Nature', {progression:"secondary", flags:"undefined"}),
       new BonusSkill('Animal handling', {progression:"secondary", flags:"undefined"}),
       new BonusEffect('Light', {progression:1, flags:""}),
@@ -363,7 +363,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The ki adept uses magic to enhance her own body, pushing it beyond normal human limits. This still needs some tweaking, so it is not over-powered (character can do a super-human jump every turn) or under-powered (character can jump once per encounter).",
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusSkill('Acrobatics', {progression:"secondary", flags:"undefined"}),
       new BonusStat('reflex', {progression:[2,8,14,20], flags:"undefined"}),
       new BonusStat('init', {progression:[1,7,13,19], flags:"undefined"}),
@@ -395,7 +395,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     notes:[
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusSkill('Subterfuge', {progression:"secondary", flags:"undefined"}),
       new BonusEffect('Hidden ', {progression:1, flags:"Sr"}),
       new BonusAttack('Pull ', {progression:2, flags:"S", notes:[
@@ -430,7 +430,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "Target must be conscious for Channel I to VI.",
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusAttack('Channel I ', {progression:1, flags:"Sm", notes:[
         "Creates a channel to the target, who must be within 1 square; the character gains a once per round ability from the target, useable until the end of their next turn. The target gains d10 hits, but is stunned one round",
       ]}),
@@ -489,7 +489,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     notes:[
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusSkill('Persuasion', {progression:"secondary", flags:"undefined"}),
       new BonusStat('will', {progression:[2,5,8,11,14], flags:"undefined"}),
       new BonusAttack('Study ', {progression:1, flags:"A", notes:[
@@ -530,7 +530,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     notes:[
     ],
     bonuses:[
-      new BonusStat('Casting spells from this list', {progression:"primary", flags:"undefined"}),
+      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
       new BonusEffect('Prehensile tongue ', {progression:1, flags:"C", notes:[
         "Character's tongue grows to around 12 inches long, and can be used to hold and pick things up, about about the size of a can",
       ]}),

@@ -24,7 +24,7 @@ class Log {
       }
     }
 
-    fs.appendFile('log.txt', a + '~' + b + '~' + c, function (err) {
+    fs.appendFile(settings.logFilename + '.log', a + '|' + c + '|' + b + '\n', function (err) {
       if (err) throw err;
     });    
 

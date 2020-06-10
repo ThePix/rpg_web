@@ -2,7 +2,7 @@
 
 const [Message] = require('./models/message.js')
 const [Char] = require('./models/char.js')
-const [Package, Bonus, Penalty, BonusAttack, BonusSpell] = require('./models/package.js')
+const [Package, BonusStat, PenaltyStat, BonusSkill, PenaltySkill, BonusAttack, BonusWeaponAttack, BonusEffect] = require('./models/package.js')
 const [AttackConsts, Attack, WEAPONS, Weapon] = require('./models/attack.js')
 const packages = require('./data/packages.js')
 
@@ -12,8 +12,7 @@ function testing(a, b) {
   console.log("Found : " + a)
 }
 
-console.log('------------')
-
+/*
   const tester = Char.create("Tester", {
     'Warrior (sword and shield)':2,
     'Rogue (striker)':4, 
@@ -52,3 +51,23 @@ console.log('------------')
   testing(chars[1].hits, 40)
   testing(chars[2].shield, 2)
   */
+
+
+
+  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
+    new BonusWeaponAttack('Backstab', {progression:2}),
+    new BonusWeaponAttack('Greater backstab', {progression:7}),
+  ]})
+
+  const char = Char.create('tester', {weaponMax:2})
+  char.packages.Package = 4
+  char.weaponMax = 2
+  char.updateWeapons(['Dagger', 'Flail'])
+  
+  testing(char.attacks.length, 2)
+  test.apply(char)
+  testing(char.attacks.length, 4)
+  testing(char.attacks[2].name, 'Backstab (Dagger)')
+  testing(char.attacks[3].name, 'Backstab (Flail)')
+
+  //console.log(char)
