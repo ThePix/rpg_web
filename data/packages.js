@@ -1084,6 +1084,7 @@ x - Special rules apply.
 
 
   new Package('Non-corporeal Undead', {
+    category:'NPC',
     excludes:['pc'],
     notes:[
     ],
@@ -1095,6 +1096,7 @@ x - Special rules apply.
   }),
 
   new Package('Serpent', {
+    category:'NPC',
     excludes:['pc'],
     notes:[
     ],
@@ -1106,6 +1108,7 @@ x - Special rules apply.
   }),
 
   new Package('Ogre', {
+    category:'NPC',
     excludes:['pc'],
     notes:[
     ],
@@ -1117,6 +1120,7 @@ x - Special rules apply.
   }),
 
   new Package('Boss', {
+    category:'NPC',
     excludes:['pc', 'npc', 'std', 'minion', 'elite'],
     notes:[
     ],

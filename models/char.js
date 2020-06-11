@@ -88,7 +88,7 @@ class Char {
 
     this.points = 0
     this.maxHits = 0
-    for (let skill of settings.skills) {
+    for (let skill of settings.skills.map(el => el.name)) {
       this.skills[skill] = 0
     }
     // other resets????

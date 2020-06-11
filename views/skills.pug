@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h2 Skills
+
+  table(class='big')
+    tr
+      th Name
+      th Comments
+    each skill in skills
+      tr
+        td(class="weapon")
+          b
+            =skill.name
+        td(class="weapon")
+          =skill.note

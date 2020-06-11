@@ -88,20 +88,21 @@ block content
                 tr
                   th(colspan=4 title=group.comment) Packages: #{group.display}
                 each p in group.packages
-                  tr
-                    td(colspan=3 style="text-align:left")
-                      a(href='/packages/' + p.name target="_blank" title='Click here for information on this package (opens in a new tab)') #{p.name}
-                    td
-                      input(
-                        type='number' 
-                        name='package_' + p.name
-                        value=(char.packages[p.name] ? char.packages[p.name] : 0)
-                        min=0
-                        max=char.level
-                        title='Gain skills and abilities from this package by spending points up to the character\'s current level'
-                        id='package_' + p.name.replace(/[^a-zA-Z0-9]/g, '_')
-                        data-group=p.group
-                      )
+                  if !p.npcOnly
+                    tr
+                      td(colspan=3 style="text-align:left")
+                        a(href='/packages/' + p.name target="_blank" title='Click here for information on this package (opens in a new tab)') #{p.name}
+                      td
+                        input(
+                          type='number' 
+                          name='package_' + p.name
+                          value=(char.packages[p.name] ? char.packages[p.name] : 0)
+                          min=0
+                          max=char.level
+                          title='Gain skills and abilities from this package by spending points up to the character\'s current level'
+                          id='package_' + p.name.replace(/[^a-zA-Z0-9]/g, '_')
+                          data-group=p.group
+                        )
 
       td(class="unseen")
         p  
@@ -110,10 +111,13 @@ block content
           b
             i Derived attributes
         table(width="100%")
-          each att in ["Hits", "Attack", "Weapons", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
+          each att in ["Hits", "Attack", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
             tr
               td #{att}
               td #{char[att.toLowerCase()]}
+          tr
+            td Max. weapons
+            td #{char.weaponMax}
 
         p 
           b

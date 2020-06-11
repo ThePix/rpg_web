@@ -140,8 +140,11 @@ router.post('/', function(req, res, next) {
 
 
 router.get('/weapons', function(req, res, next) {
-  const p = packages.find(el => el.name === req.params.page)
   res.render('weapons', { weapons:WEAPONS });
+});
+
+router.get('/skills', function(req, res, next) {
+  res.render('skills', { skills:settings.skills });
 });
 
 
