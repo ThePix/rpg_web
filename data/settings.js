@@ -16,7 +16,9 @@ const settings = {
   packageGroups:[
     {name:'Combat', display:'Combat', comment:'Probably every character should get at least a few levels in one of these.'},
     {name:'Magic', display:'Spell casting', comment:'A character with any of these will be considered a spell-caster.'},
-    {name:'Natural magic', display:'Magical prowess', comment:'Using the nature of the world around you, without actually casting spells.'},
+    {name:'Channelling', display:'Channelling', comment:'A character with any of these will be considered a priest.'},
+    {name:'VileChannelling', display:'Vile channelling', comment:'A character with any of these will be considered a priest of evil.'},
+    {name:'NaturalMagic', display:'Magical prowess', comment:'Using the nature of the world around you, without actually casting spells.'},
     {name:'Utility', display:'Utility', comment:'Bonuses and specialisations.'},
     {name:'Body', display:'Body', comment:'The character\'s body is different... Players should work out a background to explain why.'},
     {name:'NPC', display:'NPN Only', comment:'These are only available to NPCs.', npcOnly:true},
@@ -29,6 +31,7 @@ const settings = {
     {name: 'Etiquette', note: 'The ability to fit in, in high society. A high skill would give the character contacts in the royal court, and possibly abroad too.'},
     {name: 'Grappling', note: 'Grabbing and holding an opponent.'},
     {name: 'Healing', note: 'Basic first aid.'},
+    {name: 'Holy channel', note: 'Skill at channelling holy magic from a god.'},
     {name: 'Lore', note: 'History and geography, legends and myths. A character will know more about his or her own culture.'},
     {name: 'Nature', note: 'Knowledge of plants and animals, including what is safe to eat and what to avoid.'},
     {name: 'Religion', note: 'Knowledge of religion; its history, rites, beliefs.'},
@@ -36,12 +39,14 @@ const settings = {
     {name: 'Persuade', note: 'The ability to convince an NPC (includes diplomacy, intimidate and bluff).'},
     {name: 'Pick lock', note: 'The ability to pick locks.'},
     {name: 'Riding', note: 'The ability to act (for example, attack a foe, shoot an arrow) whilst riding a beast. All characters are assumed to have the skill to ride a horse along a road.'},
+    {name: 'Spell casting', note: 'Skill at casting spells.'},
     {name: 'Subterfuge', note: 'Skill at chicanery (but see also Persuade, Pick lock and Sneak).'},
     {name: 'Survival', note: 'Skill at staying alive in hostile environments.'},
     {name: 'Sneak', note: 'The ability to hide and to move silently.'},
     {name: 'Streetwise', note: 'The ability to fit in, in the criminal underworld. A high skill would give the character underworld contacts.'},
     {name: 'Strength', note: 'The ability to lift and break stuff.'},
     {name: 'Swim', note: 'The ability to swim, duh.'},
+    {name: 'Vile channel', note: 'Skill at channelling unholy magic from a god.'},
   ],
 }
 

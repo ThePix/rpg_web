@@ -49,6 +49,7 @@ class Char {
       nether:new NetherElement(this, data),
     }
     this.skills = []
+    this.notes = []
   }
   
   

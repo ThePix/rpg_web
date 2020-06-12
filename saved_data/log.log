@@ -593,3 +593,29 @@ secret|4:28:16 PM|Refresh is 5 seconds
 title|4:28:16 PM|Go to 192.168.1.132:8091 to access the web site
 secret|4:28:16 PM|About to load characters
 secret|4:28:16 PM|Loaded 8 characters
+msg|2:00:36 PM|Attacker misses Target by a mile.
+msg|2:00:36 PM|Attacker just misses Target.
+msg|2:00:36 PM|Target's shield stops Attacker's attack.
+msg|2:00:36 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|2:00:38 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|2:00:38 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|2:00:38 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|2:00:38 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+secret|2:02:20 PM|Refresh is 5 seconds
+title|2:02:20 PM|Go to 10.0.0.100:8091 to access the web site
+secret|2:03:28 PM|Refresh is 5 seconds
+title|2:03:28 PM|Go to 10.0.0.100:8091 to access the web site
+secret|2:03:28 PM|About to load characters
+secret|2:03:28 PM|Loaded 8 characters
+secret|2:07:24 PM|Refresh is 5 seconds
+title|2:07:24 PM|Go to 10.0.0.100:8091 to access the web site
+secret|2:07:24 PM|About to load characters
+secret|2:07:24 PM|Loaded 8 characters
+title|2:07:29 PM|Go to 10.0.0.100:8091 to access the web site
+secret|2:07:28 PM|Refresh is 5 seconds
+secret|2:07:29 PM|About to load characters
+secret|2:07:29 PM|Loaded 8 characters
+secret|2:11:11 PM|Refresh is 5 seconds
+title|2:11:11 PM|Go to 10.0.0.100:8091 to access the web site
+secret|2:11:11 PM|About to load characters
+secret|2:11:11 PM|Loaded 8 characters

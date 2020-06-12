@@ -169,7 +169,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The elementalist taps into the raw elements of fire, frost and storm. These are relatively powerful, but you need to attune first, and can only access spells from one element at a time. Could be suitable for a mage-fighter hybrid.",
     ],
     bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
+      new BonusSkill('Spell casting', {progression:'primary', mode:'max'}),
       new BonusSkill('Arcana', {progression:"secondary", flags:"undefined"}),
       new BonusStat('Initiative', {progression:[1,7,13,19], flags:"undefined"}),
       new BonusEffect('Attune', {progression:1, flags:"", notes:[
@@ -221,51 +221,6 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
 
 
 
-  new Package('Shaman (spirit mage)', {
-    category:'Magic',
-    notes:[
-      "The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform certain rituals.",
-    ],
-    bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
-      new BonusSkill('History', {progression:"secondary", flags:"undefined"}),
-      new BonusSkill('Religion', {progression:"secondary", flags:"undefined"}),
-      new BonusEffect('Familiar', {progression:1, flags:"", notes:[
-        "Can possess your familiar",
-      ]}),
-      new BonusEffect('Converse with spirit', {progression:2, flags:""}),
-      new BonusAttack('Life drain I', {progression:3, flags:""}),
-      new BonusEffect('Summon spirit', {progression:4, flags:""}),
-      new BonusEffect('Sustain', {progression:5, flags:"", notes:[
-        "Target is kept alive",
-      ]}),
-      new BonusAttack('Necrosis', {progression:6, flags:"", notes:[
-        "Target weakened to elemental attacks",
-      ]}),
-      new BonusEffect('Summon undead', {progression:7, flags:""}),
-      new BonusAttack('Life drain II', {progression:8, flags:""}),
-      new BonusAttack('Repel undead', {progression:9, flags:""}),
-      new BonusEffect('Renewal', {progression:10, flags:"", notes:[
-        "Second wind has double effect for you and all friends within three squares until end of your next turn",
-      ]}),
-      new BonusEffect('Death ward', {progression:11, flags:"", notes:[
-        "Keep going after zero hits",
-      ]}),
-      new BonusAttack('Life drain III', {progression:12, flags:""}),
-      new BonusEffect('Spirit walk', {progression:13, flags:"", notes:[
-        "Limited teleport",
-      ]}),
-      new BonusEffect('Spirit ward', {progression:14, flags:"", notes:[
-        "Protection from spirits, inc undead",
-      ]}),
-      new BonusAttack('Curse', {progression:15, flags:""}),
-      new BonusEffect('Cheat death', {progression:16, flags:"", notes:[
-        "Become a lich",
-      ]}),
-    ]
-  }),
-
-
 
   new Package('Conjuror (summoner)', {
     category:'Magic',
@@ -273,7 +228,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The conjuror is adept at spells that summon forth items and creatures.",
     ],
     bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
+      new BonusSkill('Spell casting', {progression:'primary', mode:'max'}),
       new BonusAttack('Control I', {progression:2, flags:"C", notes:[
         "Gain the ability to control a single creature the caster has summoned,",
       ]}),
@@ -320,40 +275,6 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
 
 
 
-  new Package('Druid (nature mage)', {
-    category:'Magic',
-    notes:[
-      "The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform certain rituals.",
-    ],
-    bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
-      new BonusSkill('Nature', {progression:"secondary", flags:"undefined"}),
-      new BonusSkill('Animal handling', {progression:"secondary", flags:"undefined"}),
-      new BonusEffect('Light', {progression:1, flags:""}),
-      new BonusEffect('Beast tongue', {progression:2, flags:""}),
-      new BonusEffect('Blend', {progression:3, flags:""}),
-      new BonusEffect('Tremors', {progression:4, flags:"", notes:[
-        "3x3 becames difficult terrain due to movement",
-      ]}),
-      new BonusEffect('Hostile trees', {progression:5, flags:""}),
-      new BonusEffect('Surefoot', {progression:6, flags:""}),
-      new BonusAttack('Calm beast', {progression:7, flags:""}),
-      new BonusEffect('Renewal', {progression:8, flags:"", notes:[
-        "Second wind has double effect for you and all friends within three squares until end of your next turn",
-      ]}),
-      new BonusEffect('Waterwalking', {progression:9, flags:""}),
-      new BonusEffect('Beastform', {progression:10, flags:""}),
-      new BonusEffect('Stoneflesh', {progression:11, flags:""}),
-      new BonusEffect('Beast mastery', {progression:12, flags:""}),
-      new BonusAttack('Calm', {progression:13, flags:""}),
-      new BonusEffect('Call rain', {progression:14, flags:""}),
-      new BonusAttack('Call lightning', {progression:15, flags:"", notes:[
-        "From sky only",
-      ]}),
-      new BonusEffect('Pathfinding', {progression:16, flags:""}),
-      new BonusEffect('Protection from elements', {progression:17, flags:""}),
-    ]
-  }),
 
 
 
@@ -363,7 +284,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "The ki adept uses magic to enhance her own body, pushing it beyond normal human limits. This still needs some tweaking, so it is not over-powered (character can do a super-human jump every turn) or under-powered (character can jump once per encounter).",
     ],
     bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
+      new BonusSkill('Spell casting', {progression:'primary', mode:'max'}),
       new BonusSkill('Acrobatics', {progression:"secondary", flags:"undefined"}),
       new BonusStat('reflex', {progression:[2,8,14,20], flags:"undefined"}),
       new BonusStat('init', {progression:[1,7,13,19], flags:"undefined"}),
@@ -395,7 +316,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     notes:[
     ],
     bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
+      new BonusSkill('Spell casting', {progression:'primary', mode:'max'}),
       new BonusSkill('Subterfuge', {progression:"secondary", flags:"undefined"}),
       new BonusEffect('Hidden ', {progression:1, flags:"Sr"}),
       new BonusAttack('Pull ', {progression:2, flags:"S", notes:[
@@ -420,9 +341,71 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
   }),
 
 
+  new Package('Mind-mage (single target only)', {
+    category:'Magic',
+    notes:[
+    ],
+    bonuses:[
+      new BonusSkill('Spell casting', {progression:'primary', mode:'max'}),
+      new BonusSkill('Persuasion', {progression:"secondary", flags:"undefined"}),
+      new BonusStat('will', {progression:[2,5,8,11,14], flags:"undefined"}),
+      new BonusAttack('Study ', {progression:1, flags:"A", notes:[
+        "+1 to attack OR +2 to spells on this list, +2 to impersonate",
+      ]}),
+      new BonusAttack('Stagger ', {progression:2, flags:"S", notes:[
+        "Target forced back 1 square and falls to ground",
+      ]}),
+      new BonusAttack('Control ', {progression:3, flags:"S", notes:[
+        "Force target to move up to two squares in your turn",
+      ]}),
+      new BonusAttack('Mindblast ', {progression:4, flags:"S"}),
+      new BonusAttack('Mindmeld ', {progression:5, flags:"So", notes:[
+        "Two way communication, could be forced",
+      ]}),
+      new BonusAttack('Truth sense ', {progression:6, flags:"S", notes:[
+        "Can tell if someone is lying",
+      ]}),
+      new BonusAttack('Beast master ', {progression:7, flags:"So", notes:[
+        "Control a beast",
+      ]}),
+      new BonusAttack('Delusion ', {progression:8, flags:"Sl", notes:[
+        "Target is convinced of one fact",
+      ]}),
+      new BonusEffect('Mind protection ', {progression:9, flags:"Sr", notes:[
+        "Immune to mind magic",
+      ]}),
+      new BonusAttack('Paralysis ', {progression:10, flags:"Sr"}),
+      new BonusAttack('Insanity ', {progression:11, flags:"Sl", notes:[
+        "Can choose to give a phobia, making target vulnerable to one element",
+      ]}),
+      new BonusAttack('Beguile ', {progression:12, flags:"Sl"}),
+    ]
+  }),
+
+  new Package('Bodyshock!', {
+    category:'Magic',
+    notes:[
+    ],
+    bonuses:[
+      new BonusSkill('Spell casting', {progression:'primary', mode:'max'}),
+      new BonusEffect('Prehensile tongue ', {progression:1, flags:"C", notes:[
+        "Character's tongue grows to around 12 inches long, and can be used to hold and pick things up, about about the size of a can",
+      ]}),
+      new BonusEffect('Tentacle I ', {progression:2, flags:"Ao", notes:[
+        "As a standard action, character can cause a tentacle to sprout from her belly; can be dismissed as a minor action",
+      ]}),
+      new BonusEffect('Tentacle II ', {progression:3, flags:"Ao", notes:[
+        "Character can cause tentacles to sprout from her sides; see Tentacle I for details; can attack separately",
+      ]}),
+      new BonusEffect('Spider legs ', {progression:4, flags:"Ao", notes:[
+        "As a standard action, character can cause eight jointed legs to sprout from her sides, belly; can be dismissed as a minor action",
+      ]}),
+      new BonusEffect('Also: spiny body, snake hair, claws, camouflage, tail, gills, batwings, dragon breath, poison', {progression:5, flags:""}),
+    ]
+  }),
 
   new Package('Channeller', {
-    category:'Magic',
+    category:'Channelling',
     notes:[
       "Allows a character to create a direct channel from himself to a target. This causes the target to heal, and the character to gain some of the target's expertise. The target can choose whether to resist or not (as the target does receive healing). You can never prevent the target getting healing, healing is only up to the target's maximum hits.",
       "This can be performed as a minor action, allowing the character to grab a skill and use it in the same round.",
@@ -430,7 +413,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
       "Target must be conscious for Channel I to VI.",
     ],
     bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
+      new BonusSkill('Holy channel', {progression:'primary', mode:'max'}),
       new BonusAttack('Channel I ', {progression:1, flags:"Sm", notes:[
         "Creates a channel to the target, who must be within 1 square; the character gains a once per round ability from the target, useable until the end of their next turn. The target gains d10 hits, but is stunned one round",
       ]}),
@@ -483,73 +466,90 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
   }),
 
 
-
-  new Package('Mind-mage (single target only)', {
-    category:'Magic',
+  new Package('Shaman (spirit mage)', {
+    category:'Channelling',
     notes:[
+      "The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform certain rituals.",
     ],
     bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
-      new BonusSkill('Persuasion', {progression:"secondary", flags:"undefined"}),
-      new BonusStat('will', {progression:[2,5,8,11,14], flags:"undefined"}),
-      new BonusAttack('Study ', {progression:1, flags:"A", notes:[
-        "+1 to attack OR +2 to spells on this list, +2 to impersonate",
+      new BonusSkill('Holy channel', {progression:'primary', mode:'max'}),
+      new BonusSkill('History', {progression:"secondary", flags:"undefined"}),
+      new BonusSkill('Religion', {progression:"secondary", flags:"undefined"}),
+      new BonusEffect('Familiar', {progression:1, flags:"", notes:[
+        "Can possess your familiar",
       ]}),
-      new BonusAttack('Stagger ', {progression:2, flags:"S", notes:[
-        "Target forced back 1 square and falls to ground",
+      new BonusEffect('Converse with spirit', {progression:2, flags:""}),
+      new BonusAttack('Life drain I', {progression:3, flags:""}),
+      new BonusEffect('Summon spirit', {progression:4, flags:""}),
+      new BonusEffect('Sustain', {progression:5, flags:"", notes:[
+        "Target is kept alive",
       ]}),
-      new BonusAttack('Control ', {progression:3, flags:"S", notes:[
-        "Force target to move up to two squares in your turn",
+      new BonusAttack('Necrosis', {progression:6, flags:"", notes:[
+        "Target weakened to elemental attacks",
       ]}),
-      new BonusAttack('Mindblast ', {progression:4, flags:"S"}),
-      new BonusAttack('Mindmeld ', {progression:5, flags:"So", notes:[
-        "Two way communication, could be forced",
+      new BonusEffect('Summon undead', {progression:7, flags:""}),
+      new BonusAttack('Life drain II', {progression:8, flags:""}),
+      new BonusAttack('Repel undead', {progression:9, flags:""}),
+      new BonusEffect('Renewal', {progression:10, flags:"", notes:[
+        "Second wind has double effect for you and all friends within three squares until end of your next turn",
       ]}),
-      new BonusAttack('Truth sense ', {progression:6, flags:"S", notes:[
-        "Can tell if someone is lying",
+      new BonusEffect('Death ward', {progression:11, flags:"", notes:[
+        "Keep going after zero hits",
       ]}),
-      new BonusAttack('Beast master ', {progression:7, flags:"So", notes:[
-        "Control a beast",
+      new BonusAttack('Life drain III', {progression:12, flags:""}),
+      new BonusEffect('Spirit walk', {progression:13, flags:"", notes:[
+        "Limited teleport",
       ]}),
-      new BonusAttack('Delusion ', {progression:8, flags:"Sl", notes:[
-        "Target is convinced of one fact",
+      new BonusEffect('Spirit ward', {progression:14, flags:"", notes:[
+        "Protection from spirits, inc undead",
       ]}),
-      new BonusEffect('Mind protection ', {progression:9, flags:"Sr", notes:[
-        "Immune to mind magic",
+      new BonusAttack('Curse', {progression:15, flags:""}),
+      new BonusEffect('Cheat death', {progression:16, flags:"", notes:[
+        "Become a lich",
       ]}),
-      new BonusAttack('Paralysis ', {progression:10, flags:"Sr"}),
-      new BonusAttack('Insanity ', {progression:11, flags:"Sl", notes:[
-        "Can choose to give a phobia, making target vulnerable to one element",
-      ]}),
-      new BonusAttack('Beguile ', {progression:12, flags:"Sl"}),
     ]
   }),
 
-  new Package('Bodyshock!', {
-    category:'Magic',
+
+  new Package('Druid (nature mage)', {
+    category:'Channelling',
     notes:[
+      "The shaman and druid could both be clerics; they are the only options that have any form of healing; they both allow the character to perform certain rituals.",
     ],
     bonuses:[
-      new BonusStat('spellCasting', {progression:'primary', mode:'max'}),
-      new BonusEffect('Prehensile tongue ', {progression:1, flags:"C", notes:[
-        "Character's tongue grows to around 12 inches long, and can be used to hold and pick things up, about about the size of a can",
+      new BonusSkill('Holy channel', {progression:'primary', mode:'max'}),
+      new BonusSkill('Nature', {progression:"secondary", flags:"undefined"}),
+      new BonusSkill('Animal handling', {progression:"secondary", flags:"undefined"}),
+      new BonusEffect('Light', {progression:1, flags:""}),
+      new BonusEffect('Beast tongue', {progression:2, flags:""}),
+      new BonusEffect('Blend', {progression:3, flags:""}),
+      new BonusEffect('Tremors', {progression:4, flags:"", notes:[
+        "3x3 becames difficult terrain due to movement",
       ]}),
-      new BonusEffect('Tentacle I ', {progression:2, flags:"Ao", notes:[
-        "As a standard action, character can cause a tentacle to sprout from her belly; can be dismissed as a minor action",
+      new BonusEffect('Hostile trees', {progression:5, flags:""}),
+      new BonusEffect('Surefoot', {progression:6, flags:""}),
+      new BonusAttack('Calm beast', {progression:7, flags:""}),
+      new BonusEffect('Renewal', {progression:8, flags:"", notes:[
+        "Second wind has double effect for you and all friends within three squares until end of your next turn",
       ]}),
-      new BonusEffect('Tentacle II ', {progression:3, flags:"Ao", notes:[
-        "Character can cause tentacles to sprout from her sides; see Tentacle I for details; can attack separately",
+      new BonusEffect('Waterwalking', {progression:9, flags:""}),
+      new BonusEffect('Beastform', {progression:10, flags:""}),
+      new BonusEffect('Stoneflesh', {progression:11, flags:""}),
+      new BonusEffect('Beast mastery', {progression:12, flags:""}),
+      new BonusAttack('Calm', {progression:13, flags:""}),
+      new BonusEffect('Call rain', {progression:14, flags:""}),
+      new BonusAttack('Call lightning', {progression:15, flags:"", notes:[
+        "From sky only",
       ]}),
-      new BonusEffect('Spider legs ', {progression:4, flags:"Ao", notes:[
-        "As a standard action, character can cause eight jointed legs to sprout from her sides, belly; can be dismissed as a minor action",
-      ]}),
-      new BonusEffect('Also: spiny body, snake hair, claws, camouflage, tail, gills, batwings, dragon breath, poison', {progression:5, flags:""}),
+      new BonusEffect('Pathfinding', {progression:16, flags:""}),
+      new BonusEffect('Protection from elements', {progression:17, flags:""}),
     ]
   }),
+
 
 
   new Package('Alchemist', {
-    category:'Natural magic',
+    category:'NaturalMagic',
     notes:[
       "An alchemist brews potions .",
     ],
@@ -563,7 +563,7 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
 
 
   new Package('Shapeshifter', {
-    category:'Natural magic',
+    category:'NaturalMagic',
     notes:[
       "A shapeshifter changes shape by putting on a magical cloak (but see No cloak). There is a special link between the cloak and the shift; no one else will be affected when wearing the cloak, and the shifter can only be connected to a limited number of cloaks (can unlink to a cloak at any time).",
     ],
