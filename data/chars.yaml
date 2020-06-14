@@ -107,6 +107,9 @@
     -
       name: Serpent
       rank: 3
+    -
+      name: Boss
+      rand: 1
   weaponNames:
 -
   name: Ghost

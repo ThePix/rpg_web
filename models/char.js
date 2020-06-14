@@ -174,6 +174,9 @@ class Char {
       { name:'none', type:'int', display:"None", disableSave:true},
       { name:'init', type:'int', display:false, default:0, derived:true},
       { name:'size', type:'int', display:false, default:-1},
+      { name:'turnsPerRound', type:'int', display:false, default:1},  // does nothing !!!
+      { name:'weaponBonus', type:'int', display:false, default:0},  // does nothing !!!
+      { name:'weaponElement', type:'string', display:false, default:'none'},  // does nothing !!!
       
       { name:'applyDamage', type:'function' },
       { name:'onDeath', type:'function' },

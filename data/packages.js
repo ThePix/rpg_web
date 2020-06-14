@@ -707,10 +707,25 @@ Bow (penalty is -4 at 0, reducing by 1 each level, down to 0)*/
     notes:[
     ],
     bonuses:[
-      new BonusSkill('Sneak', {progression:1, flags:""}),
-      new BonusSkill('Pick lock', {progression:2, flags:""}),
-      new BonusSkill('Subterfuge', {progression:3, flags:""}),
+      new BonusSkill('Sneak', {progression:'secondary1', flags:""}),
+      new BonusSkill('Pick lock', {progression:'secondary2', flags:""}),
+      new BonusSkill('Subterfuge', {progression:'secondary3', flags:""}),
       //new Bonus('etc.', {progression:4, flags:""}),
+    ]
+  }),
+
+
+
+  new Package('Used car salesman', {
+    category:'Utility',
+    notes:[
+    ],
+    bonuses:[
+      new BonusSkill('Persuade', {progression:'primary', flags:""}),
+      new BonusStat('Will', {progression:[2, 5, 10, 17], flags:""}),
+      new BonusEffect('Good looking', {progression:1, flags:""}),
+      new BonusEffect('Attractive', {progression:3, flags:""}),
+      new BonusEffect('Stunning', {progression:7, flags:""}),
     ]
   }),
 
@@ -1125,8 +1140,8 @@ x - Special rules apply.
     notes:[
     ],
     bonuses:[
-      new BonusEffect('Extra Action', {progression:1, flags:"", notes:[
-        "NEEDS WORK!!! Appears twice in action order.",
+      new BonusStat('turnsPerRound', {progression:[1,2,3], flags:"", notes:[
+        "Each rank gives an extra turn in every round.",
       ]}),
     ]
   }),
