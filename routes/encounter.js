@@ -14,6 +14,10 @@ const settings = require('../data/settings.js')
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.current)
+  if (char === undefined) {
+    res.redirect('/encounter/inits')
+    return
+  }
   res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages });
 });
 
@@ -109,7 +113,7 @@ router.get('/refresh/:char', function(req, res, next) {
 router.get('/add-file/:char', function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.params.char)
-  files = ['one', 'two'];
+  const files = fs.readdirSync(settings.stocksFolder)
   res.render('add', { options:files, timestamp:req.timestamp, char:char, title:"Pick one or more sets of characters to add", action:'add-file' });
 });
 
@@ -123,12 +127,12 @@ router.get('/add-stock/:char', function(req, res, next) {
 router.get('/add-custom/:char', function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.params.char)
-  const newchar = new Char({name:'char' + Math.random()})
+  const newchar = new Char({name:'char' + Math.floor(Math.random() * 100000)})
   newchar.next = char.next
   char.next = newchar.name
   newchar.disabled = true
   chars.push(newchar)
-  res.render('edit', { char:newchar, fields: req.app.get('fields'), timestamp:req.timestamp });
+  res.render('edit', { char:newchar, fields: req.app.get('fields'), timestamp:req.timestamp, editableName:true });
 });
 
 
@@ -204,6 +208,27 @@ router.post('/add-stock', function(req, res, next) {
   res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
 });
 
+router.post('/add-file', function(req, res, next) {
+  const chars = req.app.get('chars');
+  const stocks = req.app.get('stocks');
+  const current = chars.find(el => el.current)
+  const char = chars.find(el => el.name === req.body.name)
+  delete req.body.submit_param
+  delete req.body.name
+  console.log(req.body)
+  let previous = char
+  for (let name in req.body) {
+    console.log("Adding stock " + name + " after " + char.name)
+    //const chr = stocks.find(el => el.display === name)
+    //const newchar = chr.clone()
+    //newchar.next = previous.next
+    //previous.next = newchar.name
+    //previous = newchar
+    //chars.push(newchar)
+  }
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+});
+
 router.post('/inits', function(req, res, next) {
   const chars = req.app.get('chars');
 
@@ -219,13 +244,19 @@ router.post('/inits', function(req, res, next) {
       chr.initScore = chr2.initScore
     }
   }
+  
+  console.log(chars.map(el => (el.name + ',' + el.initScore)))
+  
   chars.sort(function(a, b) {
     if (a.initScore !== b.initScore) return b.initScore - a.initScore;
-    if (a.charType === 'pc') return 1;
-    if (b.charType !== 'pc') return -1;
+    if (a.charType === 'pc') return -1;
+    if (b.charType !== 'pc') return 1;
     return 1;
   })
 
+  console.log('------------')
+  console.log(chars.map(el => (el.name + ',' + el.initScore)))
+  
   for (let i = 1; i < chars.length; i++) {
     chars[i - 1].next = chars[i].name
     chars[i].current = false

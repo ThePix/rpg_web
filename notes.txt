@@ -13,7 +13,7 @@ Set sex (female), weapon (battle axe), two packages (2)
 Create, check character is listed, data preserved
 
 
-
+Blinded, Charmed, Deafened, Frightened, Grappled, Incapacitated, Invisible, Paralyzed, Petrified, Poisoned, Prone, Restrained, Stunned, Unconscious, Exhaustion and Concentration
 
 The saved character has .packages, a dictionary of package names and numbers
 The char.update method uses that to construct the full character
@@ -229,4 +229,10 @@ Now they seek to destroy the gods or at least get them to pay attention to their
 
 Or maybe these guys are True Humans, and the rest of humans in D&D have been mixed with something else to make them less evil.
 
+
+
+
+
+snake people
+fish people
 

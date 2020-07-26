@@ -5,7 +5,7 @@ block content
   p
     =title
   p NOTE: Will be in  entered into the turn sequence directly after #{char.display}
-  form(method="post" action=action)
+  form(method="post" action='/encounter/' + action)
     ul
       for option in options
         li
@@ -13,4 +13,4 @@ block content
           = option
     p
     input(type="hidden" name="name" value=char.name)
-    input(type="submit" name="submit_param" value="submit_value" class="link-button") Submit
+    input(type="submit" name="submit_param" value="Submit" class="link-button")

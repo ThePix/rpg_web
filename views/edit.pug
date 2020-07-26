@@ -6,6 +6,12 @@ block content
     tr
       td(width="30%" style="background-color:white;")
         form(method="post" action="/char")
+          if editableName
+            input(type='hidden' name='oldname' value=char.name)
+            p Name: 
+              input(type='text' name='name' value=char.name)
+            br
+          
           table
             tr
               th Attribute

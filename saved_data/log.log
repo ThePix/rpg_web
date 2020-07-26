@@ -657,3 +657,74 @@ msg|4:10:01 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|4:10:01 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
 msg|4:10:01 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|4:10:01 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+secret|3:25:36 PM|Refresh is 5 seconds
+title|3:25:36 PM|Go to 192.168.1.132:8091 to access the web site
+secret|3:25:36 PM|About to load characters
+secret|3:25:36 PM|Loaded 8 characters
+secret|3:27:25 PM|Refresh is 5 seconds
+title|3:27:25 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|3:27:25 PM|About to load characters
+secret|3:27:25 PM|Loaded 8 characters
+secret|9:11:29 AM|Refresh is 5 seconds
+title|9:11:29 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|9:11:29 AM|About to load characters
+secret|9:11:29 AM|Loaded 8 characters
+msg|9:11:38 AM|Turn sequence set
+secret|9:37:59 AM|Refresh is 5 seconds
+title|9:37:59 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|9:37:59 AM|About to load characters
+secret|9:37:59 AM|Loaded 8 characters
+msg|9:38:07 AM|Turn sequence set
+secret|9:38:49 AM|Refresh is 5 seconds
+title|9:38:49 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|9:38:49 AM|About to load characters
+secret|9:38:49 AM|Loaded 8 characters
+msg|9:38:54 AM|Turn sequence set
+msg|9:39:10 AM|Turn sequence set
+secret|9:43:13 AM|Refresh is 5 seconds
+title|9:43:13 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|9:43:13 AM|About to load characters
+secret|9:43:13 AM|Loaded 8 characters
+msg|9:47:36 AM|Turn sequence set
+secret|9:48:36 AM|Refresh is 5 seconds
+title|9:48:36 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|9:48:37 AM|About to load characters
+secret|9:48:37 AM|Loaded 8 characters
+msg|10:39:51 AM|Turn sequence set
+secret|10:42:06 AM|Refresh is 5 seconds
+title|10:42:06 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|10:42:06 AM|About to load characters
+secret|10:42:06 AM|Loaded 8 characters
+secret|10:44:30 AM|Refresh is 5 seconds
+title|10:44:30 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|10:44:30 AM|About to load characters
+secret|10:44:30 AM|Loaded 8 characters
+secret|10:52:10 AM|Refresh is 5 seconds
+title|10:52:10 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|10:52:10 AM|About to load characters
+secret|10:52:10 AM|Loaded 8 characters
+secret|10:53:08 AM|Refresh is 5 seconds
+title|10:53:08 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|10:53:08 AM|About to load characters
+secret|10:53:08 AM|Loaded 8 characters
+msg|10:53:23 AM|Turn sequence set
+secret|10:55:27 AM|Refresh is 5 seconds
+title|10:55:27 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|10:55:27 AM|About to load characters
+secret|10:55:27 AM|Loaded 8 characters
+secret|10:56:08 AM|Refresh is 5 seconds
+title|10:56:08 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|10:56:08 AM|About to load characters
+secret|10:56:08 AM|Loaded 8 characters
+secret|10:57:29 AM|Refresh is 5 seconds
+title|10:57:29 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|10:57:29 AM|About to load characters
+secret|10:57:29 AM|Loaded 8 characters
+secret|11:06:20 AM|Refresh is 5 seconds
+title|11:06:21 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|11:06:21 AM|About to load characters
+secret|11:06:21 AM|Loaded 8 characters
+secret|11:08:19 AM|Refresh is 5 seconds
+title|11:08:19 AM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|11:08:19 AM|About to load characters
+secret|11:08:19 AM|Loaded 8 characters
