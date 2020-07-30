@@ -6,6 +6,7 @@ const settings = {
   maxMessages:20,
   pointsPerLevel:3,
   bonusPoints:3,
+  baseHits:20,
   startLevel:3,
   maxWeaponLines:2,  // maximum number of weapons will be two times this
   logLength:20,
@@ -22,7 +23,7 @@ const settings = {
     {name:'NaturalMagic', display:'Magical prowess', comment:'Using the nature of the world around you, without actually casting spells.'},
     {name:'Utility', display:'Utility', comment:'Bonuses and specialisations.'},
     {name:'Body', display:'Body', comment:'The character\'s body is different... Players should work out a background to explain why.'},
-    {name:'NPC', display:'NPN Only', comment:'These are only available to NPCs.', npcOnly:true},
+    {name:'NPC', display:'NPC Only', comment:'These are only available to NPCs.', npcOnly:true},
   ],
   skills: [
     {name: 'Arcana', note: 'Knowledge of spell casting principles, including rituals. May also give knowledge of great artefacts, wizards and magical phenomena.'},

@@ -728,3 +728,74 @@ secret|11:08:19 AM|Refresh is 5 seconds
 title|11:08:19 AM|Go to 'http://192.168.1.132:8091' to access the web site
 secret|11:08:19 AM|About to load characters
 secret|11:08:19 AM|Loaded 8 characters
+secret|7:46:20 AM|Refresh is 5 seconds
+title|7:46:20 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|7:46:20 AM|About to load characters
+secret|7:46:20 AM|Loaded 8 characters
+msg|7:48:04 AM|Turn sequence set
+secret|7:54:18 AM|Refresh is 5 seconds
+title|7:54:18 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|7:54:18 AM|About to load characters
+secret|7:54:18 AM|Loaded 8 characters
+msg|7:55:56 AM|Attacker misses Target by a mile.
+msg|7:55:56 AM|Attacker just misses Target.
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|7:55:56 AM|Target's shield stops Attacker's attack.
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|7:55:56 AM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|7:55:56 AM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|7:55:56 AM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|7:55:56 AM|Target is on fire.
+msg|7:55:56 AM|Attacker just misses Target.
+msg|7:55:56 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|7:55:56 AM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|7:55:56 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|7:55:56 AM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+secret|7:59:52 AM|Refresh is 5 seconds
+title|7:59:52 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|7:59:52 AM|About to load characters
+secret|7:59:52 AM|Loaded 8 characters
+msg|8:03:02 AM|Turn sequence set
+secret|8:04:25 AM|Refresh is 5 seconds
+title|8:04:25 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:04:26 AM|About to load characters
+secret|8:04:26 AM|Loaded 8 characters
+secret|8:12:52 AM|Refresh is 5 seconds
+title|8:12:52 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:12:52 AM|About to load characters
+secret|8:12:52 AM|Loaded 8 characters
+secret|8:13:05 AM|Refresh is 5 seconds
+title|8:13:05 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:13:27 AM|Refresh is 5 seconds
+title|8:13:27 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:13:27 AM|About to load characters
+secret|8:13:27 AM|Loaded 8 characters
+secret|8:18:02 AM|Refresh is 5 seconds
+title|8:18:02 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:18:02 AM|About to load characters
+secret|8:18:02 AM|Loaded 8 characters
+secret|8:19:38 AM|Refresh is 5 seconds
+title|8:19:38 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:19:38 AM|About to load characters
+secret|8:19:38 AM|Loaded 8 characters
+secret|8:22:16 AM|Refresh is 5 seconds
+title|8:22:16 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:22:16 AM|About to load characters
+secret|8:22:16 AM|Loaded 8 characters
+secret|8:22:19 AM|Refresh is 5 seconds
+title|8:22:19 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:22:19 AM|About to load characters
+secret|8:22:19 AM|Loaded 8 characters
+secret|8:31:13 AM|Refresh is 5 seconds
+title|8:31:13 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:31:13 AM|About to load characters
+secret|8:31:13 AM|Loaded 8 characters
+secret|8:48:37 AM|Refresh is 5 seconds
+title|8:48:37 AM|Go to 'http://10.0.0.100:8091' to access the web site
+secret|8:48:37 AM|About to load characters
+secret|8:48:37 AM|Loaded 8 characters

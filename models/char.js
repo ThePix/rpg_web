@@ -62,9 +62,9 @@ class Char {
   
   
   updateWeapons(weaponNames) {
-    this.weapons = []
-    this.weaponNames = []
+
     if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
+      
     if (weaponNames.length > this.weaponMax) {
       weaponNames.length = this.weaponMax
       this.warnings.push("Additional weapon discarded")
@@ -85,10 +85,26 @@ class Char {
       p.applyWeaponMax(this)
     }
     
+    this.weapons = []
+    this.weaponNames = []
+    this.warnings = []
+    this.attacks = []
+    for (let field of Char.fields()) {
+      if (field.default) {
+        this[field.name] = field.default
+      }
+      else if (field.type === 'bool') {
+        this[field.name] = false
+      }
+      else if (field.type === 'int') {
+        this[field.name] = 0
+      }
+    }
+
     if (weaponNames) this.updateWeapons(weaponNames)
 
     this.points = 0
-    this.maxHits = 0
+    this.maxHits = settings.baseHits
     for (let skill of settings.skills.map(el => el.name)) {
       this.skills[skill] = 0
     }
@@ -145,7 +161,7 @@ class Char {
 
       { name:'turnCount', type:'int', display:false, derived:true},
       { name:'maxHits', type:'int', display:"Max. hits", disableSave:true},
-      { name:'hits', type:'int', display:"Hits", default:20, derived:true},
+      { name:'hits', type:'int', display:"Hits", derived:true},
       { name:'pp', type:'int', display:false, derived:true},
       { name:'weaponMax', type:'int', display:false, disableSave:true},
       { name:'attack', type:'int', display:false},

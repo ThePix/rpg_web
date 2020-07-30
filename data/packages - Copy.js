@@ -27,7 +27,7 @@ a - Spell/flourish can be performed as an addition to another action.
 p - Spell/flourish can be performed as an opportunity attack.
 l - An instant spell/flourish, but the effect is lasting, until cured (just as a weapon attack is instant, but the damage is still there until cured).
 x - Special rules apply.
-1 - once per encounter
+
 
 
 
@@ -35,107 +35,6 @@ x - Special rules apply.
 
 
 const packages = [
-  new Package('Fencer', {
-    category:'Combat',
-    notes:[
-      'The fencer uses a rapier and finesse to defeat a foe.'
-    ],
-    hitsPerLevel:1,
-    extraWeapon:3,
-    bonuses:[
-      new BonusStat('attack', {progression:'primary', mode:'max'}),
-      new BonusWeaponAttack('Easy strike', {
-        progression:5,
-        flags:'Fa',
-        notes:'Bonus +2 to hit and +2 damage if the target gives CA or is immobilised.',
-        weaponCheck:function(weapon) { 
-          //console.log(weapon.name + "..." + weapon.is('fast'));
-          return weapon.is('fast');
-        },
-      }),
-      new BonusWeaponAttack('Defensive stance', {
-        progression:5,
-        flags:'Fa',
-        notes:'Penalty -2 to hit, but +2 to reflex until the start of your next round.',
-        weaponCheck:function(weapon) { 
-          //console.log(weapon.name + "..." + weapon.is('fast'));
-          return weapon.is('fast');
-        },
-      }),
-    ],
-  }),
-  
-Disarming strike (encounter/reliable)
-Defensive stance: target at -4 to attack you until start of your next turn
-Dance of blades: attack two targets with -2 penalty or three with -4 penalty
-Spinning blade (encounter): attack all adjacent foes, then shift up to 2 squares, which can be though a foe-occupied square
-Strike of finesse (encounter/reliable): with an elegant flourish, you impale your foe, +d8 damage
-
-  
-  
-
-  new Package('Brawler', {
-    category:'Combat',
-    notes:[
-      'The brawler is a tough fighter who uses a knife and unarmed attackers, getting in close to his foe. He protects his comrades by drawing foes to himself.'
-    ],
-    hitsPerLevel:2,
-    extraWeapon:3,
-    bonuses:[
-      new BonusStat('attack', {progression:'primary', mode:'max'}),
-      new BonusAttack('Mark', {progression:5, flags:'Fof', notes:[
-        'Marked foe is at -2 when an attack does not target you, in addition you get an Opportunity attack if the target makes an an attack that does not target you or if the target moves or shifts under his own volition (opportunity attack stops the move if successful)',
-      ]}),
-      new BonusWeaponAttack('Draw in', {progression:5, flags:'F', notes:'On successful attack, you and foe move one square in your direction'}),
-
-      new BonusWeaponAttack('On the defensive', {progression:8, flags:'F', notes:'Take a -4 penalty to your attack, but your target is at -3 to all attacks until the start of your next turn.'}),
-      // Do we need extra details here?
-      new BonusAttack('Throw off', {progression:8, flags:'F', notes:'Only when grappled. On success foe is thrown back one square.'}),
-      
-      
-      new BonusWeaponAttack('Inner strength', {progression:5, flags:'F1', notes:'Once per encounter, recovery third of your total hits'}),
-      new BonusWeaponAttack('Threatening rush', {progression:5, flags:'F1', notes:'Once per encounter, charge at least three squares. Any adjacent foe is marked and cannot have CA against you until the start of your next turn or you move, whichever is first'}),
-    ],
-  }),
-
-
-/*
-Grapple (On a success, target is held)
-Throw (+4 to attack; target must be held; target knocked down)
-Bear hug (+4 to attack; target must be held)
-Low blow (if target attacked you since your last turn) feint with the dagger and give a knee to the groin (extra damage if humanoid with genitals)
-*/
-
-
-  new Package('Knifer', {
-    category:'Combat',
-    notes:[
-      'An opportunist, the knifer waits for the right moment to get maximum damage.'
-    ],
-    hitsPerLevel:1,
-    extraWeapon:3,
-    bonuses:[
-      new BonusStat('attack', {progression:'primary', mode:'max'}),
-      new BonusWeaponAttack('Sneak attack', {
-        progression:5,
-        flags:'Fa',
-        notes:'Bonus 2d6 damage on a successful hit, once per turn, when you have combat advantage. Each addition rank gives an extra d6.',
-        weaponCheck:function(weapon) { 
-          //console.log(weapon.name + "..." + weapon.is('fast'));
-          return weapon.is('fast');
-        },
-      }),
-      new BonusWeaponAttack('Measured strike', {progression:5, flags:'F', notes:'Attack at -2 while you take the measure of your foe. Next turn you gain CA against him.'}),
-      new BonusWeaponAttack('Fading strike', {progression:5, flags:'F', notes:'On a hit, you can shift two squares to a square not adjacent to an enemy'}),
-    ],
-  }),
-
-
-
-
-
-
-
   new Package('Warrior (sword and shield)', {
     category:'Combat',
     notes:[
