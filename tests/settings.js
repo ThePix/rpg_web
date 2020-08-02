@@ -1,9 +1,10 @@
 'use strict';
 
+const folder = require('../settings.js').folder
 import test from 'ava';
-const settings = require('../data/settings.js')
-const weapon_data = require('../data/weapons.js')
-const package_data = require('../data/packages.js')
+const settings = require('../' + folder + '/settings.js')
+const weapon_data = require('../' + folder + '/weapons.js')
+const package_data = require('../' + folder + '/packages.js')
 
  
 

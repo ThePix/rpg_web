@@ -200,7 +200,7 @@ test('PenaltySkill', t => {
 
 test('BonusAttack', t => {
   const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new BonusAttack('Icedart', {progression:2}),
+    new BonusAttack('Icedart', {progression:2, secondaryDamage:'2'}),
     new BonusAttack('Ice storm', {progression:7}),
   ]})
 
@@ -210,15 +210,20 @@ test('BonusAttack', t => {
   test.apply(char)
   t.is(char.attacks.length, 1)
   t.is(char.attacks[0].name, 'Icedart')
+  t.is(char.attacks[0].primaryDamage, 'd4')
+  t.is(char.attacks[0].secondaryDamage, '2')
+  
+  // need char.attacks[0] to have substance
+  
 });
 
 test('BonusWeaponAttack', t => {
   const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new BonusWeaponAttack('Backstab', {progression:2}),
+    new BonusWeaponAttack('Backstab', {progression:2, secondaryDamage:'2', bonus:2}),
     new BonusWeaponAttack('Greater backstab', {progression:7}),
   ]})
 
-  const char = Char.create('tester', {weaponMax:2})
+  const char = Char.create('tester', {'Warrior (sword and shield)':3})
   char.packages.Package = 4
   char.weaponMax = 2
   char.updateWeapons(['Dagger', 'Flail'])
@@ -228,6 +233,8 @@ test('BonusWeaponAttack', t => {
   t.is(char.attacks.length, 4)
   t.is(char.attacks[2].name, 'Backstab (Dagger)')
   t.is(char.attacks[3].name, 'Backstab (Flail)')
+  t.is(char.attacks[2].secondaryDamage, '2')
+  t.is(char.attacks[2].bonus, 5)
 });
 
 test('BonusWeaponAttack with restriction', t => {
@@ -241,7 +248,7 @@ test('BonusWeaponAttack with restriction', t => {
     new BonusWeaponAttack('Greater backstab', {progression:7}),
   ]})
 
-  const char = Char.create('tester', {weaponMax:2})
+  const char = Char.create('tester', {'Warrior (sword and shield)':3})
   char.packages.Package = 4
   char.weaponMax = 2
   char.updateWeapons(['Dagger', 'Flail'])

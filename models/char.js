@@ -4,12 +4,13 @@
 
 const yaml = require('js-yaml');
 
+const folder = require('../settings.js').folder
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('../models/message.js')
 const [Package, Bonus] = require('../models/package.js')
-const settings = require('../data/settings.js')
-const packages = require('../data/packages.js')
+const settings = require('../' + folder + '/settings.js')
+const packages = require('../' + folder + '/packages.js')
 
 //const MongoClient = require('mongodb').MongoClient
 //const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
@@ -36,11 +37,11 @@ class Char {
     if (this.display === undefined || this.display == '') this.display = this.name
     this.warnings = []
     this.attacks = data.attacks ? data.attacks : []
-    if (this.size === -1) {
-      this.size = 3
-    }
     if (typeof this.size === "string") this.size = Char.sizes().findIndex(el => el === this.size.toLowerCase())
+    if (this.size === 0) this.size = 3
     this.elementalThreshold = 1 << this.size
+    //console.log(this.size)
+    //console.log(this.elementalThreshold)
     
     this.elements = {
       ice:new IceElement(this, data),
@@ -55,6 +56,12 @@ class Char {
   
 
   static create(name, data, weaponNames) {
+    if (typeof name !== 'string') {
+      console.log("WARNING: Char.create was not sent a string for the name")
+      console.log(name)
+      return
+    }
+    
     const c = new Char({name:name})
     c.update(data, weaponNames)
     return c
@@ -78,13 +85,9 @@ class Char {
   }
   
   update(data, weaponNames) {
-    if (data !== undefined) this.packages = data
+    this.packages = data || {}
     
-    this.weaponMax = 1
-    for (let p of packages) {
-      p.applyWeaponMax(this)
-    }
-    
+    // Rest everything to the defaults
     this.weapons = []
     this.weaponNames = []
     this.warnings = []
@@ -100,20 +103,26 @@ class Char {
         this[field.name] = 0
       }
     }
-
-    if (weaponNames) this.updateWeapons(weaponNames)
-
     this.points = 0
     this.maxHits = settings.baseHits
     for (let skill of settings.skills.map(el => el.name)) {
       this.skills[skill] = 0
     }
-    // other resets????
+
+    // Calculate the number of weapons allowed
+    this.weaponMax = 1
+    for (let p of packages) {
+      p.applyWeaponMax(this)
+    }
+    
+    // Set weapons
+    if (weaponNames) this.updateWeapons(weaponNames)
+
+    // Set everything from the packages
     for (let p of packages) {
       p.apply(this)
     }
     this.hits = this.maxHits
-
 
 
     //console.log(this.attacks.length)
@@ -189,7 +198,7 @@ class Char {
       { name:'stamina', type:'int', display:"Stamina", derived:true},
       { name:'none', type:'int', display:"None", disableSave:true},
       { name:'init', type:'int', display:false, default:0, derived:true},
-      { name:'size', type:'int', display:false, default:-1},
+      { name:'size', type:'int', display:false},
       { name:'turnsPerRound', type:'int', display:false, default:1},  // does nothing !!!
       { name:'weaponBonus', type:'int', display:false, default:0},  // does nothing !!!
       { name:'weaponElement', type:'string', display:false, default:'none'},  // does nothing !!!

@@ -89,8 +89,8 @@ test('weapon target desc', t => {
 
 test('attack primaryResolve', t => {
   const weapon = new Attack("Weapon", {primaryDamage:4})
-  const attacker = new Char({name: "Attacker", attacks: [weapon]})
-  const target = new Char({name: "Target", })
+  const attacker = Char.create("Attacker", {attacks: [weapon]})
+  const target = Char.create("Target", {})
   t.is(weapon.primaryResolve(attacker, target, 1, 0), AttackConsts.CRITICAL_MISS);
   t.is(weapon.primaryResolve(attacker, target, 1, 5), AttackConsts.CRITICAL_MISS);
   t.is(weapon.primaryResolve(attacker, target, 2, 9), AttackConsts.PLAIN_HIT);
@@ -102,8 +102,8 @@ test('attack primaryResolve', t => {
 
 test('attack secondaryResolve', t => {
   const weapon = new Attack("Weapon", {primaryDamage:4})
-  const attacker = new Char({name: "Attacker", attacks: [weapon]})
-  const target = new Char({name: "Target", })
+  const attacker = Char.create("Attacker", {attacks: [weapon]})
+  const target = Char.create("Target", {})
   t.is(weapon.secondaryResolve(attacker, target, 1, 0), AttackConsts.BAD_MISS);
   t.is(weapon.secondaryResolve(attacker, target, 2, 0), AttackConsts.BAD_MISS);
   t.is(weapon.secondaryResolve(attacker, target, 10, 0), AttackConsts.PLAIN_MISS);

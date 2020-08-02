@@ -27,6 +27,13 @@ const attackPostFun = function(req, res, next) {
   const chars = req.app.get('chars');
   const char = chars.find(el => el.name === req.body.name)
   const attack = char.attacks.find(el => el.name === req.body.attack)
+  if (attack === undefined) {
+    const s = "Failed to find an attack named '" + req.body.attack + "' for " + char.name + " (in routes/attack, attackPostFun)"
+    console.log(s)
+    console.log(char)
+    res.render('error', {message:'Error in server code', error:{status:s}})
+    return
+  }
   const roll = req.body.roll
   const bonus = req.body.bonus
     

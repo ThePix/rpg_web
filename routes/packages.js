@@ -3,11 +3,12 @@
 const express = require('express');
 const router = express.Router();
 
+const folder = require('../settings.js').folder
 const [Package, Bonus] = require('../models/package.js')
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Char] = require('../models/char.js')
-const settings = require('../data/settings.js')
-const packages = require('../data/packages.js')
+const settings = require('../' + folder + '/settings.js')
+const packages = require('../' + folder + '/packages.js')
 
 const maxLevel = 20
 

@@ -18,6 +18,7 @@
 
 'use strict';
 
+const folder = require('../settings.js').folder
 
 
 
@@ -235,7 +236,7 @@ const AttackConsts = {
 }
 
 
-const weapon_data = require('../data/weapons.js')
+const weapon_data = require('../' + folder + '/weapons.js')
 
 const WEAPONS = weapon_data.map(el => new Weapon(el.name, el))
 

@@ -1,10 +1,11 @@
 'use strict';
 
+const folder = require('../settings.js').folder
 const express = require('express');
 const router = express.Router();
 
 const [Log] = require('../models/log.js')
-const settings = require('../data/settings.js')
+const settings = require('../' + folder + '/settings.js')
 
 
 /* GET home page. */

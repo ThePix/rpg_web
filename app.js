@@ -1,5 +1,7 @@
 "use strict";
 
+const folder = require('./settings.js').folder
+
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
@@ -18,8 +20,7 @@ const chalk = require('chalk');
 const [Log] = require('./models/log.js')
 const [AttackConsts, Attack] = require('./models/attack.js')
 const [Char] = require('./models/char.js')
-//const [chars, stocks] = require('./data.js')
-const settings = require('./data/settings.js')
+const settings = require('./' + folder + '/settings.js')
 
 const app = express();
 
@@ -44,7 +45,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-fs.readFile('data/chars.yaml', function(err, s) {
+fs.readFile(folder + '/chars.yaml', function(err, s) {
   if (err) throw err;
   Log.add("secret", "About to load characters")
   const chars = Char.loadYaml(String(s));
@@ -53,6 +54,7 @@ fs.readFile('data/chars.yaml', function(err, s) {
 });  
 app.set('stocks', [])  // TODO!!!
 app.set('fields', Char.fields())
+app.set('folder', folder)
 
 
 const [indexGetFun, logGetFun] = require('./routes/index');

@@ -7,8 +7,9 @@ const router = express.Router();
 // This is the only part of the attack process that changes the game state
 const damagePostFun = function(req, res, next) {
   //console.log("ATTACK/DAMAGE")
-  //console.log(req.body)
+  //console.log(req)
   const chars = req.app.get('chars');
+  //console.log(chars)
   const attacker = chars.find(el => el.name === req.body.name)
   const attack = attacker.attacks.find(el => el.name === req.body.attack)
   

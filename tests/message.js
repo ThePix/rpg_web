@@ -41,7 +41,7 @@ test('messagesFor', t => {
 });
 
 test('messagesAsHtml', t => {
-  const chr1 = new Char({name:'Tester 1'})
+  const chr1 = Char.create('Tester 1', {})
   const chr2 = {name:'Tester 2'}
   const chr3 = {name:'Tester 3'}
   Message.send(chr1, chr2, 'This is a test')

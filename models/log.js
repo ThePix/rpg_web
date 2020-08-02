@@ -1,6 +1,7 @@
 'use strict';
 
-const settings = require('../data/settings.js')
+const folder = require('../settings.js').folder
+const settings = require('../' + folder + '/settings.js')
 const chalk = require('chalk');
 const fs = require('fs');
 

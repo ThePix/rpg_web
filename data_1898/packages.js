@@ -47,6 +47,8 @@ const packages = [
       new BonusWeaponAttack('Easy strike', {
         progression:5,
         flags:'Fa',
+        bonus:-2,
+        damage:'2d6+2',
         notes:'Bonus +2 to hit and +2 damage if the target gives CA or is immobilised.',
         weaponCheck:function(weapon) { 
           //console.log(weapon.name + "..." + weapon.is('fast'));
@@ -56,6 +58,8 @@ const packages = [
       new BonusWeaponAttack('Defensive stance', {
         progression:5,
         flags:'Fa',
+        bonus:-2,
+        // +2 to reflex
         notes:'Penalty -2 to hit, but +2 to reflex until the start of your next round.',
         weaponCheck:function(weapon) { 
           //console.log(weapon.name + "..." + weapon.is('fast'));
@@ -86,15 +90,53 @@ Strike of finesse (encounter/reliable): with an elegant flourish, you impale you
       new BonusAttack('Mark', {progression:5, flags:'Fof', notes:[
         'Marked foe is at -2 when an attack does not target you, in addition you get an Opportunity attack if the target makes an an attack that does not target you or if the target moves or shifts under his own volition (opportunity attack stops the move if successful)',
       ]}),
-      new BonusWeaponAttack('Draw in', {progression:5, flags:'F', notes:'On successful attack, you and foe move one square in your direction'}),
+      new BonusWeaponAttack('Draw in', {
+        progression:5,
+        flags:'F', 
+        weaponCheck:function(weapon) { 
+          return weapon.is('melee');
+        },
+        notes:'On successful attack, you and foe move one square in your direction',
+      }),
 
-      new BonusWeaponAttack('On the defensive', {progression:8, flags:'F', notes:'Take a -4 penalty to your attack, but your target is at -3 to all attacks until the start of your next turn.'}),
-      // Do we need extra details here?
-      new BonusAttack('Throw off', {progression:8, flags:'F', notes:'Only when grappled. On success foe is thrown back one square.'}),
+      new BonusWeaponAttack('Attack to Distract', {
+        progression:8,
+        flags:'F',
+        bonus:-4,
+        // -3 to target
+        weaponCheck:function(weapon) { 
+          return weapon.is('melee');
+        },
+        notes:'Take a -4 penalty to your attack, but your target is at -3 to all attacks until the start of your next turn.',
+      }),
+
+      new BonusAttack('Throw off', {
+        progression:8,
+        flags:'F',
+        weaponCheck:function(weapon) { 
+          return weapon.is('melee');
+        },
+        notes:'Only when grappled. On success foe is thrown back one square.',
+      }),
       
       
-      new BonusWeaponAttack('Inner strength', {progression:5, flags:'F1', notes:'Once per encounter, recovery third of your total hits'}),
-      new BonusWeaponAttack('Threatening rush', {progression:5, flags:'F1', notes:'Once per encounter, charge at least three squares. Any adjacent foe is marked and cannot have CA against you until the start of your next turn or you move, whichever is first'}),
+      new BonusWeaponAttack('Inner strength', {
+        progression:5,
+        flags:'F1',
+        weaponCheck:function(weapon) { 
+          return weapon.is('melee');
+        },
+        notes:'Once per encounter, recovery third of your total hits',
+      }),
+      
+      new BonusWeaponAttack('Threatening rush', {
+        progression:5,
+        flags:'F1',
+        weaponCheck:function(weapon) { 
+          return weapon.is('melee');
+        },
+        notes:'Once per encounter, charge at least three squares. Any adjacent foe is marked and cannot have CA against you until the start of your next turn or you move, whichever is first',
+      }),
     ],
   }),
 
@@ -119,16 +161,36 @@ Low blow (if target attacked you since your last turn) feint with the dagger and
       new BonusWeaponAttack('Sneak attack', {
         progression:5,
         flags:'Fa',
-        notes:'Bonus 2d6 damage on a successful hit, once per turn, when you have combat advantage. Each addition rank gives an extra d6.',
+        damage:'3d6',
+        notes:'Bonus 2d6 damage on a successful hit, once per turn, when you have combat advantage.',
         weaponCheck:function(weapon) { 
-          //console.log(weapon.name + "..." + weapon.is('fast'));
           return weapon.is('fast');
         },
       }),
-      new BonusWeaponAttack('Measured strike', {progression:5, flags:'F', notes:'Attack at -2 while you take the measure of your foe. Next turn you gain CA against him.'}),
-      new BonusWeaponAttack('Fading strike', {progression:5, flags:'F', notes:'On a hit, you can shift two squares to a square not adjacent to an enemy'}),
+      new BonusWeaponAttack('Measured strike', {
+        progression:5,
+        flags:'F',
+        bonus:-2,
+        weaponCheck:function(weapon) { 
+          return weapon.is('melee');
+        },
+        notes:'Attack at -2 while you take the measure of your foe. Next turn you gain CA against him.',
+      }),
+      new BonusWeaponAttack('Fading strike', {
+        progression:5,
+        flags:'F',
+        weaponCheck:function(weapon) { 
+          return weapon.is('melee');
+        },
+        notes:'On a hit, you can shift two squares to a square not adjacent to an enemy',
+      }),
     ],
   }),
+
+
+
+
+
 
 
 

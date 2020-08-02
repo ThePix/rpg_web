@@ -139,7 +139,7 @@ class Bonus {
       char[name] += grade
     }
     
-    if (this.script) this.script(char)
+    if (this.script) this.script(char, grade)
     
     if (this.notes) {
       if (typeof this.notes === "string") {
@@ -259,7 +259,7 @@ class BonusStat extends Bonus {
       char[name] += grade
     }
     
-    if (this.script) this.script(char)
+    if (this.script) this.script(char, grade)
     
     if (this.notes) {
       if (typeof this.notes === "string") {
@@ -331,11 +331,17 @@ class BonusWeaponAttack extends Bonus {
     let flag = false
     for (let weapon of char.weapons) {
       if (this.weaponCheck && !this.weaponCheck(weapon)) continue;
-      const data = Object.assign({}, this.data, weapon)
-      data.bonus = Math.min(level, char.attack) // !!! probably needs to tail off at higher level
-      data.weapon = weapon
+      
+      const attack = Attack.createFromWeapon(weapon, this)
+      attack.name = this.name + " (" + weapon.name + ")"
+      attack.bonus = Math.min(level, char.attack) // !!! probably needs to tail off at higher level
+      if (this.bonus) attack.bonus += this.bonus
+      for (let s in this) {
+        if (s === 'name' || s === 'bonus') continue
+        attack[s] = this[s]
+      }
       if (this.dataModifier) this.dataModifier(data, char)
-      char.attacks.push(new Attack(this.name + " (" + weapon.name + ")", data))
+      char.attacks.push(attack)
       flag = true
     }
     if (!flag) char.warnings.push("No weapons suitable for " + this.name)
@@ -351,11 +357,14 @@ class BonusAttack extends Bonus {
   }
 
   apply(char, level) {
+    //console.log('Here1 ' + this.secondaryDamage)
     const grade = this._grade(level)
     if (grade === 0) return
-    const data = Object.assign({}, this.data)
+    const data = Object.assign({}, this)
+    //console.log('Here2 ' + data.secondaryDamage)
     data.bonus = level // !!! probably needs to tail off at higher level
-    if (this.dataModifier) this.dataModifier(data, char)    
+    if (this.bonus) data.bonus += this.bonus
+    if (this.dataModifier) this.dataModifier(data, char, level)    
     char.attacks.push(new Attack(this.name, data))
   }
 }

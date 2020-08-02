@@ -7,12 +7,15 @@ const [damagePostFun] = require('../routes/damage');
 
 Log.debug = true
 
-const mockAttacker = new Char({name: "Tester0", protectedFromFire:2, attacks:[
-  new Attack("Weapon", {primaryDamage:4}),
-]})
-const mockTarget1 = new Char({name: "Tester1", protectedFromFire:2})
-const mockTarget2 = new Char({name: "Tester2", protectedFromFire:2})
-const mockTarget3 = new Char({name: "Tester3", protectedFromFire:2})
+const mockAttacker = new Char({name:"Tester0", protectedFromFire:2})
+mockAttacker.update()
+mockAttacker.attacks = [new Attack("Weapon", {primaryDamage:4})]
+const mockTarget1 = new Char({name:"Tester1", protectedFromFire:2})
+const mockTarget2 = new Char({name:"Tester2", protectedFromFire:2})
+const mockTarget3 = new Char({name:"Tester3", protectedFromFire:2})
+mockTarget1.hits = 20
+mockTarget2.hits = 20
+mockTarget3.hits = 20
 
 const mockChars = [mockAttacker, mockTarget1, mockTarget2, mockTarget3]
 

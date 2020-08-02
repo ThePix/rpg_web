@@ -1,11 +1,12 @@
 'use strict';
 
 import test from 'ava';
+const folder = require('../settings.js').folder
 const [Char] = require('../models/char.js')
 const [AttackConsts, Attack] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
 const [Package, Bonus] = require('../models/package.js')
-const packages = require('../data/packages.js')
+const packages = require('../' + folder + '/packages.js')
 
 
 Log.debug = true
