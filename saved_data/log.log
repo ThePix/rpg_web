@@ -1317,3 +1317,25 @@ msg|9:29:02 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|9:29:02 AM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
 msg|9:29:02 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|9:29:02 AM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+secret|6:11:42 PM|Refresh is 5 seconds
+title|6:11:42 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|6:14:33 PM|Refresh is 5 seconds
+title|6:14:33 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|6:52:18 PM|Refresh is 5 seconds
+title|6:52:18 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|6:54:58 PM|Refresh is 5 seconds
+title|6:54:58 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|6:54:58 PM|About to load characters
+secret|6:54:58 PM|Loaded 4 characters
+secret|6:55:38 PM|Refresh is 5 seconds
+title|6:55:38 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|6:55:38 PM|About to load characters
+secret|6:55:38 PM|Loaded 4 characters
+secret|6:57:13 PM|Refresh is 5 seconds
+title|6:57:13 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|6:57:13 PM|About to load characters
+secret|6:57:13 PM|Loaded 4 characters
+secret|7:18:46 PM|Refresh is 5 seconds
+title|7:18:46 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|7:18:46 PM|About to load characters
+secret|7:18:46 PM|Loaded 8 characters

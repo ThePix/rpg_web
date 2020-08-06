@@ -7,7 +7,7 @@ const settings = {
   pointsPerLevel:3,
   bonusPoints:3,
   baseHits:20,
-  startLevel:3,
+  startLevel:5,
   maxWeaponLines:2,  // maximum number of weapons will be two times this
   logLength:20,
   defaultWeapon:'Dagger',

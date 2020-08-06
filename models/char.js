@@ -78,6 +78,7 @@ class Char {
     }
     for (let s of weaponNames) {
       const w = WEAPONS.find(el => el.name === s)
+      if (w === undefined) console.log("Failed to find weapon called " + s)
       this.weapons.push(w)
       this.weaponNames.push(s)
       this.attacks.push(Attack.createFromWeapon(w, this)) // !!! Other skills might affect this
