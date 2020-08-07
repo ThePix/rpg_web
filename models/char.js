@@ -55,7 +55,7 @@ class Char {
   
   
 
-  static create(name, data, weaponNames) {
+  static create(name, data, weaponNames, preserveState) {
     if (typeof name !== 'string') {
       console.log("WARNING: Char.create was not sent a string for the name")
       console.log(name)
@@ -63,7 +63,7 @@ class Char {
     }
     
     const c = new Char({name:name})
-    c.update(data, weaponNames)
+    c.update(data, weaponNames, preserveState)
     return c
   }
   
@@ -85,7 +85,7 @@ class Char {
     }
   }
   
-  update(data, weaponNames) {
+  update(data, weaponNames, preserveState) {
     this.packages = data || {}
     
     // Rest everything to the defaults
@@ -123,7 +123,7 @@ class Char {
     for (let p of packages) {
       p.apply(this)
     }
-    this.hits = this.maxHits
+    if (!preserveState) this.hits = this.maxHits
 
 
     //console.log(this.attacks.length)
@@ -233,29 +233,33 @@ class Char {
   }
 
 
-  // restoreState should be true if this is part way through an encounter and
+  // preserveState should be true if this is part way through an encounter and
   // you want saved values to override the derived values; otherwise, these values will
-  // be ignored as they could hasve changed in a rules update
-  static loadYaml(s, restoreState) {
+  // be ignored as they could have changed in a rules update
+  // ONLY WORKS FOR HITS - AND THAT IS NOT TESTED!!!
+  static loadYaml(s, preserveState) {
     const data = yaml.safeLoad(s);
     const chars = []
     for (let h of data) {
-      const ps = []
+      const ps = {}
       for (let p of h.packages) {
         ps[p.name] = p.rank
       }
-      const c = Char.create(h.name, ps, h.weaponNames)
-      for (let field of Char.fields()) {
+      const c = Char.create(h.name, ps, h.weaponNames, preserveState)
+      for (let key in h) {
+        if (!['name', 'weaponNames', 'packages'].includes(key)) c[key] = h[key]
+      }
+/*      for (let field of Char.fields()) {
         if (field.disableSave || field.type === 'function') continue
         if (h[field.name] === undefined) continue
-        if (field.derived && !restoreState) continue
+        if (field.derived && !preserveState) continue
         if (field.type === 'element') {
           c.elements[field.name].load(h[field.name])
         }
         else {
           c[field.name] = h[field.name]
         }
-      }
+      }*/
       chars.push(c)
     }
     return chars

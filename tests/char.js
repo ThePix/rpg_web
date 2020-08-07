@@ -250,3 +250,40 @@ test('save and load', t => {
   t.is(tester2.attacks[3].name, 'Firedart')
   
 })
+
+  
+
+test('load yaml', t => {
+  let s = `-
+  name: Kyle
+  charType: pc
+  race: Bear
+  sex: Male
+  level: 3
+  packages:
+    -
+      name: Warrior (2H)
+      rank: 3
+    -
+      name: Barbarian (striker)
+      rank: 3
+  weaponNames:
+    - Warhammer
+    - Flail`
+    
+  const chars = Char.loadYaml(s);
+  t.is(chars[0].name, 'Kyle')
+  t.is(chars[0].points, 6)
+  t.is(chars[0].weaponMax, 3)
+  t.is(chars[0].charType, 'pc')
+  t.is(chars[0].attacks.length, 4)
+  t.is(Object.keys(chars[0].packages).length, 2)
+  t.is(chars[0].weapons.length, 2)
+  t.is(chars[0].weaponNames.length, 2)
+  
+})
+
+
+
+
+

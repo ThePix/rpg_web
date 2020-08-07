@@ -7,6 +7,7 @@ expected and what was found. You can add output in the code to identify the issu
 (Ava does some "clever" output that makes debugging very difficult).
 */
 
+const fs = require('fs');
 const folder = require('./settings.js').folder
 const [Message] = require('./models/message.js')
 const [Char] = require('./models/char.js')
@@ -55,24 +56,10 @@ const mockNext = function() {}
 
 
 
+fs.readFile(folder + '/chars.yaml', function(err, s) {
+  if (err) throw err;
+  const chars = Char.loadYaml(String(s));
+  console.log(chars[1])
+});  
 
-  const test = new Package('Package', { hitsPerLevel:0.5, bonuses:[
-    new BonusWeaponAttack('Backstab', {progression:2, secondaryDamage:'2', bonus:2}),
-    new BonusWeaponAttack('Greater backstab', {progression:7}),
-  ]})
 
-  const char = Char.create('tester', {'Warrior (sword and shield)':3})
-  console.log(char)
-  char.packages.Package = 4
-  char.weaponMax = 2
-  char.updateWeapons(['Dagger', 'Flail'])
-
-  t.is(char.attacks.length, 2)
-  test.apply(char)
-  t.is(char.attacks.length, 4)
-  t.is(char.attacks[2].name, 'Backstab (Dagger)')
-  t.is(char.attacks[3].name, 'Backstab (Flail)')
-  t.is(char.attacks[2].secondaryDamage, '2')
-  t.is(char.attacks[2].bonus, '5')
-
-  //console.log(char)

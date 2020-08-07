@@ -1,5 +1,7 @@
 Character creation testing
 
+Load characters from yaml file
+
 From index.html, create a new character
 Set name (Piggy Suu), sex (f), weapon (flail), two packages (1)
 Refresh, check data preserved

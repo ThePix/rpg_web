@@ -266,6 +266,48 @@ const packages = [
 
 
 
+
+  new Package('Gunslinger', {
+    category:'Combat',
+    notes:[
+      'Using a firearm.'
+    ],
+    hitsPerLevel:2,
+    extraWeapon:3,
+    bonuses:[
+      new BonusStat('attack', {progression:'primary', mode:'max'}),
+      new BonusSkill('Overwatch', {
+        progression:5,
+        flags:'F',
+        notes:'Target must be in cover, character can take no further action this turn. Until the start of your next turn, get OAon the target if he breaks cover (including taking a shot inyour direction)',
+        weaponCheck:function(weapon) { 
+          return weapon.is('firearm');
+        },
+      }),
+      new BonusSkill('Aiming', {
+        progression:5,
+        flags:'Fa',
+        notes:'Take an action to aim carefully at a target. Gain +2 to subsequent shots on that target, until you move (but can shift), make another standard action, change weapons. Not cummulative!',
+        weaponCheck:function(weapon) { 
+          return weapon.is('firearm');
+        },
+      }),
+      new BonusSkill('Go for the head', {
+        progression:5,
+        flags:'Fa',
+        bonus:-2,
+        bonusDamage:'4',
+        notes:'Target must not be in cover (or otherwise get a bonus to defence due to an obstruction between you). Take a -2 penalty to hit, but a +4 bonus to damage if you do.',
+        weaponCheck:function(weapon) { 
+          return weapon.is('firearm');
+        },
+      }),
+    ],
+  }),
+
+
+
+
 ]
 
 
