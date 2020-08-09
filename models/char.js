@@ -49,7 +49,7 @@ class Char {
       shock:new ShockElement(this, data),
       nether:new NetherElement(this, data),
     }
-    this.skills = []
+    this.skills = {}
     this.notes = []
   }
   
@@ -106,6 +106,7 @@ class Char {
     }
     this.points = 0
     this.maxHits = settings.baseHits
+    this.movement = settings.movement
     for (let skill of settings.skills.map(el => el.name)) {
       this.skills[skill] = 0
     }
@@ -116,15 +117,19 @@ class Char {
       p.applyWeaponMax(this)
     }
     
-    // Set weapons
-    if (weaponNames) this.updateWeapons(weaponNames)
-
     // Set everything from the packages
     for (let p of packages) {
       p.apply(this)
     }
     if (!preserveState) this.hits = this.maxHits
 
+    // Set weapons now we have attack set
+    if (weaponNames) this.updateWeapons(weaponNames)
+
+    // Now add bonus attacks, etc
+    for (let p of packages) {
+      p.applyAttacks(this)
+    }
 
     //console.log(this.attacks.length)
     //console.log(this.attacks[0])
@@ -200,6 +205,7 @@ class Char {
       { name:'none', type:'int', display:"None", disableSave:true},
       { name:'init', type:'int', display:false, default:0, derived:true},
       { name:'size', type:'int', display:false},
+      { name:'movement', type:'int', display:false},
       { name:'turnsPerRound', type:'int', display:false, default:1},  // does nothing !!!
       { name:'weaponBonus', type:'int', display:false, default:0},  // does nothing !!!
       { name:'weaponElement', type:'string', display:false, default:'none'},  // does nothing !!!

@@ -284,7 +284,7 @@ class Attack {
   _damageToArray(damageString) {
     const md = /(\d*)d(\d+)(([+-])(\d+))?/.exec(damageString)
     if (md === null) {
-      console.log("Error: Failed to find match for '" + damageString + "'")
+      console.log("Error: Failed to find match for damage '" + damageString + "'")
       return false;
     }
     const result = []
@@ -351,9 +351,17 @@ class Attack {
     }
     if (data && data.altName) attack.name = data.altName;
     attack.bonus = chr.attack
+    //console.log('attack ' + this.name + ' '  + chr.attack + ' ' + chr.name)
     attack.desc += attack.weapon.desc
     attack.icon = attack.weapon.getNotes('attack type')[0].icon
     return attack
+  }
+  
+  display() {
+    if (typeof this.bonus === 'string') return this.bonus
+    let s = this.bonus + ' (' + this.primaryDamage + ')'
+    if (this.primaryMax > 1 || this.secondaryMax > 0) s += ' *'
+    return s
   }
 }
 

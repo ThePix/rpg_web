@@ -8,6 +8,12 @@
     -
       name: Fencer
       rank: 5
+    -
+      name: Gunslinger
+      rank: 5
+    -
+      name: Athletic aristocrat
+      rank: 5
   weaponNames:
     - Rapier
     - Revolver
@@ -18,7 +24,13 @@
   level: 5
   packages:
     -
-      name: Wrestler
+      name: Knifer
+      rank: 5
+    -
+      name: Gunslinger
+      rank: 5
+    -
+      name: Investigator
       rank: 5
   weaponNames:
     - Dagger
@@ -30,7 +42,13 @@
   level: 5
   packages:
     -
+      name: Gunslinger
+      rank: 5
+    -
       name: Brawler
+      rank: 5
+    -
+      name: Artist of the occult
       rank: 5
   weaponNames:
     - Dagger
@@ -42,10 +60,71 @@
   level: 5
   packages:
     -
-      name: Brawler
+      name: Gunslinger
+      rank: 5
+    -
+      name: Wrestler
+      rank: 5
+    -
+      name: Old soldier
       rank: 5
   weaponNames:
     - Dagger
     - Revolver
+    - Shotgun
+    
+-
+  name: Wolf1
+  charType: std
+  sex: Male
+  level: 5
+  packages:
+    -
+      name: Beast
+      rank: 5
+-
+  name: Wolf2
+  charType: std
+  sex: Female
+  level: 4
+  packages:
+    -
+      name: Beast
+      rank: 4
+-
+  name: Wolf3
+  charType: std
+  sex: Female
+  level: 4
+  packages:
+    -
+      name: Beast
+      rank: 4
 
-
+-
+  name: Witch
+  charType: elite
+  sex: Female
+  level: 5
+  packages:
+    -
+      name: Witch
+      rank: 5
+-
+  name: Shambler
+  charType: elite
+  sex: Male
+  level: 5
+  packages:
+    -
+      name: Shambler
+      rank: 5
+-
+  name: Rat swarm
+  charType: minion
+  sex: Male
+  level: 5
+  packages:
+    -
+      name: Swarm
+      rank: 1

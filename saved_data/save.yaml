@@ -1,13 +1,20 @@
-Lara:
-  next: Goblin1
+---
+-
+  name: Wolf1
+  next: Lara Croft
+  charType: std
+  sex: Male
   turnCount: 1
-  maxHits: 45
-  hits: 45
+  hits: 20
   pp: 0
-  weaponMax: 0
   attack: 0
-  level: 0
+  spellCasting: 0
+  level: 5
   penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
   current: false
   stunned: false
   blooded: false
@@ -16,23 +23,38 @@ Lara:
   alerts: false
   shield: 0
   armour: 0
-  will: 2
+  armourBonus: 0
+  will: 0
   reflex: 0
   stamina: 0
-  none: 0
-  init: 5
-  size: 3
+  init: 4
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Beast
+      rank: 5
+  weaponNames:
 
-Goblin1:
-  next: Kyle
+-
+  name: Lara Croft
+  next: Wolf3
+  charType: pc
+  sex: Female
   turnCount: 0
-  maxHits: 35
   hits: 35
   pp: 0
-  weaponMax: 0
-  attack: 0
-  level: 0
+  attack: 5
+  spellCasting: 0
+  level: 5
   penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
   current: true
   stunned: false
   blooded: false
@@ -41,75 +63,46 @@ Goblin1:
   alerts: false
   shield: 0
   armour: 0
-  will: 0
-  reflex: 0
+  armourBonus: 0
+  will: 1
+  reflex: 1
   stamina: 0
-  none: 0
-  init: 0
-  size: 3
+  init: 3
+  size: 0
+  movement: 6
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Fencer
+      rank: 5
+    -
+      name: Gunslinger
+      rank: 5
+    -
+      name: Athletic aristocrat
+      rank: 5
+  weaponNames:
+    - Rapier
+    - Revolver
 
-Kyle:
-  next: Ogre
-  profession: Mercenary
-  race: Bear
+-
+  name: Wolf3
+  next: Wolf2
+  charType: std
+  sex: Female
   turnCount: 0
-  maxHits: 50
-  hits: 50
-  pp: 0
-  weaponMax: 0
-  attack: 0
-  level: 0
-  penalty: 0
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  will: 0
-  reflex: 2
-  stamina: 0
-  none: 0
-  init: 0
-  size: 3
-
-Ogre:
-  next: Serpent
-  turnCount: 0
-  maxHits: 100
-  hits: 76
-  pp: 0
-  weaponMax: 0
-  attack: 0
-  level: 0
-  penalty: 0
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  will: 0
-  reflex: 2
-  stamina: 2
-  none: 0
-  init: 0
-  size: 3
-
-Serpent:
-  next: Jon
-  turnCount: 0
-  maxHits: 20
   hits: 20
   pp: 0
-  weaponMax: 0
   attack: 0
-  level: 0
+  spellCasting: 0
+  level: 4
   penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
   current: false
   stunned: false
   blooded: false
@@ -118,98 +111,38 @@ Serpent:
   alerts: false
   shield: 0
   armour: 0
+  armourBonus: 0
   will: 0
   reflex: 0
   stamina: 0
-  none: 0
-  init: 0
-  size: 3
+  init: 3
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Beast
+      rank: 4
+  weaponNames:
 
-Jon:
-  next: Goblin2
+-
+  name: Wolf2
+  next: Albert Mason
+  charType: std
+  sex: Female
   turnCount: 0
-  maxHits: 100
-  hits: 100
-  pp: 0
-  weaponMax: 0
-  attack: 0
-  level: 0
-  penalty: 0
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  will: 0
-  reflex: 2
-  stamina: 0
-  none: 0
-  init: 0
-  size: 3
-
-Goblin2:
-  next: Ghost
-  turnCount: 0
-  maxHits: 35
-  hits: 35
-  pp: 0
-  weaponMax: 0
-  attack: 0
-  level: 0
-  penalty: 0
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  will: 0
-  reflex: 0
-  stamina: 0
-  none: 0
-  init: Goblin1
-  size: 3
-
-Ghost:
-  next: Serpent_redux
-  turnCount: 0
-  maxHits: 35
-  hits: 35
-  pp: 0
-  weaponMax: 0
-  attack: 0
-  level: 0
-  penalty: 0
-  current: false
-  stunned: false
-  blooded: false
-  dead: true
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  will: 0
-  reflex: 0
-  stamina: 0
-  none: 0
-  init: 4
-  size: 3
-
-Serpent_redux:
-  next: Lara
-  turnCount: 0
-  maxHits: 20
   hits: 20
   pp: 0
-  weaponMax: 0
   attack: 0
-  level: 0
+  spellCasting: 0
+  level: 4
   penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
   current: false
   stunned: false
   blooded: false
@@ -218,10 +151,164 @@ Serpent_redux:
   alerts: false
   shield: 0
   armour: 0
+  armourBonus: 0
   will: 0
   reflex: 0
   stamina: 0
-  none: 0
+  init: 3
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Beast
+      rank: 4
+  weaponNames:
+
+-
+  name: Albert Mason
+  next: Walter Hartright
+  charType: pc
+  sex: Male
+  turnCount: 0
+  hits: 40
+  pp: 0
+  attack: 5
+  spellCasting: 0
+  level: 5
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: 0
+  armourBonus: 0
+  will: 0
+  reflex: 1
+  stamina: 1
   init: 0
-  size: 3
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Wrestler
+      rank: 5
+    -
+      name: Gunslinger
+      rank: 5
+    -
+      name: Investigator
+      rank: 5
+  weaponNames:
+    - Dagger
+    - Revolver
+
+-
+  name: Walter Hartright
+  next: Sgt Sloth
+  charType: pc
+  sex: Male
+  turnCount: 0
+  hits: 45
+  pp: 0
+  attack: 5
+  spellCasting: 0
+  level: 5
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: 0
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 3
+  init: 0
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Gunslinger
+      rank: 5
+    -
+      name: Brawler
+      rank: 5
+    -
+      name: Artist of the occult
+      rank: 5
+  weaponNames:
+    - Dagger
+    - Revolver
+
+-
+  name: Sgt Sloth
+  next: Wolf1
+  charType: pc
+  sex: Male
+  turnCount: 0
+  hits: 45
+  pp: 0
+  attack: 5
+  spellCasting: 0
+  level: 5
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: 0
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 3
+  init: 0
+  size: 0
+  movement: 3
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Gunslinger
+      rank: 5
+    -
+      name: Brawler
+      rank: 5
+    -
+      name: Old soldier
+      rank: 5
+  weaponNames:
+    - Dagger
+    - Revolver
+    - Shotgun
 

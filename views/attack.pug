@@ -18,16 +18,17 @@ block content
           th Bonus
           th 2&deg;
         each char in chars
+          - const safe_name = char.name.replace(/ /, '_')
           tr
             td #{char.display}
             td
-              input(type='checkbox' name=char.name+'_pri')
+              input(type='checkbox' name=safe_name+'_pri')
             td
-              input(type='number' name=char.name+'_roll')
+              input(type='number' name=safe_name+'_roll')
             td
-              input(type='number' name=char.name+'_bonus' value=0)
+              input(type='number' name=safe_name+'_bonus' value=0)
             td 
-              input(type='checkbox' name=char.name+'_sec')
+              input(type='checkbox' name=safe_name+'_sec')
       if attack.secondaryMax > 0 && (typeof attack.secondaryDamage === "string")
         tbody
           tr
@@ -54,7 +55,7 @@ block content
     //a(onclick="validate()") Test
 
     p #[i Attack type:] #{attack.icon}
-    p #[i Description:] #{attack.desc}
+    p #[i Description:] #{attack.notes}
     p #[i Primary targets:] #{attack.primaryTargetNote()}
     p #[i Secondary targets:] #{attack.secondaryTargetNote()}
     

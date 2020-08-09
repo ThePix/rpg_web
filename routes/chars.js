@@ -65,14 +65,14 @@ const charsGetPdfFun = function(req, res, next) {
   });
   
   doc.info.Title = char.name
-  doc.info.Author = "Pixies and Predators"
+  doc.info.Author = "RPG Web/The Pixie"
   doc.pipe(res);
   
   doc.rect(0, 0, 615, 60).fill(blue)
   doc.font('Helvetica-BoldOblique')
     .fill('white')
     .fontSize(32)
-    .text("Pixies and Predators", 40, 20)
+    .text(settings.title ? settings.title : "Pixies and Predators", 40, 20)
   doc.font('Helvetica-Bold')
     .fill('black')
     .fontSize(20)
@@ -83,14 +83,15 @@ const charsGetPdfFun = function(req, res, next) {
   display(doc, 'Identity', '', 0, 0, true)
 
   display(doc, "Sex", char.sex, 0, 1)
-  display(doc, "Race", char.race, 0, 2)
-  display(doc, "Profession", char.profession, 0, 3)
-  display(doc, "Level", char.level, 0, 4)
-  display(doc, "Points", char.points + '/' + char.getMaxPoints(), 0, 5)
+  if (char.profession) display(doc, "Profession", char.profession, 0, 2)
+  if (char.race) display(doc, "Race", char.race, 0, 3)
   
-  const atts = ["Hits", "Attack", "Weapons", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will"]
+  const atts = settings.pdfAtts
 
-  display(doc, 'Stats', '', 0, 7, true)
+  display(doc, 'Stats', '', 0, 5, true)
+  display(doc, "Level", char.level, 0, 6)
+  display(doc, "Points", char.points + '/' + char.getMaxPoints(), 0, 7)
+
   for (let i = 0; i < atts.length; i++) {
     display(doc, atts[i], char[atts[i].toLowerCase()], 0, 8 + i)
   }
@@ -100,29 +101,35 @@ const charsGetPdfFun = function(req, res, next) {
   count++
   for (let key in char.packages) {
     if (char.packages[key] && char.packages[key] > 0) {
-      display(doc, key, char.packages[key], 0, count, false, true)
+      display(doc, key, char.packages[key], 0, count)
       count++
     }
   }
 
   count = 0
-  display(doc, 'Skills, spells, abilities', '', 1, count, true)
+  display(doc, 'Skills', '', 1, count, true)
   count++
-  for (let name in char) {
-    if (name.match(/^[A-Z]/)) {
-      display(doc, name, char[name], 1, count, false, true)
-      count++
-    }
+  for (let skill in char.skills) {
+    display(doc, skill, char.skills[skill], 1, count)
+    count++
+  }
+
+  count++
+  display(doc, 'Spells and abilities', '', 1, count, true)
+  count++
+  for (let attack of char.attacks) {
+    display(doc, attack.name, attack.display(), 1, count)
+    count++
   }
   doc.end();
 }
 
-const display = function(doc, name, value, x, y, title, longName) {
+const display = function(doc, name, value, x, y, title, longValue) {
   const offset = (x === 0 ? 40 : 305)
   doc.font(title ? 'Helvetica-BoldOblique' : 'Helvetica-Oblique')
     .text(name, offset, 115 + y * 15)
   doc.font('Helvetica')
-    .text(value, (longName ? 200 : 100) + offset, 115 + y * 15)
+    .text(value, (longValue ? 100 : 200) + offset, 115 + y * 15)
 }  
 
 

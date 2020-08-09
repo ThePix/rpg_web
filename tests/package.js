@@ -208,6 +208,7 @@ test('BonusAttack', t => {
   char.packages.Package = 4
   t.is(char.attacks.length, 0)
   test.apply(char)
+  test.applyAttacks(char)
   t.is(char.attacks.length, 1)
   t.is(char.attacks[0].name, 'Icedart')
   t.is(char.attacks[0].primaryDamage, 'd4')
@@ -230,6 +231,7 @@ test('BonusWeaponAttack', t => {
 
   t.is(char.attacks.length, 2)
   test.apply(char)
+  test.applyAttacks(char)
   t.is(char.attacks.length, 4)
   t.is(char.attacks[2].name, 'Backstab (Dagger)')
   t.is(char.attacks[3].name, 'Backstab (Flail)')
@@ -255,6 +257,7 @@ test('BonusWeaponAttack with restriction', t => {
 
   t.is(char.attacks.length, 2)
   test.apply(char)
+  test.applyAttacks(char)
   t.is(char.attacks.length, 3)
   t.is(char.attacks[2].name, 'Backstab (Dagger)')
 });

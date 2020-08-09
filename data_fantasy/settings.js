@@ -8,6 +8,7 @@ const settings = {
   bonusPoints:3,
   baseHits:20,
   startLevel:3,
+  movement:5,
   maxWeaponLines:2,  // maximum number of weapons will be two times this
   logLength:20,
   defaultWeapon:'Dagger',
@@ -15,6 +16,7 @@ const settings = {
   saveFilename:'saved_data/save',
   logFilename:'saved_data/log',
   stocksFolder:'stocks',
+  pdfAtts:["Hits", "Attack", "Armour", "Shield", "Init", "Reflex", "Stamina", "Will", "Movement"],
   packageGroups:[
     {name:'Combat', display:'Combat', comment:'Probably every character should get at least a few levels in one of these.'},
     {name:'Magic', display:'Spell casting', comment:'A character with any of these will be considered a spell-caster.'},

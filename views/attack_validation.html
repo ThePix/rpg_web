@@ -1,29 +1,33 @@
 <script>
   function validate() {
     console.log("Validating attack...")
-    const names = $('input[name="chars"]').val().split(' ')
+    const names = $('input[name="chars"]').val().split('|')
     const chars = []
     const errors = []
     let primaryCount = 0
     let secondaryCount = 0
     for (let i = 0; i < names.length; i++) {
       const d = {name: names[i]}
-      console.log("checking: " + names[i])
-      if ($('input[name=' + names[i] + '_pri]').prop("checked")) {
+      const safe_name = names[i].replace(/ /, '_')
+      console.log("checking: " + safe_name)
+      if ($('input[name=' + safe_name + '_pri]').prop("checked")) {
         d.primary = true
         primaryCount++
-        if ($('input[name=' + names[i] + '_roll]').val().length === 0) errors.push("No roll for " + names[i])
+        console.log("primary")
+        if ($('input[name=' + safe_name + '_roll]').val().length === 0) errors.push("No roll for " + names[i])
       }
-      if ($('input[name=' + names[i] + '_sec]').prop("checked")) {
+      if ($('input[name=' + safe_name + '_sec]').prop("checked")) {
         d.secondary = true
         secondaryCount++
+        console.log("secondary")
       }
       chars.push(d)
     }
+    console.log('Primary: ' + parseInt($('input[name=primaryMax]').val()) + ' and ' + parseInt($('input[name=primaryMin]').val()))
     console.log(primaryCount)
-    console.log(parseInt($('input[name=primaryMax]').val()))
-    console.log(parseInt($('input[name=primaryMin]').val()))
+    console.log('Primary: ' + parseInt($('input[name=secondaryMax]').val()) + ' and ' + parseInt($('input[name=secondaryMin]').val()))
     console.log(secondaryCount)
+
     if (primaryCount > parseInt($('input[name=primaryMax]').val())) {
       errors.push("Too many primary targets selected (maximum is " + $('input[name=primaryMax]').val() + ")")
     }

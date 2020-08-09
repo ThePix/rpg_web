@@ -15,7 +15,7 @@ const attackGetFun = function(req, res, next) {
     chars:chars.filter(el => !el.link),  // do not want extra places in attack sequence 
     char:char,
     attack:attack,
-    charList:chars.map(el => el.name).join(' '),
+    charList:chars.map(el => el.name).join('|'),
     timestamp:req.timestamp
   });
 }
@@ -41,13 +41,14 @@ const attackPostFun = function(req, res, next) {
   const secondary = []
   let secondaryFlag = false
   for (let i = 0; i < chars.length; i++) {
-    if (req.body[chars[i].name + "_pri"]) {
-      chars[i].tmp_roll = parseInt(req.body[chars[i].name + "_roll"])
-      chars[i].tmp_bonus = parseInt(req.body[chars[i].name + "_bonus"])
+    const safe_name = chars[i].name.replace(/ /, '_')
+    if (req.body[safe_name + "_pri"]) {
+      chars[i].tmp_roll = parseInt(req.body[safe_name + "_roll"])
+      chars[i].tmp_bonus = parseInt(req.body[safe_name + "_bonus"])
       chars[i].tmp_primary = attack.primaryResolve(char, chars[i], chars[i].tmp_roll, chars[i].tmp_bonus)
       primary.push(chars[i])
     }
-    if (req.body[chars[i].name + '_sec']) {
+    if (req.body[safe_name + '_sec']) {
       chars[i].tmp_secondary = attack.secondaryResolve(char, chars[i], roll, bonus)
       if (chars[i].tmp_secondary >= AttackConsts.PLAIN_HIT) secondaryFlag = true
       secondary.push(chars[i])

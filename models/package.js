@@ -24,6 +24,16 @@ class Package {
     char.points += rank
   }
 
+  // Tested with various bonus types
+  applyAttacks(char) {
+    const rank = char.packages[this.name]
+    //console.log(this.name + '-' + rank)
+    if (rank === undefined || rank === 0) return
+    for (let bonus of this.bonuses) {
+      bonus.applyAttack(char, rank)
+    }
+  }
+
   // Tested in test/char.js
   applyWeaponMax(char) {
     if (this.extraWeapon === undefined) return
@@ -152,6 +162,10 @@ class Bonus {
         char.notes.push(this.notes[grade - 1])
       }
     }
+  }
+
+
+  applyAttack(char, level) {
   }
   
   _grade(level) {
@@ -326,6 +340,9 @@ class BonusWeaponAttack extends Bonus {
   }
 
   apply(char, level) {
+  }
+
+  applyAttack(char, level) {
     const grade = this._grade(level)
     if (grade === 0) return
     let flag = false
@@ -357,6 +374,9 @@ class BonusAttack extends Bonus {
   }
 
   apply(char, level) {
+  }
+
+  applyAttack(char, level) {
     //console.log('Here1 ' + this.secondaryDamage)
     const grade = this._grade(level)
     if (grade === 0) return
@@ -377,14 +397,18 @@ class BonusEffect extends Bonus {
   }
 
   apply(char, level) {
+  }
+
+  applyAttack(char, level) {
     const grade = this._grade(level)
     if (grade === 0) return
-    const data = Object.assign({}, this.data)
-    data.bonus = level // !!! probably needs to tail off at higher level
+    const data = Object.assign({icon:'misc'}, this.data)
+    data.bonus = '-'
     if (this.dataModifier) this.dataModifier(data, char)    
     // Do what???
-    //char.attacks.push(new Attack(this.name, data))
+    char.attacks.push(new Attack(this.name, data))
   }
+  
 }
 
 
