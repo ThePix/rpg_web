@@ -1,50 +1,10 @@
 ---
 -
-  name: Wolf1
-  next: Lara Croft
-  charType: std
-  sex: Male
-  turnCount: 1
-  hits: 20
-  pp: 0
-  attack: 0
-  spellCasting: 0
-  level: 5
-  penalty: 0
-  ice: 0~false~10
-  fire: 0~false~10
-  shock: 0~false~10
-  nether: 0~false~10
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  armourBonus: 0
-  will: 0
-  reflex: 0
-  stamina: 0
-  init: 4
-  size: 0
-  movement: 5
-  turnsPerRound: 1
-  weaponBonus: 0
-  weaponElement: none
-  packages:
-    -
-      name: Beast
-      rank: 5
-  weaponNames:
-
--
   name: Lara Croft
-  next: Wolf3
+  next: Sgt Sloth
   charType: pc
   sex: Female
-  turnCount: 0
+  turnCount: 1
   hits: 35
   pp: 0
   attack: 5
@@ -55,7 +15,7 @@
   fire: 0~false~10
   shock: 0~false~10
   nether: 0~false~10
-  current: true
+  current: false
   stunned: false
   blooded: false
   dead: false
@@ -88,92 +48,12 @@
     - Revolver
 
 -
-  name: Wolf3
-  next: Wolf2
-  charType: std
-  sex: Female
-  turnCount: 0
-  hits: 20
-  pp: 0
-  attack: 0
-  spellCasting: 0
-  level: 4
-  penalty: 0
-  ice: 0~false~10
-  fire: 0~false~10
-  shock: 0~false~10
-  nether: 0~false~10
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  armourBonus: 0
-  will: 0
-  reflex: 0
-  stamina: 0
-  init: 3
-  size: 0
-  movement: 5
-  turnsPerRound: 1
-  weaponBonus: 0
-  weaponElement: none
-  packages:
-    -
-      name: Beast
-      rank: 4
-  weaponNames:
-
--
-  name: Wolf2
-  next: Albert Mason
-  charType: std
-  sex: Female
-  turnCount: 0
-  hits: 20
-  pp: 0
-  attack: 0
-  spellCasting: 0
-  level: 4
-  penalty: 0
-  ice: 0~false~10
-  fire: 0~false~10
-  shock: 0~false~10
-  nether: 0~false~10
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  armourBonus: 0
-  will: 0
-  reflex: 0
-  stamina: 0
-  init: 3
-  size: 0
-  movement: 5
-  turnsPerRound: 1
-  weaponBonus: 0
-  weaponElement: none
-  packages:
-    -
-      name: Beast
-      rank: 4
-  weaponNames:
-
--
-  name: Albert Mason
-  next: Walter Hartright
+  name: Sgt Sloth
+  next: Wolf1
   charType: pc
   sex: Male
-  turnCount: 0
-  hits: 40
+  turnCount: 1
+  hits: 35
   pp: 0
   attack: 5
   spellCasting: 0
@@ -197,30 +77,151 @@
   stamina: 1
   init: 0
   size: 0
+  movement: 3
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Gunslinger
+      rank: 5
+    -
+      name: Wrestler
+      rank: 5
+    -
+      name: Old soldier
+      rank: 5
+  weaponNames:
+    - Dagger
+    - Revolver
+    - Shotgun
+
+-
+  name: Wolf1
+  next: Wolf3
+  charType: std
+  sex: Male
+  turnCount: 1
+  hits: 8
+  pp: 0
+  attack: 0
+  spellCasting: 0
+  level: 5
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: true
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: -1
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 0
+  init: 4
+  size: 0
   movement: 5
   turnsPerRound: 1
   weaponBonus: 0
   weaponElement: none
   packages:
     -
-      name: Wrestler
-      rank: 5
-    -
-      name: Gunslinger
-      rank: 5
-    -
-      name: Investigator
+      name: Beast
       rank: 5
   weaponNames:
-    - Dagger
-    - Revolver
+
+-
+  name: Wolf3
+  next: Wolf2
+  charType: std
+  sex: Female
+  turnCount: 1
+  hits: 28
+  pp: 0
+  attack: 0
+  spellCasting: 0
+  level: 4
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: -1
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 0
+  init: 3
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Beast
+      rank: 4
+  weaponNames:
+
+-
+  name: Wolf2
+  next: Walter Hartright
+  charType: std
+  sex: Female
+  turnCount: 1
+  hits: 28
+  pp: 0
+  attack: 0
+  spellCasting: 0
+  level: 4
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: -1
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 0
+  init: 3
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Beast
+      rank: 4
+  weaponNames:
 
 -
   name: Walter Hartright
-  next: Sgt Sloth
+  next: Albert Mason
   charType: pc
   sex: Male
-  turnCount: 0
+  turnCount: 1
   hits: 45
   pp: 0
   attack: 5
@@ -264,14 +265,16 @@
     - Revolver
 
 -
-  name: Sgt Sloth
-  next: Wolf1
+  name: Albert Mason
+  next: Lara Croft
   charType: pc
+  profession: Cringey
+  race: Cringey
   sex: Male
   turnCount: 0
-  hits: 45
+  hits: 20
   pp: 0
-  attack: 5
+  attack: 0
   spellCasting: 0
   level: 5
   penalty: 0
@@ -279,7 +282,7 @@
   fire: 0~false~10
   shock: 0~false~10
   nether: 0~false~10
-  current: false
+  current: true
   stunned: false
   blooded: false
   dead: false
@@ -290,25 +293,13 @@
   armourBonus: 0
   will: 0
   reflex: 0
-  stamina: 3
+  stamina: 0
   init: 0
   size: 0
-  movement: 3
+  movement: 5
   turnsPerRound: 1
   weaponBonus: 0
   weaponElement: none
   packages:
-    -
-      name: Gunslinger
-      rank: 5
-    -
-      name: Brawler
-      rank: 5
-    -
-      name: Old soldier
-      rank: 5
   weaponNames:
-    - Dagger
-    - Revolver
-    - Shotgun
 

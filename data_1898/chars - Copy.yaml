@@ -100,3 +100,31 @@
     -
       name: Beast
       rank: 4
+
+-
+  name: Witch
+  charType: elite
+  sex: Female
+  level: 5
+  packages:
+    -
+      name: Witch
+      rank: 5
+-
+  name: Shambler
+  charType: elite
+  sex: Male
+  level: 5
+  packages:
+    -
+      name: Shambler
+      rank: 5
+-
+  name: Rat swarm
+  charType: minion
+  sex: Male
+  level: 5
+  packages:
+    -
+      name: Swarm
+      rank: 1

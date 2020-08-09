@@ -248,7 +248,7 @@ class Char {
     const chars = []
     for (let h of data) {
       const ps = {}
-      for (let p of h.packages) {
+      for (let p of packages) {
         ps[p.name] = p.rank
       }
       const c = Char.create(h.name, ps, h.weaponNames, preserveState)

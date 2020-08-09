@@ -187,34 +187,22 @@ const packages = [
         flags:'Fa',
         primaryDamage:'3d6',
         notes:'Bonus 2d6 primaryDamage on a successful hit, once per turn, when you have combat advantage.',
-        weaponCheck:function(weapon) { 
-          return weapon.is('fast');
-        },
       }),
       new BonusWeaponAttack('Measured strike', {
         progression:5,
         flags:'F',
         bonus:-2,
-        weaponCheck:function(weapon) { 
-          return weapon.is('melee');
-        },
         notes:'Attack at -2 while you take the measure of your foe. Next turn you gain CA against him.',
       }),
       new BonusWeaponAttack('Fading strike', {
         progression:5,
         flags:'F',
-        weaponCheck:function(weapon) { 
-          return weapon.is('melee');
-        },
         notes:'On a hit, you can shift two squares to a square not adjacent to an enemy',
       }),
       new BonusWeaponAttack('Spinning blade', {
         progression:5,
         flags:'F',
         primaryMax:8,
-        weaponCheck:function(weapon) { 
-          return weapon.is('melee');
-        },
         notes:'Once per encounter. Attack all adjacent foes, then shift up to 2 squares, which can be though a foe-occupied square.',
       }),
     ],
@@ -233,18 +221,18 @@ const packages = [
       new BonusStat('reflex', {progression:[1, 8, 17]}),
       new BonusStat('stamina', {progression:[1, 8, 17]}),
       new BonusStat('attack', {progression:'primary', mode:'max'}),
-      new BonusAttack('Grapple', {
+      new BonusWeaponAttack('Grapple', {
         progression:5,
         flags:'Fa',
         notes:'Target is held on a successful hit, once per turn, when you have combat advantage.',
       }),
-      new BonusAttack('Low blow', {
+      new BonusWeaponAttack('Low blow', {
         progression:5,
         primaryDamage:'2d8',
         flags:'Fa',
         notes:'Target must be "normal" human; limited to once per encounter per foe. A swift knee to the groin makes the target think twice about having children.',
       }),
-      new BonusAttack('Throw', {
+      new BonusWeaponAttack('Throw', {
         progression:5,
         flags:'F',
         bonus:4,
@@ -253,13 +241,13 @@ const packages = [
         secondaryMax:2,
         notes:'Target must by held; once per encounter. Target is thrown up to three squares. Can be throw at another foe or two adjacent foes within three squares.',
       }),
-      new BonusAttack('Throw down', {
+      new BonusWeaponAttack('Throw down', {
         progression:5,
         flags:'F',
         primaryDamage:'2d6',
         notes:'Target must by held. On a successful hit, target is knocked to the ground. On failure target is still held (except on natural 1).',
       }),
-      new BonusAttack('Bear hug', {
+      new BonusWeaponAttack('Bear hug', {
         progression:5,
         primaryDamage:'2d6',
         bonus:2,

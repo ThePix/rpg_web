@@ -2038,3 +2038,102 @@ secret|4:53:12 PM|Refresh is 5 seconds
 title|4:53:12 PM|Go to 'http://192.168.1.132:8091' to access the web site
 secret|4:53:12 PM|About to load characters
 secret|4:53:12 PM|Loaded 10 characters
+secret|7:14:28 PM|Refresh is 5 seconds
+title|7:14:28 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|7:14:28 PM|About to load characters
+secret|7:14:28 PM|Loaded 7 characters
+msg|7:55:32 PM|Turn sequence set
+secret|8:01:46 PM|Lara Croft: End turn
+secret|8:01:46 PM|Sgt Sloth: Start turn
+title|8:01:46 PM|Next!
+comment|8:01:46 PM|Messages saved
+comment|8:01:46 PM|Characters saved
+secret|8:06:19 PM|Refresh is 5 seconds
+title|8:06:19 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:06:19 PM|About to load characters
+secret|8:06:19 PM|Loaded 7 characters
+secret|8:06:39 PM|Refresh is 5 seconds
+title|8:06:39 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:06:39 PM|About to load characters
+secret|8:06:39 PM|Loaded 7 characters
+msg|8:07:09 PM|Turn sequence set
+secret|8:07:34 PM|Lara Croft: End turn
+secret|8:07:34 PM|Sgt Sloth: Start turn
+title|8:07:34 PM|Next!
+comment|8:07:34 PM|Characters saved
+comment|8:07:34 PM|Messages saved
+msg|8:09:06 PM|Wolf1 is hit by Sgt Sloth with Revolver, doing 6 hits (4 before armour).
+secret|8:10:04 PM|Sgt Sloth: End turn
+secret|8:10:04 PM|Wolf1: Start turn
+title|8:10:04 PM|Next!
+comment|8:10:04 PM|Messages saved
+comment|8:10:04 PM|Characters saved
+msg|8:12:01 PM|Wolf1 just misses Walter Hartright.
+secret|8:12:04 PM|Wolf3: Start turn
+secret|8:12:04 PM|Wolf1: End turn
+title|8:12:04 PM|Next!
+comment|8:12:04 PM|Characters saved
+comment|8:12:04 PM|Messages saved
+msg|8:12:47 PM|Sgt Sloth is hit by Wolf3 with Maul, doing 5 hits.
+secret|8:13:07 PM|Wolf3: End turn
+secret|8:13:07 PM|Wolf2: Start turn
+title|8:13:07 PM|Next!
+comment|8:13:07 PM|Characters saved
+comment|8:13:07 PM|Messages saved
+msg|8:13:33 PM|Wolf2 just misses Walter Hartright.
+secret|8:13:41 PM|Wolf2: End turn
+secret|8:13:41 PM|Walter Hartright: Start turn
+title|8:13:41 PM|Next!
+comment|8:13:41 PM|Characters saved
+comment|8:13:41 PM|Messages saved
+msg|8:16:46 PM|Wolf1 is hit by Walter Hartright with Revolver, doing 16 hits (14 before armour).
+secret|8:16:50 PM|Walter Hartright: End turn
+secret|8:16:50 PM|Albert Mason: Start turn
+title|8:16:50 PM|Next!
+comment|8:16:50 PM|Messages saved
+comment|8:16:50 PM|Characters saved
+secret|8:19:08 PM|Refresh is 5 seconds
+title|8:19:08 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:19:08 PM|About to load characters
+secret|8:19:08 PM|Loaded 7 characters
+secret|8:19:14 PM|Refresh is 5 seconds
+title|8:19:14 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:19:14 PM|About to load characters
+secret|8:19:14 PM|Loaded 7 characters
+msg|8:19:46 PM|Turn sequence set
+comment|8:19:52 PM|Recovered state from start of turn
+comment|8:19:52 PM|About to load last saved messages...
+secret|8:21:32 PM|Refresh is 5 seconds
+title|8:21:32 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:21:32 PM|About to load characters
+secret|8:21:32 PM|Loaded 7 characters
+comment|8:21:34 PM|Recovered state from start of turn
+comment|8:21:34 PM|About to load last saved messages...
+comment|8:21:34 PM|...Load last saved messages
+comment|8:21:34 PM|About to load last saved game...
+comment|8:21:34 PM|...Load last saved game
+secret|8:21:40 PM|Refresh is 5 seconds
+title|8:21:40 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:21:40 PM|About to load characters
+secret|8:21:40 PM|Loaded 7 characters
+msg|8:21:45 PM|Turn sequence set
+comment|8:21:49 PM|Recovered state from start of turn
+comment|8:21:49 PM|About to load last saved messages...
+comment|8:21:49 PM|...Load last saved messages
+comment|8:21:49 PM|About to load last saved game...
+comment|8:21:49 PM|...Load last saved game
+secret|8:23:49 PM|Refresh is 5 seconds
+title|8:23:49 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:23:49 PM|About to load characters
+secret|8:23:49 PM|Loaded 7 characters
+msg|8:23:59 PM|Turn sequence set
+comment|8:27:35 PM|Recovered state from start of turn
+comment|8:27:35 PM|About to load last saved messages...
+comment|8:27:35 PM|...Load last saved messages
+comment|8:27:35 PM|About to load last saved game...
+comment|8:27:35 PM|...Load last saved game
+secret|8:28:18 PM|Refresh is 5 seconds
+title|8:28:18 PM|Go to 'http://192.168.1.132:8091' to access the web site
+secret|8:28:18 PM|About to load characters
+secret|8:28:18 PM|Loaded 7 characters
+msg|8:28:26 PM|Turn sequence set
