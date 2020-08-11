@@ -56,15 +56,9 @@ const attNames = {
     icon:'bow',
   },
   firearm:{
-    code:/^f/,
+    code:/^[Ff]/,
     attType:'attack type',
     desc:'Firearm (one handed)',
-    icon:'firearm',
-  },
-  firearm2:{
-    code:/^F/,
-    attType:'attack type',
-    desc:'Firearm (two handed)',
     icon:'firearm',
   },
   artillery:{

@@ -78,7 +78,10 @@ class Char {
     }
     for (let s of weaponNames) {
       const w = WEAPONS.find(el => el.name === s)
-      if (w === undefined) console.log("Failed to find weapon called " + s)
+      if (w === undefined) {
+        console.log("ERROR: Failed to find weapon called " + s)
+        continue
+      }
       this.weapons.push(w)
       this.weaponNames.push(s)
       this.attacks.push(Attack.createFromWeapon(w, this)) // !!! Other skills might affect this
@@ -239,33 +242,30 @@ class Char {
   }
 
 
-  // preserveState should be true if this is part way through an encounter and
-  // you want saved values to override the derived values; otherwise, these values will
-  // be ignored as they could have changed in a rules update
-  // ONLY WORKS FOR HITS - AND THAT IS NOT TESTED!!!
-  static loadYaml(s, preserveState) {
+  // May have issues preserving state!!!!
+  static loadYaml(s) {
     const data = yaml.safeLoad(s);
     const chars = []
     for (let h of data) {
       const ps = {}
-      for (let p of packages) {
+      for (let p of h.packages) {
         ps[p.name] = p.rank
       }
-      const c = Char.create(h.name, ps, h.weaponNames, preserveState)
+      const c = Char.create(h.name, ps, h.weaponNames)
       for (let key in h) {
         if (!['name', 'weaponNames', 'packages'].includes(key)) c[key] = h[key]
       }
-/*      for (let field of Char.fields()) {
+      // we have the fresh character, now set it to its saved state (eg current hits)
+      for (let field of Char.fields()) {
         if (field.disableSave || field.type === 'function') continue
         if (h[field.name] === undefined) continue
-        if (field.derived && !preserveState) continue
         if (field.type === 'element') {
           c.elements[field.name].load(h[field.name])
         }
         else {
           c[field.name] = h[field.name]
         }
-      }*/
+      }
       chars.push(c)
     }
     return chars
@@ -507,6 +507,7 @@ class Char {
       Log.add(s)
     }
     else {
+      //console.log('In applyDamage')
       this.hits -= hits
       Log.add(s)
       if (result === AttackConsts.CRITICAL_HIT) {

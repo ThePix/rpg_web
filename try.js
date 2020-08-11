@@ -55,11 +55,35 @@ const mockNext = function() {}
 */
 
 
-
+/*
 fs.readFile(folder + '/chars.yaml', function(err, s) {
   if (err) throw err;
   const chars = Char.loadYaml(String(s));
   console.log(chars[1])
 });  
+*/
 
 
+
+  const tester = Char.create("Tester", {
+    'Warrior (sword and shield)':2,
+    'Rogue (striker)':4, 
+    Elementalist:3
+  }, ["Warhammer", "Dagger"])
+
+
+  const yaml = tester.toYaml()
+  const tester2 = Char.loadYaml(yaml)[0]
+
+
+console.log(yaml)
+console.log('-------------------')
+console.log(tester2.toYaml())
+  
+/*  t.is(tester2.weaponMax, 2)
+  t.is(tester2.attacks.length, 4)
+  t.is(tester2.warnings.length, 0)
+  t.is(tester2.attacks[0].name, 'Warhammer')
+  t.is(tester2.attacks[2].name, 'Sneak attack (Dagger)')
+  t.is(tester2.attacks[3].name, 'Firedart')
+*/

@@ -120,14 +120,14 @@ test('resolveDamage', t => {
   t.is(target.hits, 70);
   t.is(Log.last, "Target is hit by Attacker with Weapon, doing 10 hits.");
 
-  target.armour = 2
+  target.armour = 4
   target.resolveDamage(attacker, weapon, 10, AttackConsts.PLAIN_HIT)
-  t.is(target.hits, 62);
-  t.is(Log.last, "Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).");
+  t.is(target.hits, 64);
+  t.is(Log.last, "Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).");
 
   target.resolveDamage(attacker, weapon, 10, AttackConsts.CRITICAL_HIT)
-  t.is(target.hits, 54);
-  t.is(Log.last, "Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).");
+  t.is(target.hits, 58);
+  t.is(Log.last, "Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).");
 });
 
 
@@ -200,12 +200,12 @@ test('adding attacks restricted', t => {
   }, ["Warhammer", "Flail", "Dagger"])
 
   t.is(tester.weaponMax, 2)
-  t.is(tester.attacks.length, 3)
+  t.is(tester.attacks.length, 5)
   t.is(tester.warnings.length, 2)
   t.is(tester.warnings[0], "Additional weapon discarded")
   t.is(tester.warnings[1], "No weapons suitable for Sneak attack")
   t.is(tester.attacks[0].name, 'Warhammer')
-  t.is(tester.attacks[2].name, 'Firedart')
+  t.is(tester.attacks[4].name, 'Firedart')
 
 })
 
@@ -221,11 +221,11 @@ test('adding attacks okay', t => {
   }, ["Warhammer", "Dagger"])
 
   t.is(tester.weaponMax, 2)
-  t.is(tester.attacks.length, 4)
+  t.is(tester.attacks.length, 6)
   t.is(tester.warnings.length, 0)
   t.is(tester.attacks[0].name, 'Warhammer')
   t.is(tester.attacks[2].name, 'Sneak attack (Dagger)')
-  t.is(tester.attacks[3].name, 'Firedart')
+  t.is(tester.attacks[5].name, 'Firedart')
 
 })
 
@@ -243,11 +243,11 @@ test('save and load', t => {
   const tester2 = Char.loadYaml(yaml)[0]
   
   t.is(tester2.weaponMax, 2)
-  t.is(tester2.attacks.length, 4)
+  t.is(tester2.attacks.length, 6)
   t.is(tester2.warnings.length, 0)
   t.is(tester2.attacks[0].name, 'Warhammer')
   t.is(tester2.attacks[2].name, 'Sneak attack (Dagger)')
-  t.is(tester2.attacks[3].name, 'Firedart')
+  t.is(tester2.attacks[5].name, 'Firedart')
   
 })
 
