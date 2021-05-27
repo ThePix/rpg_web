@@ -55,8 +55,14 @@ const attNames = {
     desc:'Thrown projectile',
     icon:'bow',
   },
+  firearm2:{
+    code:/^F/,
+    attType:'attack type',
+    desc:'Firearm (two handed)',
+    icon:'firearm',
+  },
   firearm:{
-    code:/^[Ff]/,
+    code:/^f/,
     attType:'attack type',
     desc:'Firearm (one handed)',
     icon:'firearm',

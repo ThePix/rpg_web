@@ -2403,3 +2403,59 @@ msg|7:55:06 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|7:55:06 AM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
 msg|7:55:06 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|7:55:06 AM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|4:38:50 PM|Attacker misses Target by a mile.
+msg|4:38:50 PM|Attacker just misses Target.
+msg|4:38:50 PM|Target's shield stops Attacker's attack.
+msg|4:38:50 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|4:38:52 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|4:38:52 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|4:38:52 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|4:38:52 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+secret|4:39:53 PM|Refresh is 5 seconds
+title|4:39:53 PM|Go to 'http://192.168.1.104:8091' to access the web site
+secret|4:39:53 PM|About to load characters
+secret|4:39:53 PM|Loaded 8 characters
+msg|4:41:16 PM|Turn sequence set
+msg|4:43:17 PM|Lara just misses Ghost.
+msg|4:43:36 PM|Lara delays a turn
+secret|4:43:36 PM|Kyle: Start turn
+msg|4:44:27 PM|Ogre is hit by Kyle with Onslaught (Warhammer), doing 11 hits (13 before armour).
+msg|4:19:18 PM|Attacker misses Target by a mile.
+msg|4:19:18 PM|Target's shield stops Attacker's attack.
+msg|4:19:18 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|4:19:18 PM|Attacker just misses Target.
+msg|4:19:19 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|4:19:19 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|4:19:19 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|4:19:19 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|4:27:49 PM|Attacker misses Target by a mile.
+msg|4:27:49 PM|Attacker just misses Target.
+msg|4:27:49 PM|Target's shield stops Attacker's attack.
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|4:27:49 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|4:27:49 PM|Attacker just misses Target.
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|4:27:49 PM|Target is on fire.
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|4:27:49 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|4:27:49 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+secret|4:28:01 PM|Refresh is 5 seconds
+title|4:28:01 PM|Go to 'http://192.168.1.104:8091' to access the web site
+secret|4:28:01 PM|About to load characters
+secret|4:28:01 PM|Loaded 8 characters
+secret|4:32:19 PM|Refresh is 5 seconds
+title|4:32:19 PM|Go to 'http://192.168.1.104:8091' to access the web site
+secret|4:32:19 PM|About to load characters
+secret|4:32:19 PM|Loaded 8 characters
+secret|4:37:12 PM|Refresh is 5 seconds
+title|4:37:12 PM|Go to 'http://192.168.1.104:8091' to access the web site
+secret|4:37:12 PM|About to load characters
+secret|4:37:12 PM|Loaded 8 characters
+secret|4:37:18 PM|Refresh is 5 seconds
+title|4:37:18 PM|Go to 'http://192.168.1.104:8091' to access the web site
+secret|4:37:18 PM|About to load characters
+secret|4:37:18 PM|Loaded 8 characters

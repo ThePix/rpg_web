@@ -27,7 +27,7 @@ const weapon_data = [
   {name:"Light crossbow", damage:"d12", atts:"bpMX", desc:"Takes a minor action to reload, but decent against armoured foes"},
   {name:"Heavy crossbow", damage:"d20", atts:"bpL1X", desc:"Takes a full standard action to reload, but good against armoured foes"},
   {name:"Flintlock", damage:"2d12", atts:"fpL2", desc:"Very noisy. Takes two full standard actions to reload, and expensive to use."},
-  {name:"Arquebus", damage:"2d20", atts:"FpL2", desc:"Very noisy. Takes two full standard actions to reload, and expensive to use, but look at all the damage!"},
+  {name:"Musket", damage:"2d20", atts:"FpL2", desc:"Very noisy. Takes two full standard actions to reload, and expensive to use, but look at all the damage!"},
 ]
 
 
