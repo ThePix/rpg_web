@@ -8,6 +8,7 @@ block content
         th Character
         th Bonus
         th Roll
+        th Surprised?
       for chr in chars
         if typeof chr.init === "number"
           tr
@@ -16,7 +17,9 @@ block content
             td
               =chr.init
             td
-              input(type="number" name=chr.name value="10")
+              input(type="number" name=chr.name value=Math.floor(Math.random() * 20 + 1))
+            td
+              input(type="checkbox" name=chr.name + '_surprised' value=false)
     p
     input(type="submit" name="submit_param" value="Submit" class="link-button")
     

@@ -5,6 +5,7 @@
   sex: Female
   charType: pc
   level: 3
+  init: 5
   packages:
     -
       name: Druid (nature mage)

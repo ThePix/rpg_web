@@ -1,63 +1,15 @@
 ---
 -
-  name: Lara Croft
-  next: Sgt Sloth
-  charType: pc
-  sex: Female
-  turnCount: 1
-  hits: 35
-  pp: 0
-  attack: 5
-  spellCasting: 0
-  level: 5
-  penalty: 0
-  ice: 0~false~10
-  fire: 0~false~10
-  shock: 0~false~10
-  nether: 0~false~10
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  armourBonus: 0
-  will: 1
-  reflex: 1
-  stamina: 0
-  init: 3
-  size: 0
-  movement: 6
-  turnsPerRound: 1
-  weaponBonus: 0
-  weaponElement: none
-  packages:
-    -
-      name: Fencer
-      rank: 5
-    -
-      name: Gunslinger
-      rank: 5
-    -
-      name: Athletic aristocrat
-      rank: 5
-  weaponNames:
-    - Rapier
-    - Revolver
-
--
-  name: Sgt Sloth
-  next: Wolf1
-  charType: pc
+  name: Goblin1
+  charType: std
+  race: Goblin
   sex: Male
-  turnCount: 1
-  hits: 35
+  turnCount: 0
+  hits: 29
   pp: 0
-  attack: 5
+  attack: 3
   spellCasting: 0
-  level: 5
+  level: 3
   penalty: 0
   ice: 0~false~10
   fire: 0~false~10
@@ -69,84 +21,40 @@
   dead: false
   disabled: false
   alerts: false
-  shield: 0
-  armour: 0
+  shield: 2
+  armour: 1
   armourBonus: 0
   will: 0
-  reflex: 1
+  reflex: 0
   stamina: 1
   init: 0
   size: 0
-  movement: 3
-  turnsPerRound: 1
-  weaponBonus: 0
-  weaponElement: none
-  packages:
-    -
-      name: Gunslinger
-      rank: 5
-    -
-      name: Wrestler
-      rank: 5
-    -
-      name: Old soldier
-      rank: 5
-  weaponNames:
-    - Dagger
-    - Revolver
-    - Shotgun
-
--
-  name: Wolf1
-  next: Wolf3
-  charType: std
-  sex: Male
-  turnCount: 1
-  hits: 8
-  pp: 0
-  attack: 0
-  spellCasting: 0
-  level: 5
-  penalty: 0
-  ice: 0~false~10
-  fire: 0~false~10
-  shock: 0~false~10
-  nether: 0~false~10
-  current: false
-  stunned: false
-  blooded: true
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: -1
-  armourBonus: 0
-  will: 0
-  reflex: 0
-  stamina: 0
-  init: 4
-  size: 0
   movement: 5
   turnsPerRound: 1
   weaponBonus: 0
   weaponElement: none
   packages:
     -
-      name: Beast
-      rank: 5
+      name: Warrior (sword and shield)
+      rank: 3
+    -
+      name: Defender
+      rank: 3
   weaponNames:
+    - Broad sword
+    - Short bow
 
 -
-  name: Wolf3
-  next: Wolf2
+  name: Goblin2
   charType: std
+  race: Goblin
   sex: Female
-  turnCount: 1
-  hits: 28
+  turnCount: 0
+  hits: 29
   pp: 0
-  attack: 0
+  attack: 3
   spellCasting: 0
-  level: 4
+  level: 3
   penalty: 0
   ice: 0~false~10
   fire: 0~false~10
@@ -158,92 +66,12 @@
   dead: false
   disabled: false
   alerts: false
-  shield: 0
-  armour: -1
+  shield: 2
+  armour: 1
   armourBonus: 0
   will: 0
   reflex: 0
-  stamina: 0
-  init: 3
-  size: 0
-  movement: 5
-  turnsPerRound: 1
-  weaponBonus: 0
-  weaponElement: none
-  packages:
-    -
-      name: Beast
-      rank: 4
-  weaponNames:
-
--
-  name: Wolf2
-  next: Walter Hartright
-  charType: std
-  sex: Female
-  turnCount: 1
-  hits: 28
-  pp: 0
-  attack: 0
-  spellCasting: 0
-  level: 4
-  penalty: 0
-  ice: 0~false~10
-  fire: 0~false~10
-  shock: 0~false~10
-  nether: 0~false~10
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: -1
-  armourBonus: 0
-  will: 0
-  reflex: 0
-  stamina: 0
-  init: 3
-  size: 0
-  movement: 5
-  turnsPerRound: 1
-  weaponBonus: 0
-  weaponElement: none
-  packages:
-    -
-      name: Beast
-      rank: 4
-  weaponNames:
-
--
-  name: Walter Hartright
-  next: Albert Mason
-  charType: pc
-  sex: Male
-  turnCount: 1
-  hits: 45
-  pp: 0
-  attack: 5
-  spellCasting: 0
-  level: 5
-  penalty: 0
-  ice: 0~false~10
-  fire: 0~false~10
-  shock: 0~false~10
-  nether: 0~false~10
-  current: false
-  stunned: false
-  blooded: false
-  dead: false
-  disabled: false
-  alerts: false
-  shield: 0
-  armour: 0
-  armourBonus: 0
-  will: 0
-  reflex: 0
-  stamina: 3
+  stamina: 1
   init: 0
   size: 0
   movement: 5
@@ -252,37 +80,32 @@
   weaponElement: none
   packages:
     -
-      name: Gunslinger
-      rank: 5
+      name: Warrior (sword and shield)
+      rank: 3
     -
-      name: Brawler
-      rank: 5
-    -
-      name: Artist of the occult
-      rank: 5
+      name: Defender
+      rank: 3
   weaponNames:
-    - Dagger
-    - Revolver
+    - Broad sword
+    - Short bow
 
 -
-  name: Albert Mason
-  next: Lara Croft
-  charType: pc
-  profession: Cringey
-  race: Cringey
-  sex: Male
+  name: Serpent
+  charType: boss
+  race: Serpent
+  sex: Female
   turnCount: 0
   hits: 20
   pp: 0
   attack: 0
   spellCasting: 0
-  level: 5
+  level: 3
   penalty: 0
   ice: 0~false~10
   fire: 0~false~10
   shock: 0~false~10
   nether: 0~false~10
-  current: true
+  current: false
   stunned: false
   blooded: false
   dead: false
@@ -301,5 +124,233 @@
   weaponBonus: 0
   weaponElement: none
   packages:
+    -
+      name: Serpent
+      rank: 3
+    -
+      name: Boss
+      rank: undefined
   weaponNames:
+
+-
+  name: Ghost
+  charType: std
+  race: Ghost
+  sex: Female
+  turnCount: 0
+  hits: 20
+  pp: 0
+  attack: 0
+  spellCasting: 0
+  level: 3
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: 0
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 0
+  init: 0
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Non-corporeal Undead
+      rank: 3
+  weaponNames:
+
+-
+  name: Lara
+  charType: pc
+  race: Rabbit
+  sex: Female
+  turnCount: 0
+  hits: 20
+  pp: 0
+  attack: 0
+  spellCasting: 0
+  level: 3
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: 0
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 0
+  init: 5
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Druid (nature mage)
+      rank: 3
+    -
+      name: Elementalist
+      rank: 3
+  weaponNames:
+    - Dagger
+
+-
+  name: Kyle
+  charType: pc
+  race: Bear
+  sex: Male
+  turnCount: 0
+  hits: 24
+  pp: 0
+  attack: 3
+  spellCasting: 0
+  level: 3
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: 0
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 1
+  init: 0
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Warrior (2H)
+      rank: 3
+    -
+      name: Barbarian (striker)
+      rank: 3
+  weaponNames:
+    - Warhammer
+    - Flail
+
+-
+  name: Jon
+  charType: pc
+  race: Bear
+  sex: Male
+  turnCount: 0
+  hits: 29
+  pp: 0
+  attack: 3
+  spellCasting: 0
+  level: 3
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 2
+  armour: 1
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 1
+  init: 0
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Warrior (sword and shield)
+      rank: 3
+    -
+      name: Defender
+      rank: 3
+  weaponNames:
+    - Short sword
+    - Long bow
+
+-
+  name: Ogre
+  charType: elite
+  race: Ogre
+  sex: Male
+  turnCount: 0
+  hits: 29
+  pp: 0
+  attack: 3
+  spellCasting: 0
+  level: 3
+  penalty: 0
+  ice: 0~false~10
+  fire: 0~false~10
+  shock: 0~false~10
+  nether: 0~false~10
+  current: false
+  stunned: false
+  blooded: false
+  dead: false
+  disabled: false
+  alerts: false
+  shield: 0
+  armour: 1
+  armourBonus: 0
+  will: 0
+  reflex: 0
+  stamina: 1
+  init: 0
+  size: 0
+  movement: 5
+  turnsPerRound: 1
+  weaponBonus: 0
+  weaponElement: none
+  packages:
+    -
+      name: Warrior (2H)
+      rank: 3
+    -
+      name: Defender
+      rank: 3
+    -
+      name: Ogre
+      rank: 3
+  weaponNames:
+    - Broad sword
+    - Short bow
 

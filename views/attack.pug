@@ -26,7 +26,7 @@ block content
             td
               input(type='number' name=safe_name+'_roll')
             td
-              input(type='number' name=safe_name+'_bonus' value=0)
+              input(type='number' name=safe_name+'_bonus' value=Math.floor(Math.random() * 20 + 1))
             td 
               input(type='checkbox' name=safe_name+'_sec')
       if attack.secondaryMax > 0 && (typeof attack.secondaryDamage === "string")
@@ -38,7 +38,7 @@ block content
             td
               input(type='number' name='roll')
             td
-              input(type='number' name='bonus' value=0)
+              input(type='number' name='bonus' value=Math.floor(Math.random() * 20 + 1))
             td
 
     input(type="hidden" name="name" value=char.name)

@@ -1,9 +1,5 @@
 'use strict';
 
-//const mongo = require('mongodb'); 
-
-const yaml = require('js-yaml');
-
 const folder = require('../settings.js').folder
 const [AttackConsts, Attack, WEAPONS] = require('../models/attack.js')
 const [Log] = require('../models/log.js')
@@ -15,6 +11,10 @@ const packages = require('../' + folder + '/packages.js')
 //const MongoClient = require('mongodb').MongoClient
 //const mongoOpts = { useNewUrlParser: true, useUnifiedTopology: true }
 //const mongoUrl = 'mongodb://localhost:27017/rpg';
+
+//const mongo = require('mongodb'); 
+
+const yaml = require('js-yaml');
 
 class Char {
   constructor(data) {
@@ -54,7 +54,13 @@ class Char {
   }
   
   
-
+  static charSortFunc(a, b) {
+    if (a.initScore !== b.initScore) return a.initScore - b.initScore;
+    if (a.charType === 'pc') return -1;
+    if (b.charType !== 'pc') return 1;
+    return 1;
+  }
+  
   static create(name, data, weaponNames, preserveState) {
     if (typeof name !== 'string') {
       console.log("WARNING: Char.create was not sent a string for the name")
@@ -67,9 +73,27 @@ class Char {
     return c
   }
   
+  nextTurn(chars, inc) {
+    const currentMoment = this.initScore
+    if (inc === undefined) inc = 20 - this.init // adjust later!!!!
+    this.initScore += inc
+
+    chars.sort(Char.charSortFunc)
+    const timePassed = chars[0].initScore - currentMoment
+    console.log("From " + currentMoment + " to " + chars[0].initScore)
+    //for (const c of chars) { console.log(c.name + ": " + c.initScore) }
+    for (let i = 0; i < timePassed; i++) {
+      console.log("Time passes")
+      for (const c of chars) c.timePasses()
+    }
+  }
+  
+  timePasses() {
+    
+    
+  }
   
   updateWeapons(weaponNames) {
-
     if (weaponNames.length < this.weaponMax) this.warnings.push("You can choose an additional weapon")
       
     if (weaponNames.length > this.weaponMax) {

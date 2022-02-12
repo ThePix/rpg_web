@@ -2,8 +2,8 @@
 
 const folder = require('../settings.js').folder
 const fs = require('fs');
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const [Char] = require('./../models/char.js')
 const [Log] = require('../models/log.js')
 const [Message] = require('./../models/message.js')
@@ -14,12 +14,12 @@ const settings = require('../' + folder + '/settings.js')
 
 router.get('/', function(req, res, next) {
   const chars = req.app.get('chars');
-  const char = chars.find(el => el.current)
-  if (char === undefined) {
+  const char = chars[0]
+  if (char.initScore === undefined) {
     res.redirect('/encounter/inits')
     return
   }
-  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages });
+  res.render('encounter', { chars:chars, char:char, current:char, attacks:char.attacks, timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages, settings:settings });
 });
 
 router.get('/inits', function(req, res, next) {
@@ -29,17 +29,18 @@ router.get('/inits', function(req, res, next) {
 });
 
 router.get('/focus/:char', function(req, res, next) {
-  const chars = req.app.get('chars');
-  const current = chars.find(el => el.current)
+  const chars = req.app.get('chars')
+  chars.sort(Char.charSortFunc)
+  const current = chars[0]
   const char = chars.find(el => el.name === req.params.char)
   console.log("here3")
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages });
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp, refresh:settings.refresh, maxMessages:settings.maxMessages, settings:settings });
 });
 
 router.get('/next/:char', function(req, res, next) {
   const chars = req.app.get('chars');
   let char = chars.find(el => el.name === req.params.char)
-  char = char.nextChar(chars)
+  char.nextTurn(chars)
   const filename = settings.saveFilename + '.yaml'
   fs.writeFile(filename, Char.toYaml(chars), function (err) {
     if (err) {
@@ -81,7 +82,8 @@ router.get('/load', function(req, res, next) {
     const chars = Char.loadYaml(String(s));
     req.app.set('chars', chars);
 
-    const char = chars.find(el => el.current)
+    chars.sort(Char.charSortFunc)
+    const char = chars[0]
     Log.add("comment", "...Load last saved game")
     res.redirect('/encounter/')
   });  
@@ -93,19 +95,26 @@ router.get('/load', function(req, res, next) {
   });  
 });
 
+
 router.get('/delay/:char', function(req, res, next) {
   const chars = req.app.get('chars');
   let char = chars.find(el => el.name === req.params.char)
-  Log.add(char.display + " delays a turn")
-  char = char.delay(chars)
+  char.nextTurn(chars, settings.waitDelay)
+  Log.add("title", "Delay!")
   res.redirect('/encounter/')
 });
 
+
+
+
+
+
 // This is useful when debugging; probably not otherwise
 router.get('/refresh/:char', function(req, res, next) {
-  const chars = req.app.get('chars');
+  const chars = req.app.get('chars')
+  chars.sort(Char.charSortFunc)
   let char = chars.find(el => el.name === req.params.char)
-  if (!char) char = chars.find(el => el.current)
+  if (!char) char = chars[0]
   res.redirect('/encounter/focus/' + char.name)
 });
 
@@ -162,11 +171,12 @@ router.get('/db-save', function(req, res, next) {
 
 
 router.post('/clear-alerts', function(req, res, next) {
-  const chars = req.app.get('chars');
-  const current = chars.find(el => el.current)
+  const chars = req.app.get('chars')
+  chars.sort(Char.charSortFunc)
+  const current = chars[0]
   const char = chars.find(el => el.name === req.body.name)
   char.cancelAlerts()
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp, settings:settings });
 });
 
 
@@ -174,8 +184,9 @@ router.post('/clear-alerts', function(req, res, next) {
 
 // To do!!!
 router.post('/add', function(req, res, next) {
-  const chars = req.app.get('chars');
-  const current = chars.find(el => el.current)
+  const chars = req.app.get('chars')
+  chars.sort(Char.charSortFunc)
+  const current = chars[0]
   const char = chars.find(el => el.name === req.body.name)
   const action = req.body.action
   delete req.body.submit_param
@@ -185,13 +196,14 @@ router.post('/add', function(req, res, next) {
   for (let file in req.body) {
     console.log("Adding " + action + " " + file + " after " + char.name)
   }
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp, settings:settings });
 });
 
 router.post('/add-stock', function(req, res, next) {
-  const chars = req.app.get('chars');
-  const stocks = req.app.get('stocks');
-  const current = chars.find(el => el.current)
+  const chars = req.app.get('chars')
+  const stocks = req.app.get('stocks')
+  chars.sort(Char.charSortFunc)
+  const current = chars[0]
   const char = chars.find(el => el.name === req.body.name)
   delete req.body.submit_param
   delete req.body.name
@@ -206,13 +218,14 @@ router.post('/add-stock', function(req, res, next) {
     previous = newchar
     chars.push(newchar)
   }
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp, settings:settings });
 });
 
 router.post('/add-file', function(req, res, next) {
-  const chars = req.app.get('chars');
-  const stocks = req.app.get('stocks');
-  const current = chars.find(el => el.current)
+  const chars = req.app.get('chars')
+  const stocks = req.app.get('stocks')
+  chars.sort(Char.charSortFunc)
+  const current = chars[0]
   const char = chars.find(el => el.name === req.body.name)
   delete req.body.submit_param
   delete req.body.name
@@ -227,18 +240,23 @@ router.post('/add-file', function(req, res, next) {
     //previous = newchar
     //chars.push(newchar)
   }
-  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp });
+  res.render('encounter', { chars:chars, char:char, current:current, attacks:char.attacks, timestamp:req.timestamp, settings:settings });
 });
 
 router.post('/inits', function(req, res, next) {
+  console.log('HERE------------')
   const chars = req.app.get('chars');
 
-  for (let chr of chars) {
+  for (const chr of chars) {
     if (typeof chr.init === "number") {
-      chr.initScore = chr.init + parseInt(req.body[chr.name])
+      chr.initScore = parseInt(req.body[chr.name]) - chr.init
+      console.log(chr.initScore)
+      console.log(req.body[chr.name + '_surprised'])
+      if (req.body[chr.name + '_surprised'] === 'on') chr.initScore += settings.surprisePenalty
       chr.hits = chr.maxHits
     }
   }
+  // Some monsters have the same init
   for (let chr of chars) {
     if (typeof chr.init === "string") {
       const chr2 = chars.find(el => el.name === chr.init)
@@ -248,24 +266,17 @@ router.post('/inits', function(req, res, next) {
   
   console.log(chars.map(el => (el.name + ',' + el.initScore)))
   
-  chars.sort(function(a, b) {
-    if (a.initScore !== b.initScore) return b.initScore - a.initScore;
-    if (a.charType === 'pc') return -1;
-    if (b.charType !== 'pc') return 1;
-    return 1;
-  })
+  chars.sort(Char.charSortFunc)
 
   console.log('------------')
   console.log(chars.map(el => (el.name + ',' + el.initScore)))
   
-  for (let i = 1; i < chars.length; i++) {
-    chars[i - 1].next = chars[i].name
-    chars[i].current = false
-  }
-  chars[chars.length - 1].next = chars[0].name
-  chars[0].current = true
   res.redirect('/encounter')
 });
+
+
+
+
 
 
 module.exports = router;

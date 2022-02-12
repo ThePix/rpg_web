@@ -6,6 +6,7 @@ const router = express.Router();
 const PDFDocument = require('pdfkit');
 const [Message] = require('../models/message.js')
 const settings = require('../' + folder + '/settings.js')
+const [Char] = require('./../models/char.js')
 
 
 
@@ -28,20 +29,26 @@ const charGetFun = function(req, res, next) {
 
 // GET chars
 const allGetFun = function(req, res, next) {
-  const chars = req.app.get('chars');
-  const first = chars.find(el => el.current)
-  if (!first) {
+  const chars = req.app.get('chars')
+  chars.sort(Char.charSortFunc)
+  const first = chars[0]
+  
+  console.log('Here')
+  for (const c of chars) console.log(c.initScore)
+  
+  if (chars[0].initScore === undefined) {
     res.render('nochars', { timestamp:req.timestamp, refresh:settings.refresh });
     return
   }
-  
-  let c = first
+  /*
+  let c = chars[0]
   const list = [];
   do {
+    console.log(c.name)
     if (!c.disabled) list.push(c)
     c = chars.find(el => el.name === c.next)
-  } while (c !== first)
-  res.render('chars', { chars:list, timestamp:req.timestamp, refresh:settings.refresh });
+  } while (c !== first)*/
+  res.render('chars', { chars:chars.filter(el => !el.disabled), timestamp:req.timestamp, refresh:settings.refresh });
 }
 
 

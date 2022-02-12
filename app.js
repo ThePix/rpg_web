@@ -39,7 +39,7 @@ const requestTime = function (req, res, next) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(requestTime)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

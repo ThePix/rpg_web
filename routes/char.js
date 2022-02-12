@@ -22,8 +22,9 @@ const charGetFun = function(req, res, next) {
 
 // POST /char
 const charPostFun = function(req, res, next) {
-  const chars = req.app.get('chars');
-  const current = chars.find(el => el.current)
+  const chars = req.app.get('chars')
+  chars.sort(Char.charSortFunc)
+  const current = chars[0]
   const char = chars.find(el => el.name === req.body.name)
   for (let field of req.app.get('fields')) {
     if (!field.display) continue

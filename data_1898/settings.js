@@ -9,6 +9,8 @@ const settings = {
   baseHits:20,
   title:'RPG-1898',
   startLevel:5,
+  surprisePenalty:15,
+  waitDelay:2,
   movement:5,
   maxWeaponLines:2,  // maximum number of weapons will be two times this
   logLength:20,

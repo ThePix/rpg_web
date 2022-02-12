@@ -1,8 +1,8 @@
-const level = parseInt($('#level').val())
-const maxPoints = parseInt($('#maxPoints').val())
-const inputs = $('input')
+const level = parseInt(document.querySelector('#level').value)
+const maxPoints = parseInt(document.querySelector('#maxPoints').value)
+const inputs = document.querySelector('input')
 const inputArray = []
-
+// recently converted from JQuery, not properly checked !!!
 for (let inp of inputs) {
   if (inp.id.startsWith('package_')) {
     inputArray.push(inp.id)
@@ -16,28 +16,28 @@ function packageCountUpdate(event) {
   let points = 0
   let disabledGroups = []
   for (let s of inputArray) {
-    const inp = $('#' + s)[0]
+    const inp = document.querySelector('#' + s)[0]
     let n = parseInt(inp.value)
     if (n > level) n = inp.value = level
     if (n < 0) n = inp.value = 0
     if (inp.dataset.group && n > 0) {
       disabledGroups.push(inp.dataset.group)
-      $('#' + s).prop('disabled', false);
+      document.querySelector('#' + s).setAttribute('disabled', false);
     }
     else {
-      $('#' + s).prop('disabled', inp.dataset.group && disabledGroups.includes(inp.dataset.group));
+      document.querySelector('#' + s).setAttribute('disabled', inp.dataset.group && disabledGroups.includes(inp.dataset.group));
     }
     points += n
   }
-  $('#points').html(points + '/' + maxPoints)
+  document.querySelector('#points').innerHTML = points + '/' + maxPoints
   if (points > maxPoints) {
-    $('#points').css("background-color", "red");
+    document.querySelector('#points').style.backgroundColor = "red"
   }
   else if (points < maxPoints) {
-    $('#points').css("background-color", "yellow");
+    document.querySelector('#points').style.backgroundColor = "yellow"
   }
   else {
-    $('#points').css("background-color", "lime");
+    document.querySelector('#points').style.backgroundColor = "lime"
   }
   
 }

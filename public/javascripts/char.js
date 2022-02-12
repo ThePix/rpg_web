@@ -1,19 +1,19 @@
-const refresh = parseInt($('#refresh').val())
-const maxMessages = parseInt($('#maxMessages').val())
-const chr = $('#sender').val()
+const refresh = parseInt(document.querySelector('#refresh')?.value)
+const maxMessages = parseInt(document.querySelector('#maxMessages')?.value)
+const chr = document.querySelector('#sender').value
 
 
-$('#content').keypress(function(event){
+document.querySelector('#content').addEventListener('keydown', function(event){
   const keycode = (event.keyCode ? event.keyCode : event.which);
   if(keycode == '13'){
     sendMessage()
   }
-});
+})
 
 
 
 const sendMessage = function() {
-  if ($('#content').val() === '') return
+  if (document.querySelector('#content').value === '') return
   
   const xhr = new XMLHttpRequest();
   const url = "url";
@@ -26,11 +26,11 @@ const sendMessage = function() {
       console.log(json)
     }
   }
-  const data = JSON.stringify({sender:chr, recipient:$('#recipient').val(), content:$('#content').val().trim(),});
+  const data = JSON.stringify({sender:chr, recipient:document.querySelector('#recipient').value, content:document.querySelector('#content').value.trim(),});
   console.log(data)
-  xhr.send(data);
-  $('#content').val('')
-  $('#recipient').val('GM')
+  xhr.send(data)
+  document.querySelector('#content').value = ''
+  document.querySelector('#recipient').value = 'GM'
 }
 
 
@@ -52,15 +52,15 @@ const updatePage = function() {
       //console.log(data);
       if (data.char) {
         for (let key in data.char) {
-          $('#' + key).html(data.char[key])
+          document.querySelector('#' + key).innerHTML = data.char[key]
         }
       }
       //console.log("here" + data.messages.length);
       for (let i = 0; i < maxMessages; i++) {
         if (data.messages[i]) {
       console.log('#msg' + i);
-          $('#msg' + i).html('<b>' + data.messages[i].title + ':</b> ' + data.messages[i].content)
-          $('#msg' + i).css('background-color', msgColours[data.messages[i].type])
+          document.querySelector('#msg' + i).innerHTML = '<b>' + data.messages[i].title + ':</b> ' + data.messages[i].content
+          document.querySelector('#msg' + i).style.backgroundColor = msgColours[data.messages[i].type]
         }
       }
     }

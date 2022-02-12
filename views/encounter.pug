@@ -12,7 +12,7 @@ block content
           //  img(src="/images/button-init.png" width="32" height="32" title="Set initiative scores to determine order")
           |&nbsp;
           a(href="/encounter/delay/" + current.name)
-            img(src="/images/button-delay.png" width="32" height="32" title="Delay this character's turn until after the next character")
+            img(src="/images/button-delay.png" width="32" height="32" title="Delay this character's turn for " + settings.waitDelay + " ticks")
           |&nbsp;
           a(href="/encounter/next/" + current.name)
             img(src="/images/button-next.png" width="32" height="32" title="Next: Move on to the next character's turn (and save the game state).")
