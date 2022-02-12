@@ -3348,3 +3348,231 @@ msg|11:13:36 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|11:13:36 AM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
 msg|11:13:36 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|11:13:36 AM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|11:18:39 AM|Attacker misses Target by a mile.
+msg|11:18:39 AM|Attacker just misses Target.
+msg|11:18:39 AM|Target's shield stops Attacker's attack.
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|11:18:39 AM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|11:18:39 AM|Attacker just misses Target.
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|11:18:39 AM|Target is on fire.
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|11:18:39 AM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|11:18:39 AM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|11:18:40 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|11:18:40 AM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|11:18:40 AM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|11:18:40 AM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:22:35 PM|Attacker misses Target by a mile.
+msg|12:22:35 PM|Attacker just misses Target.
+msg|12:22:35 PM|Target's shield stops Attacker's attack.
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:22:35 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:22:35 PM|Attacker just misses Target.
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:22:35 PM|Target is on fire.
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:22:35 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:22:35 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:22:35 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:22:35 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:22:35 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:22:35 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:28:09 PM|Attacker misses Target by a mile.
+msg|12:28:09 PM|Attacker just misses Target.
+msg|12:28:09 PM|Target's shield stops Attacker's attack.
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:28:09 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:28:09 PM|Attacker just misses Target.
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:28:09 PM|Target is on fire.
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:28:09 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:28:09 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:28:09 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:28:09 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:28:09 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:28:09 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:32:48 PM|Attacker misses Target by a mile.
+msg|12:32:48 PM|Attacker just misses Target.
+msg|12:32:48 PM|Target's shield stops Attacker's attack.
+msg|12:32:48 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:32:48 PM|Attacker just misses Target.
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:32:48 PM|Target is on fire.
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:32:48 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:32:48 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:32:48 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:32:48 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:32:48 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:32:48 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:33:10 PM|Attacker misses Target by a mile.
+msg|12:33:10 PM|Attacker just misses Target.
+msg|12:33:10 PM|Target's shield stops Attacker's attack.
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:33:10 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:33:10 PM|Attacker just misses Target.
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:33:10 PM|Target is on fire.
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:33:10 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:33:10 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:33:10 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:33:10 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:33:10 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:33:10 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:40:56 PM|Attacker misses Target by a mile.
+msg|12:40:56 PM|Attacker just misses Target.
+msg|12:40:56 PM|Target's shield stops Attacker's attack.
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:40:56 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:40:56 PM|Attacker just misses Target.
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:40:56 PM|Target is on fire.
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:40:56 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:40:56 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:40:56 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:40:56 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:40:56 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:40:56 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:41:41 PM|Attacker misses Target by a mile.
+msg|12:41:41 PM|Attacker just misses Target.
+msg|12:41:41 PM|Target's shield stops Attacker's attack.
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:41:41 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:41:41 PM|Attacker just misses Target.
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:41:41 PM|Target is on fire.
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:41:41 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:41:41 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:41:41 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:41:41 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:41:41 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:41:41 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:42:46 PM|Attacker misses Target by a mile.
+msg|12:42:46 PM|Target's shield stops Attacker's attack.
+msg|12:42:46 PM|Attacker just misses Target.
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:42:46 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:42:46 PM|Attacker just misses Target.
+msg|12:42:46 PM|Target is on fire.
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:42:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:42:46 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:42:46 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:42:46 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:42:46 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:42:46 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:45:19 PM|Attacker misses Target by a mile.
+msg|12:45:19 PM|Target's shield stops Attacker's attack.
+msg|12:45:19 PM|Attacker just misses Target.
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:45:19 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:45:19 PM|Attacker just misses Target.
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:45:19 PM|Target is on fire.
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:45:19 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:45:19 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:45:19 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:45:19 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:45:19 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:45:19 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:47:29 PM|Attacker misses Target by a mile.
+msg|12:47:29 PM|Attacker just misses Target.
+msg|12:47:29 PM|Target's shield stops Attacker's attack.
+msg|12:47:29 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:47:29 PM|Attacker just misses Target.
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:47:29 PM|Target is on fire.
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:47:29 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:47:29 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:47:29 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:47:29 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:47:29 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:47:29 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:49:46 PM|Attacker misses Target by a mile.
+msg|12:49:46 PM|Attacker just misses Target.
+msg|12:49:46 PM|Target's shield stops Attacker's attack.
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:49:46 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:49:46 PM|Attacker just misses Target.
+msg|12:49:46 PM|Target is on fire.
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:49:46 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:49:46 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:49:47 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:49:47 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:49:47 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:49:47 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+msg|12:50:14 PM|Attacker misses Target by a mile.
+msg|12:50:14 PM|Target's shield stops Attacker's attack.
+msg|12:50:14 PM|Attacker just misses Target.
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 6 hits (10 before armour).
+msg|12:50:14 PM|Target is hit by Attacker with Weapon (a critical), doing 6 hits (10 before armour).
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 10 hits. Sadly Target is not affected by attacks of that type.
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:50:14 PM|Attacker just misses Target.
+msg|12:50:14 PM|Target is on fire.
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 10 hits.
+msg|12:50:14 PM|Target is hit by Attacker with Weapon (a critical), doing 8 hits (10 before armour).
+msg|12:50:14 PM|Target is hit by Attacker with Weapon, doing 8 hits (10 before armour).
+msg|12:50:14 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:50:14 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
+msg|12:50:14 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
+msg|12:50:14 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
