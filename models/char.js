@@ -16,6 +16,30 @@ const packages = require('../' + folder + '/packages.js')
 
 const yaml = require('js-yaml');
 
+/*
+Fields are:
+id
+maxHits
+display
+name
+movement
+size
+elementalThreshold
+
+skills
+notes
+
+elements
+weapons
+packages
+attacks
+
+Plus whatever is in Char.fields
+Plus skills
+
+
+*/
+
 class Char {
   constructor(data) {
     for (let field of Char.fields()) {
