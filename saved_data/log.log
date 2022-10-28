@@ -4146,3 +4146,18 @@ msg|1:15:14 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|1:15:14 PM|Tester3 is hit by Tester0 with Weapon, doing 5 hits.
 msg|1:15:14 PM|Tester1 is hit by Tester0 with Weapon, doing 4 hits.
 msg|1:15:14 PM|Tester2 is hit by Tester0 with Weapon, doing 2 hits.
+secret|10:01:35 AM|Refresh is 5 seconds
+title|10:01:36 AM|Go to 'http://192.168.1.110:8091' to access the web site
+secret|10:01:36 AM|Loaded 8 characters
+secret|10:01:36 AM|About to load characters
+msg|10:02:50 AM|Turn sequence set
+msg|10:03:45 AM|Ghost is hit by Jon with Short sword, doing NaN hits (NaN before armour).
+msg|1:55:24 PM|Goblin1 is hit by Jon with Mark, doing 1 hits (2 before armour).
+msg|1:56:23 PM|Serpent is hit by Jon with Short sword (a critical), doing 12 hits.
+msg|1:56:23 PM|Jon misses Ghost by a mile.
+msg|2:07:16 PM|Ghost is hit by Jon with Long bow, doing 1 hits.
+secret|4:15:21 PM|Refresh is 5 seconds
+title|4:15:22 PM|Use [ctrl]-C to terminate
+title|4:15:22 PM|Go to 'http://192.168.1.110:8091' to access the web site
+secret|4:15:22 PM|About to load characters
+secret|4:15:22 PM|Loaded 8 characters

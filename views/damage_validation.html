@@ -5,11 +5,12 @@
     const errors = []
 
     //const inputs = $('.damage_input')
-    const inputs = $('input[class="damage_input"]')
+    const inputs = document.querySelectorAll('input[class="damage_input"]')
     console.log("found: " + inputs.length)
     for (let input of inputs) {
-      //console.log("got: " + input.val())
       console.log(input)
+      console.log("got: " + input.value)
+      if (!input.value.match(/^\d+$/)) errors.push('Bad value set for ' + input.name)
     }      
     
     if (errors.length > 0) {
@@ -17,18 +18,18 @@
       return false
     }
     
-    $('#errors').hide()
+    document.querySelector('#errors').style.display = 'none'
     return true
   }
   
   function flagErrors(ary) {
-    $('body').css('background-color', 'red')
+    document.querySelector('#errors').style.backgroundCcolor = 'red'
     //const html = document.getElementById('errors')
-    $('#errors').show()
-    $('#errors').html("<i>Errors prevented this form being submitted:</i><br/>" + ary.join('<br/>'))
-    setTimeout(function(){ $('body').css('background-color', 'white'); }, 30);
-    setTimeout(function(){ $('body').css('background-color', 'red'); }, 100);
-    setTimeout(function(){ $('body').css('background-color', 'white'); }, 130);
+    document.querySelector('#errors').style.display = 'block'
+    document.querySelector('#errors').innerHTML = "<i>Errors prevented this form being submitted:</i><br/>" + ary.join('<br/>')
+    setTimeout(function(){ document.body.style.backgroundCcolor = 'white' }, 30)
+    setTimeout(function(){ document.body.style.backgroundCcolor = 'red' }, 60)
+    setTimeout(function(){ document.body.style.backgroundCcolor = 'white' }, 120)
   }  
   
   

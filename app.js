@@ -115,6 +115,7 @@ app.listen(settings.port)
 const ip = require("ip");
 Log.add('secret', 'Refresh is ' + settings.refresh + ' seconds')
 Log.add("title", "Go to 'http://" + ip.address() + ":" + settings.port + "' to access the web site")
+Log.add("title", "Use [ctrl]-C to terminate")
 
 module.exports = app;
 
